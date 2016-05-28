@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,58 +14,104 @@
     android:gravity="center"
     tools:showIn="@layout/activity_main"
     tools:context="xodebox.food.MainActivity"
-    android:weightSum="1">
+    android:weightSum="1"> -->
 
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout_id"
+    android:gravity =  "bottom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    sothree:umanoPanelHeight="68dp"
+    sothree:umanoShadowHeight="4dp"
+    >
+
+    <!--main layout wrapper -->
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="381dp"
-        android:layout_gravity="top|center_vertical"
-        android:layout_weight="0.54">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_main"
+        tools:context="xodebox.food.MainActivity"
+        android:weightSum="1"
+        android:gravity="center_horizontal">
+                        <!-- Main view -->
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="498dp"
+                            android:layout_gravity="top|center_vertical"
+                            android:layout_weight="0.54"
+                            android:gravity="center_vertical">
 
-        <ViewAnimator
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/viewAnimator"
-            android:layout_gravity="center_horizontal" >
+                            <ViewAnimator
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:id="@+id/viewAnimator"
+                                android:layout_gravity="center_horizontal" >
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/imageView"
-                android:src="@color/accent_material_dark" />
-        </ViewAnimator>
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/imageView"
+                                    android:src="@color/accent_material_dark" />
+                            </ViewAnimator>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/restaurant_name"
+                                android:id="@+id/restaurant_name"
+                                android:layout_gravity="center_horizontal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/restaurant_details"
+                                android:id="@+id/restaurant_description"
+                                android:layout_gravity="center_horizontal" />
+
+                            <RatingBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ratingBar"
+                                android:numStars="4"
+                                android:rating="2"
+                                android:layout_gravity="center_horizontal" />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/hButton_label"
+                                android:id="@+id/hButton"
+                                android:layout_gravity="center_horizontal" />
+
+                        </LinearLayout>
+    </LinearLayout>
+
+    <!-- sliding menu layout wrapper -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/restaurant_name"
-            android:id="@+id/restaurant_name"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/restaurant_details"
-            android:id="@+id/restaurant_description"
-            android:layout_gravity="center_horizontal" />
-
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ratingBar"
-            android:numStars="4"
-            android:rating="2"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hButton_label"
-            android:id="@+id/hButton"
-            android:layout_gravity="center_horizontal" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|top"
+            android:text="@string/pullout_menu_label"
+            android:textSize="16sp" />
 
     </LinearLayout>
-</LinearLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

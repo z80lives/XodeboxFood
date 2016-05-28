@@ -3,5 +3,12 @@
     <string name="action_settings">Settings</string>
     <string name="restaurant_name">Restaurant Name Here</string>
     <string name="restaurant_details">Details Here</string>
+
     <string name="hButton_label">H</string>
+    <string name="pullout_menu_label">Pull out Menu</string>
+
+    <string name="main_id">main_view</string>
+    <string name="sliding_menu_id">sliding_menu</string>
+    <string name="sliding_layout_id">sliding_layout</string>
+
 </resources>
