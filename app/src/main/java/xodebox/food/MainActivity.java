@@ -1,7 +1,9 @@
 package xodebox.food;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,10 +13,25 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean userIsLoggedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        //Go to login screen first
+        /* TODO: The following method must be replaced. This implemented is here just for the prototype.
+        *  Get the user id, and information from wherever it is stored.*/
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        userIsLoggedIn = prefs.getBoolean(getString(R.string.user_login_state), false);
+
+        if(!userIsLoggedIn){
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(new Intent(loginIntent));
+            finish();
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -31,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                         */
             }
         });
+
+
     }
 
     @Override

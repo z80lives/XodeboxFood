@@ -43,6 +43,7 @@
         tools:context="xodebox.food.MainActivity"
         android:weightSum="1"
         android:gravity="center_horizontal">
+
                         <!-- Main view -->
                         <LinearLayout
                             android:orientation="vertical"
@@ -63,6 +64,7 @@
                                     android:layout_height="match_parent"
                                     android:id="@+id/imageView"
                                     android:src="@color/accent_material_dark" />
+
                             </ViewAnimator>
 
                             <TextView
@@ -100,10 +102,11 @@
     </LinearLayout>
 
     <!-- sliding menu layout wrapper -->
-    <LinearLayout
+    <!--LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|top"
+        android:orientation="vertical"
         >
 
         <TextView
@@ -113,5 +116,7 @@
             android:text="@string/pullout_menu_label"
             android:textSize="16sp" />
 
-    </LinearLayout>
+    </LinearLayout> -->
+    <include layout="@layout/pullout_menu" />
+
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
