@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
  * Note: We don't need to create a layout for this activity, since this is just shown during
  * the load screen.
  */
+
 public class SplashActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
