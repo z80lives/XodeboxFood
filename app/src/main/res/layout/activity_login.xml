@@ -83,7 +83,7 @@
                 android:layout_marginBottom="10dp"
                />
 
-            <!-- Facebook in Buttin -->
+            <!-- Facebook Sign in Buttin -->
             <!--com.facebook.login.widget.LoginButton
                 android:id="@+id/facebook_login_button"
                 android:layout_width="match_parent"
@@ -91,8 +91,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
                 android:layout_gravity="center_horizontal"
-                >
-
+                -->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

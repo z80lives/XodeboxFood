@@ -28,8 +28,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -156,14 +158,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if(results.isSuccess()){
             //TODO Google sign in success!
             //appBase.setLoginState(true);
-            User currentUser = new User("1", "littleBoo");
-            signIn(currentUser);
+            GoogleSignInAccount googleSignInAccount = results.getSignInAccount();
+            appBase.setGoogleSession(mGoogleApiClient, googleSignInAccount);
+            User currentUser = new User(googleSignInAccount.getId(),
+                                        googleSignInAccount.getDisplayName(),
+                                        googleSignInAccount.getEmail());
+            Uri photoUri = googleSignInAccount.getPhotoUrl();
+
+            currentUser.setPhotoUri(photoUri);
+            //User currentUser = new User("1", "littleBoo");
+            signIn(currentUser,XodeboxBase.sessionManagerType.GOOGLE_SESSION);
             //Toast.makeText(getApplicationContext(), "Google sign in sucess!", Toast.LENGTH_SHORT).show();
         }else
         {
             appBase.setLoginState(false);
             //TODO Google sign out
-            //Toast.makeText(getApplicationContext(), "Google sign out.", Toast.LENGTH_SHORT).show();
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+            Toast.makeText(getApplicationContext(), "Google sign failed!", Toast.LENGTH_SHORT).show();
+            Log.e(LOG_TAG, "Make sure google-services.json is valid.");
         }
     }
 
@@ -383,8 +395,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * @param current_user Contains the personal data that will be shared by the activities
      * @return
      */
-    private boolean signIn(User current_user){
-        if (appBase.signIn(current_user)) {
+    private boolean signIn(User current_user, XodeboxBase.sessionManagerType sessionType){
+        if (appBase.signIn(current_user, sessionType)) {
             Log.v(LOG_TAG, "Login state = "+appBase.getLoginState());
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
@@ -442,8 +454,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 /*SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
                 prefs.putBoolean(getString(R.string.user_login_state), true);
                 prefs.apply();*/
-                User user = new User(null, mEmail);
-                signIn(user);
+                User user = new User(null, null, mEmail);
+                signIn(user, XodeboxBase.sessionManagerType.EMAIL_SESSION);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
