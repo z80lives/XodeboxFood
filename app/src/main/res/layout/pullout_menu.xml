@@ -1,81 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id = "@+id/pullout_menu_id"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnOrderPreserved="false"
+    android:clickable="false"
+    android:gravity="center">
 
-    android:clickable="false">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/imageView2"
+            android:src="#db3939"
+            android:layout_centerHorizontal="true" />
 
-    <Button
+    </LinearLayout>
+
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="History"
-        android:id="@+id/histrory_button"
-        android:layout_marginLeft="31dp"
-        android:layout_marginStart="31dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentTop="false" />
+        android:columnCount="2"
+        android:rowCount="2">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Roll the Dice"
-        android:id="@+id/roll_dice_button"
-        android:layout_alignBottom="@+id/histrory_button"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="35dp"
-        android:layout_marginEnd="35dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="History"
+                android:id="@+id/history_button"
+                />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tagged"
-        android:id="@+id/tagged_button"
-        android:layout_marginTop="84dp"
-        android:layout_below="@+id/histrory_button"
-        android:layout_alignLeft="@+id/histrory_button"
-        android:layout_alignStart="@+id/histrory_button" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Roll the Dice"
+                android:id="@+id/roll_dice_button"
+                 />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit Restaurant"
-        android:id="@+id/submit_restaurant_button"
-        android:layout_alignBaseline="@+id/tagged_button"
-        android:layout_alignBottom="@+id/tagged_button"
-        android:layout_alignRight="@+id/roll_dice_button"
-        android:layout_alignEnd="@+id/roll_dice_button" />
+            <Button
+                android:id="@+id/tagged_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tagged"
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imageView2"
-        android:src="#db3939"
-        android:layout_above="@+id/histrory_button"
-        android:layout_centerHorizontal="true" />
+                />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Favourite"
-        android:id="@+id/favourite_button"
-        android:layout_alignTop="@+id/logout_button"
-        android:layout_toLeftOf="@+id/roll_dice_button"
-        android:layout_toStartOf="@+id/roll_dice_button" />
+            <Button
+                android:id="@+id/submit_restaurant_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit Restaurant"
+                 />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:id="@+id/logout_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/roll_dice_button"
-        android:layout_alignEnd="@+id/roll_dice_button"
-        android:layout_marginBottom="28dp" />
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/favourite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favourite"
+                 />
+
+            <Button
+                android:id="@+id/logout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+               />
+
+    </GridLayout>
+</LinearLayout>

@@ -116,7 +116,8 @@
             android:text="@string/pullout_menu_label"
             android:textSize="16sp" />
 
-    </LinearLayout> -->
+    </LinearLayout-->
+
     <include layout="@layout/pullout_menu" />
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

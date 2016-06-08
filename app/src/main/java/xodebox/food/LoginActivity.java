@@ -7,19 +7,18 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +29,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,21 +44,29 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, GoogleApiClient.OnConnectionFailedListener{
+    private String LOG_TAG = this.getClass().getName();
+    private XodeboxBase appBase = XodeboxBase.getInstance();
 
     /**
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
+    private static final int RC_SIGN_IN = 9001;             //Arguement for google login intent
+
+    private GoogleApiClient mGoogleApiClient;
+
+
+
+
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world", "user@xodebox.com:welcome123"
+            "debug@xodebox.com:welcome", "test@sandbox.com:qwerasdzx123"
     };
-
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -64,14 +78,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Prepare google sign in options
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this )
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                .build();
+
+
         setContentView(R.layout.activity_login);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
+
+        /* Assign click event handlers*/
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -84,7 +112,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        //Sign in by e-mail
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_login_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,9 +121,64 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        // Google sign in
+        SignInButton signInButton = (SignInButton) findViewById(R.id.google_login_button);
+        signInButton.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        //Assign class variables
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Process results from google sign in intent <GoogleSignInApi.getSignInIntent(...)>
+        if (requestCode == RC_SIGN_IN)
+        {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleGoogleSignInResults(result);
+        }
+    }
+
+    /**
+     * Handles Google Sign in results.
+     * @param results
+     */
+    private void handleGoogleSignInResults(GoogleSignInResult results){
+        if(results.isSuccess()){
+            //TODO Google sign in success!
+            //appBase.setLoginState(true);
+            User currentUser = new User("1", "littleBoo");
+            signIn(currentUser);
+            //Toast.makeText(getApplicationContext(), "Google sign in sucess!", Toast.LENGTH_SHORT).show();
+        }else
+        {
+            appBase.setLoginState(false);
+            //TODO Google sign out
+            //Toast.makeText(getApplicationContext(), "Google sign out.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    /**
+     * This method will be called when the google connection fails.
+     * Inherited from GoogleApiClient.OnConnectionFailedListener class
+     * @param connectionResult
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e(LOG_TAG, "Google API Client: Connection failed.");
+    }
+
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -193,12 +277,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
+        //TODO: Validate e-mail
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
+        //TODO: Validate password
         return password.length() > 4;
     }
 
@@ -293,6 +377,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
+     *
+     * Once the authentication process is complete this method should be called.
+     * Prepare the current_user's data before calling this method.
+     * @param current_user Contains the personal data that will be shared by the activities
+     * @return
+     */
+    private boolean signIn(User current_user){
+        if (appBase.signIn(current_user)) {
+            Log.v(LOG_TAG, "Login state = "+appBase.getLoginState());
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
@@ -326,7 +427,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             // TODO: register the new account here.
-            return true;
+            Log.v(LOG_TAG, "Credentials not found. Do you want to register a new account.");
+            return false;
+
+            //return true;
         }
 
         @Override
@@ -334,15 +438,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-
-                SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
+            if (success) {      //doInBackground(..) returned true
+                /*SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
                 prefs.putBoolean(getString(R.string.user_login_state), true);
-                prefs.apply();
-
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-                finish();
+                prefs.apply();*/
+                User user = new User(null, mEmail);
+                signIn(user);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -354,6 +455,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+
+
+
     }
+
 }
 
