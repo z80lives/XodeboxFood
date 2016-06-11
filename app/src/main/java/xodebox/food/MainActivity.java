@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private boolean userIsLoggedIn = false;
@@ -47,17 +50,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /* Set button to listen to current class's event handler method. Add the buttons you want to
          * be handled by our local onClick method */
-        int resources[] = {R.id.hButton, R.id.logout_button};
+        int resources[] = {R.id.hButton, R.id.logout_button, R.id.viewAnimator};
         for(int rId : resources)
         {
             findViewById(rId).setOnClickListener(this);
         }
+
+        User currentUser = appBase.getCurrentUser();
+        ImageView profilePic = (ImageView) findViewById(R.id.pullout_profile_pic);
+        profilePic.setImageURI(currentUser.getPhotoUri());
     }
 
     /**
      * Handles click event. The views/buttons must be assigned first to use this method.
      * Add the view/button
-     * @param v
+     * @param v View clicked.
      */
     @Override
     public void onClick(View v) {
@@ -69,10 +76,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.logout_button:
                 Log.v(LOG_TAG, "Log out button pressed");
                 signOut();
+                updateUI();
+                return;
+            case R.id.viewAnimator:
+                Toast.makeText(this, "View restaurant", Toast.LENGTH_SHORT).show();
                 return;
             default:
 
-                return;
+
         }
     }
 
@@ -118,8 +129,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         askForLogin();
     }
 
+    /**
+     * Goto the login state without regard to the current User state
+     */
     private void askForLogin(){
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
+
+    /**
+     * Start login activity if there is no user signed in.
+     */
+    private void updateUI(){
+        if(!appBase.getLoginState()) {
+            askForLogin();
+        }else{
+            updatePullOutMenu();
+        }
+    }
+
+    /**
+     * Updates pull out menu
+     */
+    private void updatePullOutMenu(){
+        TextView username = (TextView) findViewById(R.id.pullout_profile_name);
+        ImageView imgView = (ImageView) findViewById(R.id.restaurant_image);
+
+        User currentUser = appBase.getCurrentUser();
+        username.setText(currentUser.getName());
+
+        imgView.setImageURI(currentUser.getPhotoUri());
+    }
+
 }

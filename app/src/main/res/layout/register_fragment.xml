@@ -1,0 +1,51 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <EditText
+        android:id="@+id/regform_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name_field"
+        />
+    <EditText
+        android:id="@+id/regform_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        />
+    <EditText
+        android:id="@+id/regform_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password_field"
+        android:inputType="textPassword"
+        />
+
+    <EditText
+        android:id="@+id/regform_password_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password_confirm_field"
+        android:inputType="textPassword"
+        />
+    <CheckBox
+        android:id="@+id/regform_confirm_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/licence_msg"
+        />
+
+    <Button
+        android:id="@+id/regform_btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/regform_btn_submit"
+        />
+
+</LinearLayout>

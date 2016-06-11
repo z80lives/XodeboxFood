@@ -3,6 +3,7 @@ package xodebox.food;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.FragmentTransaction;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -15,18 +16,25 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,12 +53,15 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
+ * (This code needs to be refactored into two seperate activities)
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, GoogleApiClient.OnConnectionFailedListener{
     private String LOG_TAG = this.getClass().getName();
     private XodeboxBase appBase = XodeboxBase.getInstance();
+    private enum LocalView {register, logIn}
+    private LocalView currentView;
 
-    /**
+    /**register
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
@@ -59,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private GoogleApiClient mGoogleApiClient;
 
-
+    /* TODO unpack and show register_fragment */
 
 
     /**
@@ -84,6 +95,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentView = LocalView.logIn;
 
         //Prepare google sign in options
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -116,6 +128,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //Sign in by e-mail
         Button mEmailSignInButton = (Button) findViewById(R.id.email_login_button);
+
+
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,6 +146,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
+
+        //Register button test
+        Button regButton = (Button) findViewById(R.id.btn_register);
+        regButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayRegisterScreen();
+
+            }
+        });
+
 
         //Assign class variables
         mLoginFormView = findViewById(R.id.login_form);
@@ -152,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Handles Google Sign in results.
-     * @param results
+     * @param results GoogleSignInResults processed from the async process.
      */
     private void handleGoogleSignInResults(GoogleSignInResult results){
         if(results.isSuccess()){
@@ -163,10 +188,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             User currentUser = new User(googleSignInAccount.getId(),
                                         googleSignInAccount.getDisplayName(),
                                         googleSignInAccount.getEmail());
-            Uri photoUri = googleSignInAccount.getPhotoUrl();
 
-            currentUser.setPhotoUri(photoUri);
-            //User currentUser = new User("1", "littleBoo");
+            //.getPhotoUrl() will return a URL to a JSON file, which contains the photoUri path.
+            Uri photoUri = googleSignInAccount.getPhotoUrl();
+            //Suggestion: We can use start an async task to retrieve the photo and set the photo once the job is done.
+            Log.v(LOG_TAG, photoUri.toString());        //photoUri may be null
+            //if(photoUri== null)
+                //photoUri = R;
+
+            currentUser.setPhotoUri(photoUri);  //Extract the correct Photo Uri from this link // FIXME: 6/9/16
+            
             signIn(currentUser,XodeboxBase.sessionManagerType.GOOGLE_SESSION);
             //Toast.makeText(getApplicationContext(), "Google sign in sucess!", Toast.LENGTH_SHORT).show();
         }else
@@ -174,7 +205,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             appBase.setLoginState(false);
             //TODO Google sign out
             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-            Toast.makeText(getApplicationContext(), "Google sign failed!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Google sign in failed!", Toast.LENGTH_SHORT).show();
             Log.e(LOG_TAG, "Make sure google-services.json is valid.");
         }
     }
@@ -184,7 +215,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * This method will be called when the google connection fails.
      * Inherited from GoogleApiClient.OnConnectionFailedListener class
-     * @param connectionResult
      */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -393,7 +423,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Once the authentication process is complete this method should be called.
      * Prepare the current_user's data before calling this method.
      * @param current_user Contains the personal data that will be shared by the activities
-     * @return
+     * @return True on success.
      */
     private boolean signIn(User current_user, XodeboxBase.sessionManagerType sessionType){
         if (appBase.signIn(current_user, sessionType)) {
@@ -470,6 +500,41 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 
+    }
+
+    public void displayRegisterScreen(){
+        //Fragment transaction using android.support
+        //android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //ft.replace(R.id.login_screen_container, new LoginActivity.RegisterScreenFragment());
+        //ft.commit();
+        if (currentView == LocalView.logIn) {
+            android.app.FragmentManager fm = getFragmentManager();
+            FrameLayout fl = (FrameLayout) findViewById(R.id.login_screen_container);
+            fl.setVisibility(View.VISIBLE);
+
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.login_screen_container, new RegisterScreenFragment());
+            //ft.add(R.id.login_form, new RegisterScreenFragment());
+            ft.commit();
+            mLoginFormView.setVisibility(View.GONE);
+            currentView = LocalView.register;
+        }
+
+    }
+
+    /**
+     *  Register screen fragment
+     *
+     */
+    public static class RegisterScreenFragment extends android.app.Fragment {
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            //return inflater.inflate(R.layout.register_fragment, container);
+            //return super.onCreateView(inflater, container, savedInstanceState);
+            inflater.inflate(R.layout.register_fragment, container);
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
     }
 
 }
