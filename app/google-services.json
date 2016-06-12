@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "550953555080",
+    "firebase_url": "https://xodefood.firebaseio.com",
+    "project_id": "xodefood",
+    "storage_bucket": "xodefood.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550953555080:android:885eef2594099b7e",
+        "android_client_info": {
+          "package_name": "xodebox.food"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550953555080-tcur9i5brtrujl7bt2kl6n5kaagq6r8d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xodebox.food",
+            "certificate_hash": "E5D3AD0B4BE05FB32FFF7AB4A70300557992C107"
+          }
+        },
+        {
+          "client_id": "550953555080-662ike5cjimph4canqqmmj5uug8pc4kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcvbtWBad2T1rj7PKQ4tIGbmIXYslYlDg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550953555080-662ike5cjimph4canqqmmj5uug8pc4kp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,12 @@
 <resources>
-    <string name="app_name">Food</string>
+    <string name="app_name">FoodXodebox</string>
     <string name="action_settings">Settings</string>
+    <string name="drawer_open">drawer opening</string>
+    <string name="drawer_close">drawer closing</string>
+    <string name="facebook_app_id">1120952807967816</string>
+
+
+
+
+
 </resources>
