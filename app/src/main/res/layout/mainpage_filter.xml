@@ -219,7 +219,8 @@
         android:id="@+id/ratingBar"
         android:layout_below="@+id/rating_textView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:clickable="false" />
 
     <Button
         android:layout_width="wrap_content"
