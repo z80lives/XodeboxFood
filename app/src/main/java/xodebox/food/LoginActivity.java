@@ -3,24 +3,39 @@ package xodebox.food;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Application;
 import android.app.FragmentTransaction;
+import android.app.ListActivity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
+import android.renderscript.RenderScript;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+//import android.support.v4.widget.MaterialProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.util.ThreadUtil;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -34,6 +49,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +62,13 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -179,22 +200,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Handles Google Sign in results.
      * @param results GoogleSignInResults processed from the async process.
      */
-    private void handleGoogleSignInResults(GoogleSignInResult results){
-        if(results.isSuccess()){
+    private void handleGoogleSignInResults(GoogleSignInResult results) {
+        if (results.isSuccess()) {
             //TODO Google sign in success!
             //appBase.setLoginState(true);
             GoogleSignInAccount googleSignInAccount = results.getSignInAccount();
             appBase.setGoogleSession(mGoogleApiClient, googleSignInAccount);
             User currentUser = new User(googleSignInAccount.getId(),
-                                        googleSignInAccount.getDisplayName(),
-                                        googleSignInAccount.getEmail());
+                    googleSignInAccount.getDisplayName(),
+                    googleSignInAccount.getEmail());
 
             //.getPhotoUrl() will return a URL to a JSON file, which contains the photoUri path.
             Uri photoUri = googleSignInAccount.getPhotoUrl();
+            try {
+                URL photoURL = new URL(googleSignInAccount.getPhotoUrl().toString());
+                RetrieveProfilePicture retrieveProfilePictureTask = new RetrieveProfilePicture(this);
+                retrieveProfilePictureTask.execute(photoURL);
+            }catch(MalformedURLException ex){
+                Log.e(LOG_TAG, "Malformed URL:"+ ex.getMessage());
+            }
+
+            currentUser.setPhotoUri(photoUri);
+
+
             //Suggestion: We can use start an async task to retrieve the photo and set the photo once the job is done.
             Log.v(LOG_TAG, photoUri.toString());        //photoUri may be null
             //if(photoUri== null)
                 //photoUri = R;
+
 
             currentUser.setPhotoUri(photoUri);  //Extract the correct Photo Uri from this link // FIXME: 6/9/16
             
@@ -209,6 +242,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Log.e(LOG_TAG, "Make sure google-services.json is valid.");
         }
     }
+
+
+
+    /**
+     *  AsyncTask to download the profile picture and save it in current user
+     */
+    public static class RetrieveProfilePicture extends AsyncTask<URL, Void, Drawable>
+    {
+        ProgressDialog progressDialog;
+        private Activity activity;
+
+        public RetrieveProfilePicture(Activity activity) {
+            super();
+            this.activity = activity;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            /*
+            progressDialog = new ProgressDialog(activity.getApplicationContext());
+            progressDialog.setMessage("Fetching your profile..");
+            progressDialog.setCancelable(false);
+            progressDialog.show();*/
+        }
+
+        private String LOG_TAG = this.getClass().toString();
+        User currentUser;
+
+
+        @Override
+        protected Drawable doInBackground(URL... params) {
+            try {
+                URL photoURL = params[0];
+
+                currentUser = XodeboxBase.getInstance().getCurrentUser();
+                //Bitmap profilePic = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                InputStream inputStream = (InputStream) photoURL.getContent();
+                Drawable profilePic = (Drawable) Drawable.createFromStream(inputStream, null);
+                currentUser.setDrawable(profilePic);
+                return profilePic;
+            } catch (Exception ex) {
+                Log.e(LOG_TAG, "Exception: " + ex.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            //progressDialog.cancel();
+            super.onPostExecute(drawable);
+            currentUser.setDrawable(drawable);
+
+        }
+    }
+
 
 
 
@@ -536,6 +625,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return super.onCreateView(inflater, container, savedInstanceState);
         }
     }
+/*
+    public static class DownloadProfilePic extends AsyncTask<Uri, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Uri... params) {
+            return null;
+        }
+    }*/
 
 }
 

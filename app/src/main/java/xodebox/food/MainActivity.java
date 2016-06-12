@@ -2,6 +2,7 @@ package xodebox.food;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -56,10 +57,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             findViewById(rId).setOnClickListener(this);
         }
 
+
+
+        //Set pull up menu data
         User currentUser = appBase.getCurrentUser();
-        ImageView profilePic = (ImageView) findViewById(R.id.pullout_profile_pic);
-        profilePic.setImageURI(currentUser.getPhotoUri());
+        //ImageView profilePic = (ImageView) findViewById(R.id.pullout_profile_pic);
+        //profilePic.setImageURI(currentUser.getPhotoUri());
+        //if (currentUser.getPhoto() != null)
+        //    profilePic.setImageBitmap(currentUser.getPhoto());
+        updateUI();
     }
+
+
 
     /**
      * Handles click event. The views/buttons must be assigned first to use this method.
@@ -99,14 +108,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        /*int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);*/
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                return true;
+            case R.id.action_reset:
+                updateUI();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**This method is used only for debugging purpose. Remember to remove it as soon as
@@ -152,13 +170,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Updates pull out menu
      */
     private void updatePullOutMenu(){
-        TextView username = (TextView) findViewById(R.id.pullout_profile_name);
-        ImageView imgView = (ImageView) findViewById(R.id.restaurant_image);
 
+        //Update user name
         User currentUser = appBase.getCurrentUser();
-        username.setText(currentUser.getName());
+        TextView userName = (TextView) findViewById(R.id.pullout_profile_name);
+        userName.setText(currentUser.getName());
 
-        imgView.setImageURI(currentUser.getPhotoUri());
+        //Update profile picture
+        ImageView profilePic = (ImageView) findViewById(R.id.pullout_profile_pic);
+        Drawable drawablePic = currentUser.getDrawable();
+        if(drawablePic!=null)
+            profilePic.setImageDrawable(drawablePic);
+        else
+            profilePic.setImageResource(R.drawable.com_facebook_profile_picture_blank_portrait);
+
     }
 
 }

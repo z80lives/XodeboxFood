@@ -52,6 +52,6 @@
 
     <!--DEVELOPEMENT:: Placeholder strings -->
     <string name="profile_username">Unknown User</string>
-
+    <string name="placeholder_screen">Placeholder for screen</string>
 </resources>
 
