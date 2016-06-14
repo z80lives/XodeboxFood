@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /* Set button to listen to current class's event handler method. Add the buttons you want to
          * be handled by our local onClick method */
-        int resources[] = {R.id.hButton, R.id.logout_button, R.id.viewAnimator};
+        int resources[] = {R.id.history_button, R.id.roll_dice_button, R.id.hButton,
+                            R.id.logout_button, R.id.viewAnimator};
         for(int rId : resources)
         {
             findViewById(rId).setOnClickListener(this);
@@ -79,6 +80,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId())
         {
+            case R.id.history_button:
+                startActivity(new Intent(this, UserRecordsActivity.class));
+                return;
+            case R.id.roll_dice_button:
+                startActivity(new Intent(this, RollActivity.class));
+                return;
             case R.id.hButton:
                 Log.v(LOG_TAG, "Highlights button pressed!");
                 return;

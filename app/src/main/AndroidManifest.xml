@@ -6,21 +6,19 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-
-        >
-
+        android:theme="@style/AppTheme">
         <activity
-            android:name="xodebox.food.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,21 +27,27 @@
             </intent-filter>
             -->
         </activity>
-
-        <activity android:name="xodebox.food.RestaurantPage" />
         <activity
-            android:name="xodebox.food.SplashActivity"
+            android:name=".UserRecordsActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".RollActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".RestaurantPage" />
+        <activity
+            android:name=".SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="xodebox.food.LoginActivity"
-            android:label="@string/title_activity_login">
-        </activity>
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"/>
+
     </application>
 
 </manifest>

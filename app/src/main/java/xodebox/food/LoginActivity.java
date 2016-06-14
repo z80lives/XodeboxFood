@@ -4,35 +4,23 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.Application;
 import android.app.FragmentTransaction;
-import android.app.ListActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.MediaStore;
-import android.renderscript.RenderScript;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.AppOpsManagerCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 //import android.support.v4.widget.MaterialProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.util.ThreadUtil;
@@ -49,8 +37,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,13 +48,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -79,7 +63,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, GoogleApiClient.OnConnectionFailedListener{
     private String LOG_TAG = this.getClass().getName();
     private XodeboxBase appBase = XodeboxBase.getInstance();
-    private enum LocalView {register, logIn}
+    private enum LocalView {welcome, register, logIn}
     private LocalView currentView;
 
     /**register
@@ -173,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         regButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayRegisterScreen();
+                showRegisterScreen();
 
             }
         });
@@ -591,7 +575,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    public void displayRegisterScreen(){
+    public void showRegisterScreen(){
         //Fragment transaction using android.support
         //android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //ft.replace(R.id.login_screen_container, new LoginActivity.RegisterScreenFragment());
@@ -608,21 +592,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mLoginFormView.setVisibility(View.GONE);
             currentView = LocalView.register;
         }
-
     }
 
     /**
      *  Register screen fragment
      *
      */
-    public static class RegisterScreenFragment extends android.app.Fragment {
+    public static class RegisterScreenFragment extends android.app.Fragment implements  OnClickListener{
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             //return inflater.inflate(R.layout.register_fragment, container);
             //return super.onCreateView(inflater, container, savedInstanceState);
             inflater.inflate(R.layout.register_fragment, container);
+
+            //Use local click handler for these buttons
+            int res_buttons[] = {R.id.regform_btn_submit, R.id.regform_btn_back};
+            for(int res_button: res_buttons)
+            {
+                Button btn = (Button) getActivity().findViewById(res_button);
+                btn.setOnClickListener(this);
+            }
             return super.onCreateView(inflater, container, savedInstanceState);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch(v.getId())
+            {
+                case R.id.regform_btn_submit:
+                    return;
+                case R.id.regform_btn_back:
+
+                    return;
+                default:
+                    //Unhandled click
+            }
         }
     }
 /*

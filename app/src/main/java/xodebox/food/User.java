@@ -6,6 +6,8 @@ import android.net.Uri;
 
 /**
  * Created by shath on 6/5/2016.
+ * Java class for user data model.
+ *
  */
 
 public class User {
