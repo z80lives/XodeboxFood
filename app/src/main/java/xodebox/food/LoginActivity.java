@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.ProgressDialog;
@@ -22,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 //import android.support.v4.widget.MaterialProgressDrawable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.util.ThreadUtil;
 import android.text.TextUtils;
@@ -49,6 +51,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -58,9 +61,10 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
- * (This code needs to be refactored into two seperate activities)
+ * (This code needs to be refactored )
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, GoogleApiClient.OnConnectionFailedListener{
+public class LoginActivity extends FragmentActivity implements LoaderCallbacks<Cursor>, GoogleApiClient.OnConnectionFailedListener,
+        OnClickListener{
     private String LOG_TAG = this.getClass().getName();
     private XodeboxBase appBase = XodeboxBase.getInstance();
     private enum LocalView {welcome, register, logIn}
@@ -96,6 +100,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    private boolean isLoginFormSetup = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,13 +118,102 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
         setContentView(R.layout.activity_login);
+        setupLoginForm();
 
+        //showWelcomeScreen(true);
+        changeScreen(LocalView.welcome);
+/*
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
-
+*/
         /* Assign click event handlers*/
+/*        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                    attemptLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
+*/
+        /*
+        //Sign in by e-mail
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_login_button);
+
+
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptLogin();
+            }
+        });
+
+        // Google sign in
+        SignInButton signInButton = (SignInButton) findViewById(R.id.google_login_button);
+        signInButton.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        //Register button test
+        Button regButton = (Button) findViewById(R.id.btn_register);
+        regButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRegisterScreen(true);
+            }
+        });
+
+     */
+
+        //Assign class variables
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId())
+        {
+            case R.id.welcome_register:
+                changeScreen(LocalView.register);
+                return;
+            case R.id.welcome_signin:
+                changeScreen(LocalView.logIn);
+                return;
+            case R.id.regform_btn_back:
+                changeScreen(LocalView.welcome);
+                return;
+            case R.id.regform_btn_submit:
+                Toast.makeText(this, "Cannot register", Toast.LENGTH_SHORT);
+                return;
+        }
+    }
+
+    /**
+     * Set up the login screen
+     */
+    private void setupLoginForm(){
+        if(isLoginFormSetup) {
+            Log.w(LOG_TAG, "Login form setup should be called once.");
+            return;
+        }
+
+        // Set up the email field
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        populateAutoComplete();
+
+        //Set up the password field
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -157,15 +252,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         regButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showRegisterScreen();
-
+                //showRegisterScreen(true);
+                changeScreen(LocalView.register);
             }
         });
-
-
-        //Assign class variables
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     @Override
@@ -575,30 +665,66 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    public void showRegisterScreen(){
+    public void showRegisterScreen(boolean visibility){
         //Fragment transaction using android.support
         //android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //ft.replace(R.id.login_screen_container, new LoginActivity.RegisterScreenFragment());
         //ft.commit();
-        if (currentView == LocalView.logIn) {
-            android.app.FragmentManager fm = getFragmentManager();
-            FrameLayout fl = (FrameLayout) findViewById(R.id.login_screen_container);
-            fl.setVisibility(View.VISIBLE);
+        android.app.FragmentManager fm = getFragmentManager();
+        FrameLayout fl = (FrameLayout) findViewById(R.id.login_screen_container);
+        FragmentTransaction ft = fm.beginTransaction();
+        //if (visibility) {
+            fl.setVisibility(visibility? View.VISIBLE: View.INVISIBLE);
+            mLoginFormView.setVisibility(visibility? View.GONE: View.VISIBLE);
+            if(visibility)
+                currentView = LocalView.register;
+            else
+                currentView = LocalView.logIn;
 
-            FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.login_screen_container, new RegisterScreenFragment());
             //ft.add(R.id.login_form, new RegisterScreenFragment());
             ft.commit();
-            mLoginFormView.setVisibility(View.GONE);
-            currentView = LocalView.register;
+
+        //}
+    }
+
+    private void changeScreen(LocalView targetScreen)
+    {
+        android.app.FragmentManager fm = getFragmentManager();
+        FrameLayout login_container = (FrameLayout) findViewById(R.id.login_screen_container);
+        View login_form = mLoginFormView;
+        FragmentTransaction ft = fm.beginTransaction();
+
+
+        // This can also be implemented through state tables
+        switch(targetScreen) {
+            case register:
+                currentView = LocalView.register;
+                ft.replace(R.id.login_screen_container, new RegisterScreenFragment());
+                break;
+            case welcome:
+                currentView = LocalView.welcome;
+                ft.replace(R.id.login_screen_container, new WelcomeScreenFragment());
+                break;
+            case logIn:
+                currentView = LocalView.logIn;
+                break;
         }
+        ft.commit();
+
+        //Show login container if current state is not login_screen
+        login_container.setVisibility(currentView!=LocalView.logIn? View.VISIBLE: View.INVISIBLE);
+        //Show login screen if current state is login screen
+        if(currentView == LocalView.logIn)
+            mLoginFormView.setVisibility(View.GONE);
+
     }
 
     /**
      *  Register screen fragment
      *
      */
-    public static class RegisterScreenFragment extends android.app.Fragment implements  OnClickListener{
+    public static class RegisterScreenFragment extends android.app.Fragment{
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -611,11 +737,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             for(int res_button: res_buttons)
             {
                 Button btn = (Button) getActivity().findViewById(res_button);
-                btn.setOnClickListener(this);
+                btn.setOnClickListener((LoginActivity) getActivity());
             }
             return super.onCreateView(inflater, container, savedInstanceState);
         }
 
+        /*
         @Override
         public void onClick(View v) {
             switch(v.getId())
@@ -628,7 +755,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 default:
                     //Unhandled click
             }
+        }*/
+    }
+
+    public static class WelcomeScreenFragment extends Fragment
+    {
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            inflater.inflate(R.layout.welcome_fragment, container);
+            int idButtons[] = {R.id.welcome_register, R.id.welcome_signin };
+            for(int id: idButtons)
+            {
+                Button btn = (Button) getActivity().findViewById(id);
+                btn.setOnClickListener((LoginActivity) getActivity());
+            }
+            return super.onCreateView(inflater, container, savedInstanceState);
         }
+/**
+        @Override
+        public void onClick(View v) {
+            switch (v.getId())
+            {
+                case R.id.welcome_register:
+                    getActivity().changeScreen();
+                    return;
+                case R.id.welcome_signin:
+
+                    return;
+                default:
+            }
+        }**/
     }
 /*
     public static class DownloadProfilePic extends AsyncTask<Uri, Void, Void>

@@ -45,7 +45,7 @@
     <string name="licence_msg">I accept the terms and conditions.</string>
     <string name="password_field">Password</string>
     <string name="password_confirm_field">Confirm Password</string>
-    <string name="regform_btn_submit">Sign Up</string>
+    <string name="regform_btn_submit">Register</string>
 
     <!-- User preference Strings -->
     <string name="user_login_state">user_is_logged_in</string>

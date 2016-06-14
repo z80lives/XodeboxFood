@@ -11,10 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login or Register"
-        />
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.4" />
     <ViewFlipper
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0.4">
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -22,7 +26,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                android:src="@drawable/food"
                 />
         </LinearLayout>
 
@@ -33,10 +37,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                android:src="@drawable/food2"
                 />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -44,21 +47,23 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/com_facebook_profile_picture_blank_square"
-                />
+                android:src="@drawable/food3"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
     </ViewFlipper>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"><Button
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.4"><Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/com_facebook_button"
         android:text="Login using facebook"
         android:drawableLeft="@drawable/com_facebook_button_icon"
-        />
+        android:layout_gravity="left|center_vertical" />
     <Button
 
         style="@style/Base.Widget.AppCompat.Button.Borderless"
@@ -66,32 +71,38 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/common_plus_signin_btn_icon_dark_normal"
         android:text="Login using Google"
-        />
+        android:layout_gravity="center_vertical" />
     </LinearLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:weightSum="2"
-        android:layout_weight="0.4"
+        android:layout_weight="0.25"
         android:gravity="bottom"
-        >
+        android:layout_gravity="bottom">
 
 
         <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/regform_btn_submit"
-        />
+            android:text="@string/regform_btn_submit"
+            android:layout_marginLeft="0dp"
+            android:id="@+id/welcome_register"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
 
     <Button
+        android:id="@+id/welcome_signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/action_sign_in_short"
 
-        />
 
-    </LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 
 </LinearLayout>
