@@ -24,8 +24,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private boolean userIsLoggedIn = false;
-    private String LOG_TAG = MainActivity.class.getName();
-    private XodeboxBase appBase = XodeboxBase.getInstance();
+    final private String LOG_TAG = MainActivity.class.getName();
+    final private XodeboxBase appBase = XodeboxBase.getInstance();
 
 
     @Override
