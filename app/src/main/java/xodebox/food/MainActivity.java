@@ -1,16 +1,23 @@
 package xodebox.food;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,16 +56,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
+        //Set up home screen fragment
+
+        FrameLayout homeFrameLayout = (FrameLayout) findViewById(R.id.home_container);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.home_container, new HomeScreenFragment(), "home_fragment");
+        fragmentTransaction.commit();
+
         /* Set button to listen to current class's event handler method. Add the buttons you want to
          * be handled by our local onClick method */
-        int resources[] = {R.id.history_button, R.id.roll_dice_button, R.id.hButton,
-                            R.id.logout_button, R.id.viewAnimator};
+        int resources[] = {R.id.history_button, R.id.roll_dice_button, R.id.highlights_button, R.id.logout_button};
         for(int rId : resources)
         {
-            findViewById(rId).setOnClickListener(this);
+            try {
+                View v = findViewById(rId);
+                if (v != null) v.setOnClickListener(this);
+            }catch(Exception ex)
+            {
+                Log.e(LOG_TAG, "(Resource not found), " + ex.getMessage() );
+            }
         }
-
-
 
         //Set pull up menu data
         User currentUser = appBase.getCurrentUser();
@@ -86,10 +107,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.roll_dice_button:
                 startActivity(new Intent(this, RollActivity.class));
                 return;
-            case R.id.hButton:
+            case R.id.highlights_button:
                 Log.v(LOG_TAG, "Highlights button pressed!");
                 return;
             case R.id.logout_button:
+
+
                 Log.v(LOG_TAG, "Log out button pressed");
                 signOut();
                 updateUI();
@@ -109,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -193,4 +218,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public static class HomeScreenFragment extends Fragment {
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            inflater.inflate(R.layout.home_fragment, container);
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
+    }
 }

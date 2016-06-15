@@ -22,19 +22,23 @@
 
 
     <FrameLayout
-        android:id="@+id/login_screen_container"
+        android:id="@+id/register_screen_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        >
+        />
 
-    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/welcome_screen_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
 
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         >
 
         <LinearLayout

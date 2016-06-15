@@ -22,10 +22,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-//import android.support.v4.widget.MaterialProgressDrawable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-//import android.support.v7.util.ThreadUtil;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -41,6 +39,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -51,13 +50,15 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+
+//import android.support.v4.widget.MaterialProgressDrawable;
+//import android.support.v7.util.ThreadUtil;
 
 /**
  * A login screen that offers login via email/password.
@@ -118,6 +119,11 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
 
 
         setContentView(R.layout.activity_login);
+        //Assign class variables
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
+
+
         setupLoginForm();
 
         //showWelcomeScreen(true);
@@ -174,9 +180,6 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
 
      */
 
-        //Assign class variables
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
 
 
     }
@@ -195,7 +198,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
                 changeScreen(LocalView.welcome);
                 return;
             case R.id.regform_btn_submit:
-                Toast.makeText(this, "Cannot register", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Cannot register", Toast.LENGTH_SHORT).show();
                 return;
         }
     }
@@ -204,6 +207,10 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
      * Set up the login screen
      */
     private void setupLoginForm(){
+        if(currentView != LocalView.logIn)
+        {
+            Log.w(LOG_TAG, "currentView must be login, before calling this function.");
+        }
         if(isLoginFormSetup) {
             Log.w(LOG_TAG, "Login form setup should be called once.");
             return;
@@ -290,8 +297,10 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
                 URL photoURL = new URL(googleSignInAccount.getPhotoUrl().toString());
                 RetrieveProfilePicture retrieveProfilePictureTask = new RetrieveProfilePicture(this);
                 retrieveProfilePictureTask.execute(photoURL);
-            }catch(MalformedURLException ex){
-                Log.e(LOG_TAG, "Malformed URL:"+ ex.getMessage());
+            }catch(MalformedURLException ex) {
+                Log.e(LOG_TAG, "Malformed URL:" + ex.getMessage());
+            }catch (NullPointerException ex){
+                Log.e(LOG_TAG, "Null pointer exception: " + ex.getMessage());
             }
 
             currentUser.setPhotoUri(photoUri);
@@ -664,7 +673,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
 
 
     }
-
+/*
     public void showRegisterScreen(boolean visibility){
         //Fragment transaction using android.support
         //android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -686,45 +695,76 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
             ft.commit();
 
         //}
-    }
+    }*/
 
+    /**
+     * Changes View.
+     * TODO Refactor: Replace the fragments, with a single container instead of using the visibility trick.
+     * @param targetScreen
+     */
     private void changeScreen(LocalView targetScreen)
     {
-        android.app.FragmentManager fm = getFragmentManager();
-        FrameLayout login_container = (FrameLayout) findViewById(R.id.login_screen_container);
+        //android.app.FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
+        FrameLayout register_container = (FrameLayout) findViewById(R.id.register_screen_container);
+        FrameLayout welcome_container = (FrameLayout) findViewById(R.id.welcome_screen_container);
         View login_form = mLoginFormView;
-        FragmentTransaction ft = fm.beginTransaction();
+//        FragmentTransaction ft = fm.beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
 
+        android.support.v4.app.Fragment registerFragment = fm.findFragmentByTag("register_fragment");
 
         // This can also be implemented through state tables
         switch(targetScreen) {
             case register:
                 currentView = LocalView.register;
-                ft.replace(R.id.login_screen_container, new RegisterScreenFragment());
+                welcome_container.setVisibility(View.GONE);
+                login_form.setVisibility(View.GONE);
+                register_container.setVisibility(View.VISIBLE);
+                if(registerFragment == null) {
+                    registerFragment = new RegisterScreenFragment();
+                    ft.replace(R.id.register_screen_container, registerFragment, "register_fragment");
+                    ft.addToBackStack("register_fragment");
+                }
+                Log.v(LOG_TAG, "Displaying Register screen");
                 break;
             case welcome:
-                currentView = LocalView.welcome;
-                ft.replace(R.id.login_screen_container, new WelcomeScreenFragment());
+                register_container.setVisibility(View.GONE);
+                login_form.setVisibility(View.GONE);
+                welcome_container.setVisibility(View.VISIBLE);
+                Log.v(LOG_TAG, "Displaying Welcome screen");
+                if(currentView == LocalView.register)
+                {
+ //                   fm.popBackStack();
+                }else {
+                    currentView = LocalView.welcome;
+                    ft.replace(R.id.welcome_screen_container, new WelcomeScreenFragment(), "welcome_fragment");
+                    ft.addToBackStack(null);
+                }
+                //ft.replace(R.id.login_screen_container, welcomeFragment, welcomeFragment.getTag());
                 break;
             case logIn:
+                register_container.setVisibility(View.GONE);
+                welcome_container.setVisibility(View.GONE);
+                login_form.setVisibility(View.VISIBLE);
+                Log.v(LOG_TAG, "Displaying Login screen");
                 currentView = LocalView.logIn;
                 break;
         }
         ft.commit();
 
         //Show login container if current state is not login_screen
-        login_container.setVisibility(currentView!=LocalView.logIn? View.VISIBLE: View.INVISIBLE);
+       // login_container.setVisibility(currentView!=LocalView.logIn? View.VISIBLE: View.GONE);
         //Show login screen if current state is login screen
-        if(currentView == LocalView.logIn)
-            mLoginFormView.setVisibility(View.GONE);
-
+        //login_form.setVisibility(currentView == LocalView.logIn? View.VISIBLE: View.GONE);
     }
+
 
     /**
      *  Register screen fragment
      *
      */
-    public static class RegisterScreenFragment extends android.app.Fragment{
+    public static class RegisterScreenFragment extends android.support.v4.app.Fragment{
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -758,7 +798,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
         }*/
     }
 
-    public static class WelcomeScreenFragment extends Fragment
+    public static class WelcomeScreenFragment extends android.support.v4.app.Fragment
     {
         @Nullable
         @Override
@@ -770,6 +810,16 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
                 Button btn = (Button) getActivity().findViewById(id);
                 btn.setOnClickListener((LoginActivity) getActivity());
             }
+
+            //Handle view flipper for test
+            final ViewFlipper viewFlipper = (ViewFlipper) getActivity().findViewById(R.id.restaurant_flipper);
+            viewFlipper.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewFlipper.showNext();
+                }
+            });
+
             return super.onCreateView(inflater, container, savedInstanceState);
         }
 /**
@@ -787,6 +837,12 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
             }
         }**/
     }
+
+/*    public class WelcomeGalleryAdapter extends FragmentPagerAdapter
+    {
+
+    }*/
+
 /*
     public static class DownloadProfilePic extends AsyncTask<Uri, Void, Void>
     {

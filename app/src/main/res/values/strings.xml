@@ -40,6 +40,9 @@
         completions."
     </string>
 
+    <string name="btn_facebook_login">Facebook Sign In</string>
+    <string name="btn_google_login">Google Sign In</string>
+
     <!--Register Screen -->
     <string name="name_field">Name/ID</string>
     <string name="licence_msg">I accept the terms and conditions.</string>
