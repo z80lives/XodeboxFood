@@ -29,7 +29,7 @@ dependencies {
     repositories {
         mavenCentral()
     }
-    compile 'com.facebook.android:facebook-android-sdk:4.+'
+    compile 'com.facebook.android:facebook-android-sdk:4.12.1'
     compile 'com.sothree.slidinguppanel:library:3.3.0'
    // compile 'com.google.android.gms:play-services-auth:9.0.2'
     compile 'com.google.android.gms:play-services-auth:9.0.0'

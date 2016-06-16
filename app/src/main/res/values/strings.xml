@@ -56,5 +56,9 @@
     <!--DEVELOPEMENT:: Placeholder strings -->
     <string name="profile_username">Unknown User</string>
     <string name="placeholder_screen">Placeholder for screen</string>
+    <string-array name="sort">
+        <item>Sort by Rating</item>
+        <item>Sort Alphabetically</item>
+    </string-array>
 </resources>
 

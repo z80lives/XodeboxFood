@@ -28,6 +28,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -389,7 +390,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
      * Inherited from GoogleApiClient.OnConnectionFailedListener class
      */
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e(LOG_TAG, "Google API Client: Connection failed.");
     }
 
@@ -802,7 +803,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
     {
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
             inflater.inflate(R.layout.welcome_fragment, container);
             int idButtons[] = {R.id.welcome_register, R.id.welcome_signin };
             for(int id: idButtons)
@@ -813,12 +814,44 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
 
             //Handle view flipper for test
             final ViewFlipper viewFlipper = (ViewFlipper) getActivity().findViewById(R.id.restaurant_flipper);
+
+            viewFlipper.setOnTouchListener(new View.OnTouchListener() {
+                private float lastX;
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch(event.getAction()){
+                        case MotionEvent.ACTION_UP:
+                            lastX = event.getX();
+                            return true;
+                        case MotionEvent.ACTION_DOWN:
+                            float current_x = event.getX();
+
+                            //Left to right screen swap
+                            if(lastX < current_x)
+                            {
+                                //set the animation here
+                                viewFlipper.showNext();
+
+                            }else
+                            //Right to left screen swap
+                            {
+                                //set the animation here
+                                viewFlipper.showPrevious();
+                            }
+
+                        default:
+                            return false;
+                    }
+                }
+            });
+
+            /**
             viewFlipper.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     viewFlipper.showNext();
                 }
-            });
+            });**/
 
             return super.onCreateView(inflater, container, savedInstanceState);
         }

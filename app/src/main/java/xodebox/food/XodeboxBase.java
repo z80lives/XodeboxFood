@@ -13,9 +13,11 @@ import com.google.android.gms.common.api.Status;
 /**
  * Created by shath on 6/5/2016.
  * Base singleton.
- * Use this class to share objects globally
+ * Use this class to share objects globally.
+ * We should probably avoid using this class, and use
+ * other communication meathods provided by Android
  */
-public class XodeboxBase extends Application {
+public class XodeboxBase { //extends Application {
     private String LOG_TAG = XodeboxBase.class.toString();
 
     enum sessionManagerType{EMAIL_SESSION, GOOGLE_SESSION, FACEBOOK_SESSION}
