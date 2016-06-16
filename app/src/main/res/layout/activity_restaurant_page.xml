@@ -9,10 +9,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="xodebox.food.RestaurantPage">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="I am supposed to display the restaurant page"
-        />
-
 </RelativeLayout>

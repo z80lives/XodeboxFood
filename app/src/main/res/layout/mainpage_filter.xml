@@ -14,7 +14,8 @@
         android:layout_marginLeft="0dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
-        android:layout_gravity="left|top" />
+        android:layout_gravity="left|top"
+        android:layout_margin="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -187,7 +188,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Location"
         android:id="@+id/location_textView"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="16dp"
         android:layout_below="@+id/credit_checkBox"
         android:layout_alignLeft="@+id/payment_checkBox"
         android:layout_alignStart="@+id/payment_checkBox" />
@@ -199,7 +200,7 @@
         android:layout_below="@+id/location_textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentRight="false"
         android:layout_alignParentEnd="true" />
 
     <TextView
@@ -208,10 +209,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Rating"
         android:id="@+id/rating_textView"
+        android:layout_marginTop="16dp"
         android:layout_below="@+id/location_seekBar"
         android:layout_alignLeft="@+id/location_textView"
-        android:layout_alignStart="@+id/location_textView"
-        android:layout_marginTop="25dp" />
+        android:layout_alignStart="@+id/location_textView" />
 
     <RatingBar
         android:layout_width="wrap_content"
@@ -229,7 +230,9 @@
         android:id="@+id/confirm_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -238,6 +241,8 @@
         android:id="@+id/back_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp" />
 
 </RelativeLayout>

@@ -5,63 +5,63 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <RelativeLayout
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0"
-        android:layout_marginTop="25dp">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView">
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/imageView3"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:src="@android:color/holo_green_light" />
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Name of the Restaurant and description of the restaurant bla bla bla ..."
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="210dp"
-            android:layout_marginEnd="210dp"
-            android:layout_marginBottom="124dp" />
+                <ImageView
+                    android:layout_width="256dp"
+                    android:layout_height="256dp"
+                    android:id="@+id/imageView3"
+                    android:src="@android:color/holo_green_dark"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="48dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Share"
-            android:id="@+id/button"
-            android:layout_alignTop="@+id/textView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="60dp"
-            android:layout_marginEnd="60dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Restauarant name and short description about what type of services and food is offered"
+                    android:id="@+id/textView"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/imageView3"
+                    android:layout_marginLeft="16dp"
+                    android:maxWidth="224dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tag"
-            android:id="@+id/button2"
-            android:layout_below="@+id/button"
-            android:layout_alignLeft="@+id/button"
-            android:layout_alignStart="@+id/button" />
-    </RelativeLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Share"
+                    android:id="@+id/button"
+                    android:layout_below="@+id/imageView3"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="16dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tag"
+                    android:id="@+id/button2"
+                    android:layout_below="@+id/button"
+                    android:layout_alignLeft="@+id/button"
+                    android:layout_alignStart="@+id/button" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
 </LinearLayout>
