@@ -5,8 +5,15 @@
     <string name="drawer_close">drawer closing</string>
     <string name="facebook_app_id">1120952807967816</string>
 
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_short">Signin</string>
+    <string name="action_sign_in">Sign in to continue</string>
 
-
-
-
+    <string name="permission_rationale">rationale</string>
+    <string name="error_invalid_password">Invalid Password!</string>
+    <string name="error_field_required">Field cannot be empty!</string>
+    <string name="error_incorrect_password">Incorrect Password!</string>
+    <string name="error_invalid_email">Invalid e-mail</string>
+    <string name="user_login_state">Login State?</string>
 </resources>

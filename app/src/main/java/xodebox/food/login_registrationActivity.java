@@ -1,22 +1,14 @@
 package xodebox.food;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,19 +24,17 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class login_registrationActivity extends AppCompatActivity {
+
+    private String LOG_TAG = login_registrationActivity.class.getName();
 
     //firebase references for the app cloud database
     Firebase FirebaseRef;
@@ -66,6 +56,7 @@ public class login_registrationActivity extends AppCompatActivity {
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile,user_birthday,email"));
 
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -85,6 +76,7 @@ public class login_registrationActivity extends AppCompatActivity {
 
                             }
                         });
+
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,link");
                 request.setParameters(parameters);
@@ -109,7 +101,7 @@ public class login_registrationActivity extends AppCompatActivity {
             }
         });
 
-
+        Log.v(LOG_TAG, "Activity created.");
     }
 
 
