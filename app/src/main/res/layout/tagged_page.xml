@@ -99,7 +99,7 @@
                     android:scaleType="fitCenter"
 
                     android:background="@drawable/title_shape"
-                    android:src="@drawable/deleteImage"
+                    android:src="@drawable/delete_image"
                     android:contentDescription="" />
 
             </TableRow>
@@ -144,7 +144,7 @@
                     android:layout_height="100dp"
                     android:scaleType="fitCenter"
                     android:background="@drawable/cell_shape"
-                    android:src="@drawable/cancelImage"
+                    android:src="@drawable/cancel_image"
                     android:layout_column="4"
                     android:contentDescription="" />
 
@@ -190,7 +190,7 @@
                     android:background="@drawable/cell_shape"
 
                     android:scaleType="fitCenter"
-                    android:src="@drawable/cancelImage"
+                    android:src="@drawable/cancel_image"
                     android:layout_column="4"
                     android:contentDescription="" />
 
@@ -250,7 +250,7 @@
 
                     android:scaleType="fitCenter"
 
-                    android:src="@drawable/cancelImage"
+                    android:src="@drawable/cancel_image"
                     android:layout_column="4"
                     android:contentDescription="" />
             </TableRow>

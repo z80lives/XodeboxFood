@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /* Set button to listen to current class's event handler method. Add the buttons you want to
          * be handled by our local onClick method */
-        int resources[] = {R.id.history_button, R.id.roll_dice_button, R.id.highlights_button, R.id.logout_button};
+        int resources[] = {R.id.history_button, R.id.roll_dice_button, R.id.highlights_button, R.id.logout_button, R.id.user_profile_button};
         for(int rId : resources)
         {
             try {
@@ -107,6 +107,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId())
         {
+            case R.id.user_profile_button:
+                Intent intent = new Intent(this, UserProfileActivity.class);
+                startActivity(intent);
+                return;
             case R.id.history_button:
                 startActivity(new Intent(this, UserRecordsActivity.class));
                 return;
@@ -117,8 +121,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.v(LOG_TAG, "Highlights button pressed!");
                 return;
             case R.id.logout_button:
-
-
                 Log.v(LOG_TAG, "Log out button pressed");
                 signOut();
                 updateUI();
@@ -200,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(!appBase.getLoginState()) {
             askForLogin();
         }else{
-            updatePullOutMenu();
+            //updatePullOutMenu();
         }
     }
 

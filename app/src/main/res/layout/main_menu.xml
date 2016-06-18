@@ -7,29 +7,30 @@
     android:paddingLeft="16dp"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="16dp"
-    tools:context="com.example.yeo.foodapp.MainMenu"
     android:orientation="horizontal">
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Logout"
-        android:id="@+id/button4"
+        android:id="@+id/logout_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <TableLayout
         android:layout_marginTop="48dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="horizontal"
 
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button4">
+        android:layout_above="@+id/logout_button">
+
         <ImageButton
 
-            android:id="@+id/searchImageButton"
+            android:id="@+id/user_profile_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
@@ -47,7 +48,7 @@
 
             <ImageButton
 
-                android:id="@+id/searchImageButton2"
+                android:id="@+id/roll_dice_button"
                 android:layout_width="190dp"
                 android:layout_height="162dp"
                 android:scaleType="fitCenter"
@@ -58,7 +59,7 @@
                 android:layout_weight=".5" />
 
             <ImageButton
-                android:id="@+id/searchImageButton3"
+                android:id="@+id/submit_restaurant_button"
                 android:layout_width="189dp"
                 android:layout_height="162dp"
                 android:scaleType="fitCenter"
@@ -75,7 +76,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/searchImageButton4"
+                android:id="@+id/history_button"
                 android:layout_width="126dp"
                 android:layout_height="162dp"
                 android:scaleType="fitCenter"
@@ -87,7 +88,7 @@
 
             <ImageButton
 
-                android:id="@+id/searchImageButton5"
+                android:id="@+id/tagged_button"
                 android:layout_width="126dp"
                 android:layout_height="164dp"
                 android:scaleType="fitCenter"

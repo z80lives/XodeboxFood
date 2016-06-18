@@ -148,6 +148,6 @@
 
     </LinearLayout-->
 
-    <include layout="@layout/pullout_menu" />
+    <include layout="@layout/main_menu" />
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
