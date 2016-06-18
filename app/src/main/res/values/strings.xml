@@ -4,9 +4,6 @@
     <string name="restaurant_name">Restaurant Name Here</string>
     <string name="restaurant_details">Details Here</string>
 
-    <string name="main_restaurant_flip_description">Restaurant Image</string>
-    <string name="main_restaurant_flip">Restaurant</string>
-
     <string name="hButton_label">H</string>
     <string name="pullout_menu_label">Pull out Menu</string>
 
@@ -14,15 +11,6 @@
     <string name="sliding_menu_id">Menu</string>
     <string name="sliding_layout_id">sliding_layout</string>
     <string name="title_activity_login">Sign in</string>
-
-    <!--Pull out menu -->
-    <string name="profilepic_description">Profile Picture</string>
-    <string name="btn_history">History</string>
-    <string name="btn_roll">Roll the dice</string>
-    <string name="btn_tagged">Tagged</string>
-    <string name="btn_submit_restaurant">Submit Restaurant</string>
-    <string name="btn_favourite">Favourite</string>
-    <string name="btn_logout">Logout</string>
 
     <!--Layout information -->
     <string name="pullout_menu">pull_out_menu</string>
@@ -40,28 +28,7 @@
         completions."
     </string>
 
-    <string name="btn_facebook_login">Facebook Sign In</string>
-    <string name="btn_google_login">Google Sign In</string>
-
-    <!--Register Screen -->
-    <string name="name_field">Name/ID</string>
-    <string name="licence_msg">I accept the terms and conditions.</string>
-    <string name="password_field">Password</string>
-    <string name="password_confirm_field">Confirm Password</string>
-    <string name="regform_btn_submit">Register</string>
-
     <!-- User preference Strings -->
     <string name="user_login_state">user_is_logged_in</string>
-
-    <!--DEVELOPEMENT:: Placeholder strings -->
-    <string name="profile_username">Unknown User</string>
-    <string name="placeholder_screen">Placeholder for screen</string>
-    <string-array name="sort">
-        <item>Sort by Rating</item>
-        <item>Sort Alphabetically</item>
-    </string-array>
-
-    <!--Default Image fallback description-->
-    <string name="_content_desc_restaurant">Restaurant Image</string>
 </resources>
 

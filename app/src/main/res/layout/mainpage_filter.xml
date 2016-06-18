@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Filter"
+        android:id="@+id/filter_title"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_gravity="left|top"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Types of Restaurant"
+        android:id="@+id/typeOfRes_title"
+        android:layout_gravity="left|top"
+        android:layout_below="@+id/filter_title"
+        android:layout_alignLeft="@+id/budget_textView"
+        android:layout_alignStart="@+id/budget_textView" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mamak"
+        android:id="@+id/mamak_checkBox"
+        android:layout_row="2"
+        android:layout_column="0"
+        android:layout_below="@+id/typeOfRes_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chinese"
+        android:id="@+id/chinese_checkBox"
+        android:layout_row="2"
+        android:layout_column="1"
+        android:layout_gravity="top"
+        android:layout_below="@+id/typeOfRes_title"
+        android:layout_toRightOf="@+id/mamak_checkBox"
+        android:layout_toEndOf="@+id/mamak_checkBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Indian"
+        android:id="@+id/indian_checkBox"
+        android:layout_row="2"
+        android:layout_column="2"
+        android:layout_below="@+id/typeOfRes_title"
+        android:layout_toRightOf="@+id/chinese_checkBox"
+        android:layout_toEndOf="@+id/chinese_checkBox" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Budget"
+        android:id="@+id/budget_textView"
+        android:layout_below="@+id/mamak_checkBox"
+        android:layout_toLeftOf="@+id/chinese_checkBox"
+        android:layout_toStartOf="@+id/chinese_checkBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expensive"
+        android:id="@+id/expensive_checkBox"
+        android:layout_below="@+id/budget_textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Average"
+        android:id="@+id/average_checkBox"
+        android:layout_alignTop="@+id/expensive_checkBox"
+        android:layout_toRightOf="@+id/expensive_checkBox"
+        android:layout_toEndOf="@+id/expensive_checkBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cheap"
+        android:id="@+id/cheap_checkBox"
+        android:layout_below="@+id/budget_textView"
+        android:layout_toRightOf="@+id/average_checkBox"
+        android:layout_toEndOf="@+id/average_checkBox" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Food Choices"
+        android:id="@+id/foodchoices_textView"
+        android:layout_below="@+id/expensive_checkBox"
+        android:layout_alignLeft="@+id/budget_textView"
+        android:layout_alignStart="@+id/budget_textView" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Halal"
+        android:id="@+id/halal_checkBox"
+        android:layout_below="@+id/foodchoices_textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Acoholic"
+        android:id="@+id/alcoholic_checkBox"
+        android:layout_below="@+id/halal_checkBox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Non-alcoholic"
+        android:id="@+id/nonAlcoholic_checkBox"
+        android:layout_alignBottom="@+id/alcoholic_checkBox"
+        android:layout_toRightOf="@+id/expensive_checkBox"
+        android:layout_toEndOf="@+id/expensive_checkBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Non-halal"
+        android:id="@+id/nonHalal_checkBox"
+        android:layout_alignTop="@+id/halal_checkBox"
+        android:layout_alignLeft="@+id/nonAlcoholic_checkBox"
+        android:layout_alignStart="@+id/nonAlcoholic_checkBox" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Payment Type"
+        android:layout_below="@+id/alcoholic_checkBox"
+        android:layout_alignLeft="@+id/foodchoices_textView"
+        android:layout_alignStart="@+id/foodchoices_textView"
+        android:id="@+id/payment_checkBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Credit Card"
+        android:id="@+id/credit_checkBox"
+        android:layout_below="@+id/payment_checkBox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cash"
+        android:id="@+id/cash_checkBox"
+        android:layout_below="@+id/payment_checkBox"
+        android:layout_toRightOf="@+id/credit_checkBox"
+        android:layout_toEndOf="@+id/credit_checkBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Online"
+        android:id="@+id/online_checkBox"
+        android:layout_alignTop="@+id/cash_checkBox"
+        android:layout_toRightOf="@+id/cash_checkBox"
+        android:layout_toEndOf="@+id/cash_checkBox" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Location"
+        android:id="@+id/location_textView"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/credit_checkBox"
+        android:layout_alignLeft="@+id/payment_checkBox"
+        android:layout_alignStart="@+id/payment_checkBox" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/location_seekBar"
+        android:layout_below="@+id/location_textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rating"
+        android:id="@+id/rating_textView"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/location_seekBar"
+        android:layout_alignLeft="@+id/location_textView"
+        android:layout_alignStart="@+id/location_textView" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_below="@+id/rating_textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:clickable="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:id="@+id/confirm_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/back_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp" />
+
+</RelativeLayout>
