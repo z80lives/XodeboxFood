@@ -4,8 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.ProgressDialog;
 import android.content.CursorLoader;
@@ -102,7 +100,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
     private View mProgressView;
     private View mLoginFormView;
 
-    private boolean isLoginFormSetup = false;
+    private boolean  isLoginFormSetup = false;
 
 
     @Override
@@ -200,6 +198,11 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
                 return;
             case R.id.regform_btn_submit:
                 Toast.makeText(this, "Cannot register", Toast.LENGTH_SHORT).show();
+                return;
+            case R.id.google_login_button:
+                //Google sign in intent
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
                 return;
         }
     }
@@ -811,6 +814,8 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
                 Button btn = (Button) getActivity().findViewById(id);
                 btn.setOnClickListener((LoginActivity) getActivity());
             }
+
+            getActivity().findViewById(R.id.google_login_button).setOnClickListener( (LoginActivity) getActivity());
 
             //Handle view flipper for test
             final ViewFlipper viewFlipper = (ViewFlipper) getActivity().findViewById(R.id.restaurant_flipper);

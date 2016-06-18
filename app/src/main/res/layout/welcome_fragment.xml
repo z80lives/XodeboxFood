@@ -61,7 +61,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.4"><Button
+        android:layout_weight="0.4">
+
+        <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/com_facebook_button"
@@ -72,7 +74,7 @@
         android:id="@+id/facebook_login_button"
         />
 
-    <Button
+    <!--Button
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,7 +83,15 @@
         android:layout_gravity="center_vertical|right"
         android:layout_weight="0.5"
         android:id="@+id/google_login_button"
-        />
+        /-->
+        <!-- Google sign in -->
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_weight="0.5"
+            />
 
     </LinearLayout>
 

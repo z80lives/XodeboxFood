@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private boolean userIsLoggedIn = false;
     final private String LOG_TAG = MainActivity.class.getName();
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Go to login screen first
         /* TODO: The following method must be replaced. This implemented is here just for the prototype.
         *  Get the user id, and information from wherever it is stored.*/
+
         /*
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         userIsLoggedIn = prefs.getBoolean(getString(R.string.user_login_state), false);
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if(actionBar!=null) actionBar.hide();
 
         //Set up home screen fragment
 

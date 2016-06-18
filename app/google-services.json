@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "219745343713",
+    "project_id": "xodebox-zhilli"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219745343713:android:885eef2594099b7e",
+        "android_client_info": {
+          "package_name": "xodebox.food"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219745343713-639h40ed9ph0uufm8vq889a0ba2ibp98.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xodebox.food",
+            "certificate_hash": "E09CDD49EE2475183DF3DB7FA151972E0F5AA0C5"
+          }
+        },
+        {
+          "client_id": "219745343713-u2bksuk8funup8aubkpbrdkgh7e5hs1c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-Rm5Nj7PM31kb_mDt3TFuEfVQzu_4UOw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,6 +8,7 @@
         android:layout_height="250dp"
         android:src="@drawable/rest2"
         android:id="@+id/restaurant_image"
+        android:contentDescription="@string/_content_desc_restaurant"
         />
 
     <RatingBar

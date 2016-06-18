@@ -60,5 +60,8 @@
         <item>Sort by Rating</item>
         <item>Sort Alphabetically</item>
     </string-array>
+
+    <!--Default Image fallback description-->
+    <string name="_content_desc_restaurant">Restaurant Image</string>
 </resources>
 
