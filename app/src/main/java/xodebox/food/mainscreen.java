@@ -15,11 +15,8 @@ import java.util.ArrayList;
 
 /**
  * Created by User on 16/5/2016.
- *
+ * Author: (Yeo)
  */
-
-
-
 public class mainscreen extends AppCompatActivity {
 
 

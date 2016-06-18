@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
-
+        <activity android:name=".mainscreen" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -29,9 +29,28 @@
             </intent-filter>
             -->
         </activity>
+
         <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
             android:name=".UserRecordsActivity"
             android:parentActivityName=".MainActivity" />
+
+        <service android:name=".MyFirebaseMessagingService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".MyFirebaseInstanceIDService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
         <activity android:name=".RollActivity"
             android:parentActivityName=".MainActivity" />

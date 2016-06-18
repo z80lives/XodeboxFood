@@ -26,7 +26,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -183,6 +182,10 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
 
     }
 
+    /**
+     * Click handler for LoginActivity Class
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch(v.getId())
@@ -819,7 +822,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
 
             //Handle view flipper for test
             final ViewFlipper viewFlipper = (ViewFlipper) getActivity().findViewById(R.id.restaurant_flipper);
-
+            /*
             viewFlipper.setOnTouchListener(new View.OnTouchListener() {
                 private float lastX;
                 @Override
@@ -848,15 +851,15 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<C
                             return false;
                     }
                 }
-            });
+            });*/
 
-            /**
+
             viewFlipper.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     viewFlipper.showNext();
                 }
-            });**/
+            });
 
             return super.onCreateView(inflater, container, savedInstanceState);
         }
