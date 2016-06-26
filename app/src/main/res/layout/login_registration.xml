@@ -7,7 +7,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textPersonName|textEmailAddress"
         android:text="username"
         android:ems="10"
         android:id="@+id/user_txt"
@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pass_txt"
-        android:text="password" />
+        android:text="password"
+        android:inputType="textPassword" />
 
     <LinearLayout
         android:orientation="horizontal"

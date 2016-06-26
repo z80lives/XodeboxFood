@@ -18,23 +18,20 @@ import java.util.Map;
  */
 public class HttpRequest {
 
-    String ServerURL = "http://foodapp.xodebox.com/";
     Context context;
-    String Latestresponse;
-
-    public HttpRequest(String Server,Context context) {
-        this.ServerURL = Server;
+    public HttpRequest(Context context) {
         this.context = context;
     }
 
 
-    public void SendPostrequest( final Map<String, String> data) {
+
+    public void SendPostrequest(String URL, final Map<String, String> data) {
 
         //send a request to our server to check if volley is handling requests properly
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
         // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ServerURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -62,7 +59,7 @@ public class HttpRequest {
     }
 
 
-    public String SendGetrequest(final String URL) {
+    public void SendGetrequest(final String URL,final VolleyCallback callback) {
         //send a request to our server to check if volley is handling requests properly
         //Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -72,19 +69,19 @@ public class HttpRequest {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.v("Volley", "Response is: " + response);
-                        Latestresponse=response;
+                        //Log.v("Volley", "Response is: " + response);
+                        //Latestresponse=response;
+                       callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("Volley", "Response is: " + error.getMessage());
-                Latestresponse=error.getMessage();
+               // Log.v("Volley", "Response is: " + error.getMessage());
+                //Latestresponse=error.getMessage();
+                callback.onErrorResponse(error);
             }
         });
         queue.add(stringRequest);
-
-        return Latestresponse;
 }
 
 }
