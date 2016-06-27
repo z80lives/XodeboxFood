@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+    <TextView
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_restaurant_title"
+        />
+    <View
+        style="@style/Divider"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_rest_thumb_instruction"
+        />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@android:drawable/ic_menu_report_image"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rest_upload_btn_label"/>
+
+    <View
+      style="@style/Divider" />
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_restInfo_title"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/restName_edit_hint"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/restType_edit_hint"/>
+
+    <View
+        style="@style/Divider" />
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_location_title"
+        />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@android:drawable/ic_menu_mapmode"
+
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_location_btn_label"
+        />
+
+    <View
+        style="@style/Divider" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/restContact_edit_hint"
+        />
+
+    <View
+        style="@style/Divider" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@android:string/ok"
+        />
+
+    </LinearLayout>
+
+</ScrollView>

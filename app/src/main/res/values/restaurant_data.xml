@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_restaurant_title">Add a new restaurant</string>
+    <string name="set_restInfo_title">Restaurant Details</string>
+    <string name="set_location_title">Set Location</string>
+
+
+    <string name="top_review_title">Top Review</string>
+    <string name="reviews_title">Reviews</string>
+    <string name="menu_title">Menu</string>
+    <string name="menu_info_title">Menu Info</string>
+
+    <string name="upload_rest_thumb_instruction">Add picture</string>
+    <string name="rest_upload_btn_label">Upload</string>
+    <string name="set_location_btn_label">Set location</string>
+    <string name="call_button_label">Call</string>
+
+    <string name="restName_edit_hint">Restaurant Name</string>
+    <string name="restType_edit_hint">Restaurant Type</string>
+    <string name="restContact_edit_hint">Restaurant Type</string>
+
+    <string name="label_operating_hours">Operating hours</string>
+    <string name="label_address">Restaurant Address</string>
+    <string name="label_rest_ratings">Ratings</string>
+
+    <string name="food_name">Food Name</string>
+    <string name="user_name">User Name</string>
+    <string name="price_label">Price</string>
+    <string name="review_label">Review</string>
+
+    <string name="desc_profile_pic">Profile picture</string>
+    <string name="desc_food_pic">Food</string>
+
+    <string name="more_review_label">View more reviews</string>
+
+    <style name="day_tag">
+        <item name="android:background">@drawable/round_tag</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="desc_tag">
+        <item name="android:background">@android:color/holo_red_dark</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    <!--placeholders -->
+    <string name="placeholder_operating_hours">1900-2000</string>
+    <string name="placeholder_review">The restaurant was very good!</string>
+</resources>

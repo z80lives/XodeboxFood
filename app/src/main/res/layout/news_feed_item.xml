@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_weight="0.3"
+        android:src="@android:drawable/ic_menu_gallery"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_name"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_name"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_review"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:orientation="vertical"
+        android:gravity="right">
+
+        <ImageButton
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:src="@android:drawable/ic_menu_share"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

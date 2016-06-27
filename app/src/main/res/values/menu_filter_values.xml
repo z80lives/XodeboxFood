@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="textview_distance_value">distance_from_home</item>
+    <item name="budget_form" type="id">budgetForm</item>
+
+    <string name="restaurant_type_caption">Restaurant Type</string>
+    <string name="restaurant_location_label">Location</string>
+    <string name="restaurant_location_placeholder">Location Name</string>
+    <string name="restaurant_budget_label">Budget</string>
+    <string name="restaurant_choice_label">Choices</string>
+    <string name="restaurant_paymentType_label">Payment Type</string>
+    <string name="filterForm_done_label">Done</string>
+    <string name="restaurant_rating_label">Rating</string>
+
+    <string-array name="restaurant_type_options">
+        <item name="mamak">Mamak</item>
+        <item name="indian">Indian</item>
+        <item name="chinese">Chinese</item>
+    </string-array>
+    
+    <string-array name="budget_type_options">
+        <item>Halal</item>
+        <item>Non-halal</item>
+        <item>Alcoholic</item>
+        <item>Non-Alcoholic</item>
+    </string-array>
+    
+    <string-array name="order_type_options">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+    
+    <string-array name="payment_type_options">
+        <item>Credit/Debit</item>
+        <item>Cash</item>
+        <item>Online</item>
+    </string-array>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
+
+    <style name="Heading"
+        />
+
+    <!-- Created for search_result_fragment.xml -->
+    <style name="searchResult_Text">
+        <item name="android:textSize">17dp</item>
+    </style>
+
+    <!--placeholder values -->
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="restaurant_address_string">Address Line</string>
+    <string name="restaurant_distance">XX KM</string>
+</resources>

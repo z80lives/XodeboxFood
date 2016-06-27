@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="nav_items">
+        <item name="home">Home</item>
+        <item>History</item>
+        <item>Add Restaurant</item>
+        <item name="feed">Feed</item>
+        <item>More</item>
+    </string-array>
+
+    <style name="nav_btn">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@android:color/holo_blue_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>

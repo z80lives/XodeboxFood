@@ -1,67 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/scrollView">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <RelativeLayout
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_name"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@android:drawable/ic_menu_report_image"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_type_caption"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_address_string"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_operating_hours"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_rest_ratings"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/call_button_label"
+            />
+
+        <View
+            style="@style/Divider"
+            />
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/top_review_title"
+            />
+
+        <!--Sample Review -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <include
+                layout="@layout/food_review_item"
+                />
+        </FrameLayout>
+        <View
+            style="@style/Divider"
+            />
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_title"
+            />
+
+        <!--Sample menu photos-->
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal">
-
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="256dp"
-                    android:layout_height="256dp"
-                    android:id="@+id/imageView3"
-                    android:src="@android:color/holo_green_dark"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="48dp" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    />
+            </LinearLayout>
+        </HorizontalScrollView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Restauarant name and short description about what type of services and food is offered"
-                    android:id="@+id/textView"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/imageView3"
-                    android:layout_marginLeft="16dp"
-                    android:maxWidth="224dp" />
+        <View
+            style="@style/Divider"
+            />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Share"
-                    android:id="@+id/button"
-                    android:layout_below="@+id/imageView3"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="16dp" />
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reviews_title"
+            />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tag"
-                    android:id="@+id/button2"
-                    android:layout_below="@+id/button"
-                    android:layout_alignLeft="@+id/button"
-                    android:layout_alignStart="@+id/button" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <include layout="@layout/food_review_item"/>
+        </FrameLayout>
 
-            </RelativeLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <include layout="@layout/food_review_item"/>
+        </FrameLayout>
 
-        </RelativeLayout>
-    </ScrollView>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_input_add"
+            android:layout_gravity="right|bottom"
+            />
 
-</LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/more_review_label"
+            />
+
+
+        <View
+            style="@style/Divider"
+            />
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_info_title"
+            />
+
+        <!-- Sample restaurant information -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/label_operating_hours"
+                android:layout_weight="0.3"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:text="@string/placeholder_operating_hours"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                />
+
+            <TextView
+                style="@style/day_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="Sun"/>
+
+            <TextView
+                style="@style/day_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="Mon"/>
+
+            <TextView
+                style="@style/day_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="Tues"/>
+
+            <TextView
+                style="@style/day_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="Wed"/>
+            <TextView
+                style="@style/day_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="Thurs"/>
+            <TextView
+                style="@style/day_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="Fri"/>
+
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_paymentType_label"
+            android:layout_weight="0.3"/>
+        <TextView
+            style="@style/desc_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Cash"
+            />
+        <TextView
+            style="@style/desc_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Card"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_choice_label"
+            android:layout_weight="0.3"
+            />
+        <TextView
+            style="@style/desc_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Halal"
+            />
+        <TextView
+            style="@style/desc_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Non-Alcholic"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_budget_label"
+            android:layout_weight="0.3"/>
+        <TextView
+            style="@style/desc_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Cheap"
+            />
+    </LinearLayout>
+
+        <View
+            style="@style/Divider"
+            />
+
+    </LinearLayout>
+</ScrollView>
