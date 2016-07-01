@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="home_restaurantItem_container_id">restaurantContainer</item>
+    <item type="id" name="screen_pager_id">screenPager</item>
 
     <style name="restaurant_item_framelayout">
         <item name="android:layout_weight">0.3</item>
