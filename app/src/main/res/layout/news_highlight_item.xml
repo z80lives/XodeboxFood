@@ -46,11 +46,19 @@
         android:layout_weight="0.4"
         android:orientation="vertical"
         >
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/btn_default"
+            android:id="@+id/imageButton"
+            android:layout_gravity="center_horizontal|left" />
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_input_add"
-            android:layout_gravity="right"
+            android:layout_gravity="center_horizontal|left"
             />
 
         <TextView
