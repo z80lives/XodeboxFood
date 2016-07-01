@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="home_restaurantItem_container_id">restaurantContainer</item>
+
+    <style name="restaurant_item_framelayout">
+        <item name="android:layout_weight">0.3</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="news_highlight_item_framelayout">
+        <item name="android:layout_weight">0.2</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+</resources>
