@@ -14,9 +14,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import java.util.Arrays;
+import java.util.List;
+
 import xodebox.food.R;
-import xodebox.food.ui.adapters.BasicRestaurantCardAdapter;
-import xodebox.food.ui.adapters.HighlightItemCardAdapter;
+import xodebox.food.ui.adapters.ItemCardAdapter;
+import xodebox.food.ui.view.HighlightCardView;
+import xodebox.food.ui.view.RestaurantCardView;
 
 /**
  * Created by shath on 6/29/2016.
@@ -60,17 +64,26 @@ public class HomeScreenFragment extends Fragment  {
         toolbar.inflateMenu(R.menu.home_screen_actionbar);
 
         ViewGroup rootView = createLinearRootView();   //Create a Linear class for root
-
         rootView.addView(toolbar);
-
         FrameLayout restaurantItemFrameLayout = new FrameLayout(getContext()), newsItemFrameLayout = new FrameLayout(getContext());
 
 
+        String[] test = {"1234", "5678", "zero"};
+        List<String> testList = Arrays.asList(test);
+
         /* Add the stack display items for the home screen here*/
         HomeScreenViewItem[] homeScreenViewItems = {
-                new HomeScreenViewItem(restaurantItemFrameLayout, new BasicRestaurantCardAdapter(), R.style.restaurant_item_framelayout),
-                new HomeScreenViewItem(newsItemFrameLayout, new HighlightItemCardAdapter(), R.style.news_highlight_item_framelayout)
+                //Featured Restaurants
+                new HomeScreenViewItem(restaurantItemFrameLayout,
+                        new ItemCardAdapter<String>(testList, RestaurantCardView.class),
+                        R.style.restaurant_item_framelayout),
+
+                //News Highlights
+                new HomeScreenViewItem(newsItemFrameLayout,
+                        new ItemCardAdapter<String>(testList, HighlightCardView.class),
+                        R.style.news_highlight_item_framelayout)
         };
+
 
         for(HomeScreenViewItem item : homeScreenViewItems)
         {
@@ -82,18 +95,7 @@ public class HomeScreenFragment extends Fragment  {
             rootView.addView(frameLayout);
 
         }
-/*
-        ViewPager restaurantItemViewPager = new ViewPager(getContext());
-        PagerAdapter restaurantPagerAdapter = new BasicRestaurantCardAdapter();
-        homeScreenViewItems[0].frameLayout.addView(restaurantItemViewPager);
-        restaurantItemViewPager.setAdapter(restaurantPagerAdapter);
 
-
-        ViewPager highlightItemViewPager = new ViewPager(getContext());
-        PagerAdapter highlightPagerAdapter = new HighlightItemCardAdapter();
-        highlightItemViewPager.setAdapter(highlightPagerAdapter);
-        homeScreenViewItems[1].frameLayout.addView(highlightItemViewPager);
-*/
         return rootView;
     }
 
