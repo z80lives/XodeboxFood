@@ -47,6 +47,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:layout_margin">5dp</item>
     </style>
+
     <!--placeholders -->
     <string name="placeholder_operating_hours">1900-2000</string>
     <string name="placeholder_review">The restaurant was very good!</string>

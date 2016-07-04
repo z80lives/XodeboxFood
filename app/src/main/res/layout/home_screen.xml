@@ -44,7 +44,7 @@
         android:layout_width="fill_parent"
             android:layout_height="0dp"
         android:layout_weight="0.6"
-        android:id="@+id/viewFlipper"
+        android:id="@+id/restaurantViewFlipper"
         android:clickable="false"
         android:layout_gravity="top">
 

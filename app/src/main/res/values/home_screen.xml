@@ -9,7 +9,7 @@
         <item name="android:layout_height">0dp</item>
     </style>
 
-    <style name="news_highlight_item_framelayout">
+    <style name="news_highlight_item_dice_framelayout">
         <item name="android:layout_weight">0.2</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
