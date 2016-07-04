@@ -7,9 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import xodebox.food.R;
 
@@ -55,28 +59,20 @@ public class HomeScreenFragment extends Fragment  {
         ((LinearLayout)rootView).setWeightSum(1);
         ((LinearLayout)rootView).setOrientation(LinearLayout.VERTICAL);
 
-        TextView textView = new TextView(getContext());
         //textView.setText("Home screen: "+ instance);
 
         //FragmentManager fm = getFragmentManager();
         //FragmentTransaction ft = fm.beginTransaction();
 
-        FrameLayout restaurantItemFrameLayout = new FrameLayout(getContext());
-        FrameLayout newsHighlightItemFrameLayout = new FrameLayout(getContext());
+        FrameLayout homeFrameLayout = new FrameLayout(getContext());
 
-        View restaurantItemView = inflater.inflate(R.layout.restaurant_feature_item, restaurantItemFrameLayout);
-        View newsHighlightItemView = inflater.inflate(R.layout.news_highlight_item, newsHighlightItemFrameLayout);
+        View homeView = inflater.inflate(R.layout.home_screen, homeFrameLayout);
 
-        setStyle(restaurantItemFrameLayout, R.style.restaurant_item_framelayout);
-        fillParent(restaurantItemView);
 
-        setStyle(newsHighlightItemFrameLayout, R.style.news_highlight_item_framelayout);
-        fillParent(newsHighlightItemView);
-       // v.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        // v.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
         //rootView.addView(textView);
-        rootView.addView(restaurantItemFrameLayout);
-        rootView.addView(newsHighlightItemFrameLayout);
+        rootView.addView(homeFrameLayout);
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);

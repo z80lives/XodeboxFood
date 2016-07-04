@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import xodebox.food.ui.fragments.AddNewRestaurantFragment;
 import xodebox.food.ui.fragments.HomeScreenFragment;
 
 /**
@@ -14,12 +15,14 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
 
     private String navItems[];
 
+    private enum tabElements {homeTab, collectionsTab, addRestaurantTab, feedTab, moreTab}
+
+    ;
 
     // HomeScreenFragment homeScreen;
     public ScreenPagerAdapter(FragmentManager fm, String[] navItems) {
         super(fm);
         this.navItems = navItems;
-        // homeScreen = new HomeScreenFragment();
     }
 
     /**
@@ -29,12 +32,14 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        //Fragment frag = new HomeScreenFragment();
-        //return frag;
-        switch (position)
+        tabElements index = tabElements.values()[position];
+        switch (index)
         {
-            case 0:
+            case homeTab:
                 return new HomeScreenFragment();
+            case addRestaurantTab:
+                return new AddNewRestaurantFragment();
+
             default:
                 return new Fragment();
         }
@@ -45,7 +50,7 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return navItems.length-1;
+        return navItems.length;
     }
 
     /**
@@ -59,13 +64,8 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public CharSequence getPageTitle(int position) {
-        //Fragment frag = getItem(position);
-       // return ((HomeScreenFragment) frag).getTitle();
-        //String arrNavItems[] = ;
         assert(navItems!=null && navItems.length >= position);
 
         return navItems[position].toString();
-        //return "Tab "+(position+1);
-        //return super.getPageTitle(position);
     }
 }

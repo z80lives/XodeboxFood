@@ -16,4 +16,6 @@
     <string name="error_incorrect_password">Incorrect Password!</string>
     <string name="error_invalid_email">Invalid e-mail</string>
     <string name="user_login_state">Login State?</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

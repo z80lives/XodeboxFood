@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         //TabLayout.Tab tab = new tabLayout.newTab();
 //        tabLayout.addTab(tabLayout.newTab().setText("Home"));
         tabLayout.setupWithViewPager(screenPager);
-        tabLayout.addTab(tabLayout.newTab().setText("More"));
+        // tabLayout.addTab(tabLayout.newTab().setText("More"));
 
         rootView.addView(tabLayout);
 
