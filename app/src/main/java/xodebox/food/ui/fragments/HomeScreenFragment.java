@@ -2,7 +2,6 @@ package xodebox.food.ui.fragments;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
@@ -14,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import xodebox.food.R;
+import xodebox.food.ui.adapters.BasicRestaurantCardAdapter;
+import xodebox.food.ui.adapters.HighlightItemCardAdapter;
 
 /**
  * Created by shath on 6/29/2016.
@@ -68,66 +68,32 @@ public class HomeScreenFragment extends Fragment  {
 
         /* Add the stack display items for the home screen here*/
         HomeScreenViewItem[] homeScreenViewItems = {
-                new HomeScreenViewItem(restaurantItemFrameLayout, R.layout.restaurant_feature_item, R.style.restaurant_item_framelayout),
-                new HomeScreenViewItem(newsItemFrameLayout, R.layout.news_highlight_item, R.style.news_highlight_item_framelayout)
+                new HomeScreenViewItem(restaurantItemFrameLayout, new BasicRestaurantCardAdapter(), R.style.restaurant_item_framelayout),
+                new HomeScreenViewItem(newsItemFrameLayout, new HighlightItemCardAdapter(), R.style.news_highlight_item_framelayout)
         };
 
-        for(HomeScreenViewItem homeScreenViewItem : homeScreenViewItems)
+        for(HomeScreenViewItem item : homeScreenViewItems)
         {
-            FrameLayout frameLayout = homeScreenViewItem.frameLayout = new FrameLayout(getContext());
-            int resource = homeScreenViewItem.resourceId;
-
+            FrameLayout frameLayout = item.frameLayout = new FrameLayout(getContext());
             //inflater.inflate(resource, frameLayout);
+            item.frameLayout.addView(item.getPager());
 
-
-            setStyle(frameLayout, homeScreenViewItem.styleResource);
+            setStyle(frameLayout, item.styleResource);
             rootView.addView(frameLayout);
 
         }
-
+/*
         ViewPager restaurantItemViewPager = new ViewPager(getContext());
-        PagerAdapter restaurantPagerAdapter = new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return 2;
-            }
-
-
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return false;
-            }
-
-            /**
-             * Create the page for the given position.  The adapter is responsible
-             * for adding the view to the container given here, although it only
-             * must ensure this is done by the time it returns from
-             * {@link #finishUpdate(ViewGroup)}.
-             *
-             * @param container The containing View in which the page will be shown.
-             * @param position  The page position to be instantiated.
-             * @return Returns an Object representing the new page.  This does not
-             * need to be a View, but can be some other container of the page.
-             */
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                TextView textView = new TextView(getContext());
-                textView.setText("Hi!");
-                return  textView;
-
-                //container.addView(textView);
-               // return super.instantiateItem(container, position);
-            }
-        };
-
+        PagerAdapter restaurantPagerAdapter = new BasicRestaurantCardAdapter();
         homeScreenViewItems[0].frameLayout.addView(restaurantItemViewPager);
-        //restaurantItemViewPager.setBackgroundColor(getResources().getColor(android.R.color.background_dark)); //TEST
         restaurantItemViewPager.setAdapter(restaurantPagerAdapter);
 
-        View itemView = new TextView(getContext());
-        ((TextView)itemView).setText("Show highlights here.");
-        homeScreenViewItems[1].frameLayout.addView( itemView);
 
+        ViewPager highlightItemViewPager = new ViewPager(getContext());
+        PagerAdapter highlightPagerAdapter = new HighlightItemCardAdapter();
+        highlightItemViewPager.setAdapter(highlightPagerAdapter);
+        homeScreenViewItems[1].frameLayout.addView(highlightItemViewPager);
+*/
         return rootView;
     }
 
@@ -168,15 +134,23 @@ public class HomeScreenFragment extends Fragment  {
      * Should be the container for RestaurantItem View flipper and NewsHighlight View flipper Items.
      */
     private class HomeScreenViewItem {
-        HomeScreenViewItem(FrameLayout fm, @LayoutRes int resId, @StyleRes int resStyle){
+        HomeScreenViewItem(FrameLayout fm, PagerAdapter pagerAdapter, @StyleRes int resStyle){
             frameLayout=fm;
-            resourceId=resId;
             styleResource= resStyle;
-            new FrameLayout(getContext());
+            pager = new ViewPager(getContext());
+            this.pagerAdapter = pagerAdapter;
+            //new FrameLayout(getContext());
+            pager.setAdapter(pagerAdapter);
         }
         FrameLayout frameLayout;
-        int resourceId;
         int styleResource;
+        PagerAdapter pagerAdapter;
+        ViewPager pager;
+
+        public ViewPager getPager() {
+            return pager;
+        }
+
     };
 }
 
