@@ -4,13 +4,13 @@
     <item type="id" name="screen_pager_id">screenPager</item>
 
     <style name="restaurant_item_framelayout">
-        <item name="android:layout_weight">0.3</item>
+        <item name="android:layout_weight">0.5</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
     </style>
 
-    <style name="news_highlight_item_dice_framelayout">
-        <item name="android:layout_weight">0.2</item>
+    <style name="news_highlight_item_framelayout">
+        <item name="android:layout_weight">0.5</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
     </style>

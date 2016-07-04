@@ -2,16 +2,16 @@ package xodebox.food.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import xodebox.food.R;
 import xodebox.food.ui.adapters.ScreenPagerAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
    // private ActionBar actionBar;
 
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
       //  actionBar = getActionBar();
 
         ScreenPagerAdapter screenPagerAdapter = new ScreenPagerAdapter(fm, getResources().getStringArray(R.array.nav_items));
+
         ViewGroup rootView = new LinearLayout(this);
         ViewPager screenPager = new ViewPager(this);
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         childLayoutParam.weight = 1;
         screenPager.setLayoutParams(childLayoutParam);
         screenPager.setAdapter(screenPagerAdapter);
+
       //  screenPager.setBackgroundColor(getColor(R.color.cardview_dark_background));
 
         rootView.addView(screenPager);
@@ -54,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
         //TabLayout.Tab tab = new tabLayout.newTab();
 //        tabLayout.addTab(tabLayout.newTab().setText("Home"));
+
+
         tabLayout.setupWithViewPager(screenPager);
-        // tabLayout.addTab(tabLayout.newTab().setText("More"));
+        //tabLayout.addTab(tabLayout.newTab().setText("More"));
 
         rootView.addView(tabLayout);
 
