@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 import xodebox.food.R;
+import xodebox.food.common.models.Restaurant;
 import xodebox.food.ui.adapters.ItemCardAdapter;
 import xodebox.food.ui.view.HighlightCardView;
 import xodebox.food.ui.view.RestaurantCardView;
@@ -28,7 +28,6 @@ import xodebox.food.ui.view.RestaurantCardView;
  */
 public class HomeScreenFragment extends Fragment  {
     private static final String TAG = "HomeScreenFragment";
-
     private static int instance=0;
 
     /**
@@ -40,47 +39,49 @@ public class HomeScreenFragment extends Fragment  {
 
     /**
      * Called to have the fragment instantiate its user interface view.
-     * This is optional, and non-graphical fragments can return null (which
-     * is the default implementation).  This will be called between
-     * {@link #onCreate(Bundle)} and {@link #onActivityCreated(Bundle)}.
-     * <p/>
-     * <p>If you return a View from here, you will later be called in
-     * {@link #onDestroyView} when the view is being released.
-     *
-     * @param inflater           The LayoutInflater object that can be used to inflate
-     *                           any views in the fragment,
-     * @param container          If non-null, this is the parent view that the fragment's
-     *                           UI should be attached to.  The fragment should not add the view itself,
-     *                           but this can be used to generate the LayoutParams of the view.
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     *                           from a previous saved state as given here.
      * @return Return the View for the fragment's UI, or null.
      */
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
+        //Create the root view, we are not really inflating home_screen.xml here.
+        ViewGroup rootView = createLinearRootView();
+
+        //Create the toolbar on top
         Toolbar toolbar = new Toolbar(getContext());
         toolbar.inflateMenu(R.menu.home_screen_actionbar);
-
-        ViewGroup rootView = createLinearRootView();   //Create a Linear class for root
         rootView.addView(toolbar);
-        FrameLayout restaurantItemFrameLayout = new FrameLayout(getContext()), newsItemFrameLayout = new FrameLayout(getContext());
 
+        //Create the two frame layout, as a container for the two main UI objects we want to show.
+        FrameLayout restaurantItemFrameLayout = new FrameLayout(getContext());
+        FrameLayout newsItemFrameLayout = new FrameLayout(getContext());
 
-        String[] test = {"1234", "5678", "zero"};
-        List<String> testList = Arrays.asList(test);
+        // Prepare data models we are going to display.
+        Restaurant aliMaju = new Restaurant();
+        Restaurant pizzaHut = new Restaurant();
+
+        aliMaju.addProperty("name", "Ali Maju Bistro");
+        aliMaju.addProperty("description", "This place is okay.");
+
+        pizzaHut.addProperty("name", "Pizza Hut");
+        pizzaHut.addProperty("description", "This place is bad.");
+
+        ArrayList<Restaurant> restaurants= new ArrayList<Restaurant>();
+        restaurants.add(aliMaju);
+        restaurants.add(pizzaHut);
 
         /* Add the stack display items for the home screen here*/
         HomeScreenViewItem[] homeScreenViewItems = {
                 //Featured Restaurants
                 new HomeScreenViewItem(restaurantItemFrameLayout,
-                        new ItemCardAdapter<String>(testList, RestaurantCardView.class),
+                        new ItemCardAdapter(restaurants, RestaurantCardView.class),
                         R.style.restaurant_item_framelayout),
 
                 //News Highlights
                 new HomeScreenViewItem(newsItemFrameLayout,
-                        new ItemCardAdapter<String>(testList, HighlightCardView.class),
+                        new ItemCardAdapter(restaurants, HighlightCardView.class),
                         R.style.news_highlight_item_framelayout)
         };
 
@@ -132,7 +133,8 @@ public class HomeScreenFragment extends Fragment  {
     }
 
     /**
-     * The linear stack object that will be displayed on the homescreen.
+     * A Helper class for the UI objects in this screen.
+     * This is the linear stack object that will be displayed on the homescreen.
      * Should be the container for RestaurantItem View flipper and NewsHighlight View flipper Items.
      */
     private class HomeScreenViewItem {

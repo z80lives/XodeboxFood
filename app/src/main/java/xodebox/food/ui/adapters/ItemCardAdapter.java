@@ -8,22 +8,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.lang.reflect.Constructor;
-import java.util.List;
+import java.util.ArrayList;
+
+import xodebox.food.common.models.BaseModel;
 
 /**
  * Created by shath on 7/4/2016.
  */
-public class ItemCardAdapter<Model> extends PagerAdapter {
+public class ItemCardAdapter extends PagerAdapter {
     private static final String TAG = "ItemCardAdapter";
     //private  ArrayAdapter<ViewClass> arrayAdapter;
-    private List<Model> itemList;
+    private ArrayList<BaseModel> itemList;
     private Class<?> ViewClass;
 
     /**
      * Create ItemCardAdapter from item list.
      * @param itemList List of view items
      */
-    public ItemCardAdapter(List<Model> itemList, Class<?> ViewClass){
+    public ItemCardAdapter(ArrayList itemList, Class<?> ViewClass){
         super();
         this.ViewClass =  ViewClass;
         this.itemList = itemList;
@@ -31,7 +33,7 @@ public class ItemCardAdapter<Model> extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return itemList.size()-1;
+        return itemList.size();
         //return 1;
     }
 
@@ -42,7 +44,11 @@ public class ItemCardAdapter<Model> extends PagerAdapter {
     }
 
     /**
-     * Instantiate object
+     * Insantiate an object of the previously defined class, in the constructor. The class must be a
+     * valid ViewGroup/View class which will be added into the container.
+     * @param container
+     * @param position
+     * @return View object of ViewClass on success. Fallback content on failure.
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
@@ -50,18 +56,35 @@ public class ItemCardAdapter<Model> extends PagerAdapter {
         try {
             /* Use java.reflection to instantiate an object of the ViewClass  */
             Class vClass = Class.forName(ViewClass.getName());              //Retrieve the ViewClass name
-            Constructor vConstructor = vClass.getConstructor(Context.class);  // Retrieve our default constructor: ViewClass(Context context)
+            Constructor vConstructor = vClass.getConstructor(Context.class, BaseModel.class);  // Retrieve our default constructor: ViewClass(Context context)
 
-            Object viewObject = vConstructor.newInstance(container.getContext());  //Create a new instance of that object
+            //Parcel parcel = Parcel.obtain();
+            //parcel.writeString("Hello 123");
+           // Bundle p = new Bundle();
+          //  p.putString("sda", "da");
+
+            Object viewObject = vConstructor.newInstance(container.getContext(), itemList.get(position));  //Create a new instance of that object
+            //Object viewObject = vConstructor.newInstance(container.getContext(), a);  //Create a new instance of that object
+
             container.addView((View) viewObject);                   // Typecast and try to add the object into our ViewGroup
+           // ((AbstractCardView) viewObject).updateCard();
+
             return  viewObject;
-        }catch(Exception ex){
+        }
+        catch (NoSuchMethodException ex)
+        {
+            Log.e(TAG, "instantiateItem: No such method exception occurred. "  );
+        }
+        catch(Exception ex){
             Log.e(TAG, "instantiateItem: "+ ex.getMessage());
+
         }
 
+        //Display a fallback item
         TextView tv = new TextView(container.getContext());
-        tv.setText("Error occured");
+        tv.setText("Error occured! ");
         container.addView(tv);
         return tv;
+
     }
 }
