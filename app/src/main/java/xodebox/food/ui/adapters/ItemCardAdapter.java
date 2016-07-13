@@ -71,9 +71,9 @@ public class ItemCardAdapter extends PagerAdapter {
 
             return  viewObject;
         }
-        catch (NoSuchMethodException ex)
+        catch (NoSuchMethodException ex)  //Thrown possibly by getConstructor()
         {
-            Log.e(TAG, "instantiateItem: No such method exception occurred. "  );
+            Log.e(TAG, "instantiateItem: getConstructor: No such method exception occurred. "  );
         }
         catch(Exception ex){
             Log.e(TAG, "instantiateItem: "+ ex.getMessage());

@@ -58,12 +58,22 @@ public class HomeScreenFragment extends Fragment  {
         FrameLayout restaurantItemFrameLayout = new FrameLayout(getContext());
         FrameLayout newsItemFrameLayout = new FrameLayout(getContext());
 
+        //------------BEGIN TEST DATA INSERTION--------------------
+
+/*        try {
+            InputStream inputStream = getActivity().getAssets().open("dummy.xml");
+        }catch (Exception ex)
+        {
+
+        }*/
+
         // Prepare data models we are going to display.
         Restaurant aliMaju = new Restaurant();
         Restaurant pizzaHut = new Restaurant();
 
-        aliMaju.addProperty("name", "Ali Maju Bistro");
-        aliMaju.addProperty("description", "This place is okay.");
+        aliMaju.set(Restaurant.Attrib.name, "Ali Maju");
+        aliMaju.set(Restaurant.Attrib.description, "This place is okay. !");
+        aliMaju.set(Restaurant.Attrib.imgurl, "http://paypizzapal.com/wp-content/uploads/2014/01/pizza-hut2.jpg");
 
         pizzaHut.addProperty("name", "Pizza Hut");
         pizzaHut.addProperty("description", "This place is bad.");
@@ -71,6 +81,8 @@ public class HomeScreenFragment extends Fragment  {
         ArrayList<Restaurant> restaurants= new ArrayList<Restaurant>();
         restaurants.add(aliMaju);
         restaurants.add(pizzaHut);
+
+        //-------------END OF TEST DATA INSERTION --------
 
         /* Add the stack display items for the home screen here*/
         HomeScreenViewItem[] homeScreenViewItems = {

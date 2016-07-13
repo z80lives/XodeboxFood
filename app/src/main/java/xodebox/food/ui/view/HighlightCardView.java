@@ -10,13 +10,22 @@ import xodebox.food.common.models.BaseModel;
  * Custom view for Highlight Cards
  */
 public class HighlightCardView extends AbstractCardView{
+
     public HighlightCardView(Context context, BaseModel model) {
         super(context, model);
-        init();
     }
 
+    @Override
+    public void onCreate() {
+        setTextView(R.id.highlight_rest_name, "name");
+        setTextView(R.id.highlight_rest_description, "description");
+        setTextView(R.id.highlight_rest_dish, "top_dish");
+        setTextView(R.id.highlight_rest_review, "top_review");
+        setTextView(R.id.highlight_rest_review, "type");
+    }
 
-    public void init(){
+    @Override
+    protected void inflateResource() {
         inflate(getContext(), R.layout.news_highlight_item, this);
     }
 
