@@ -1,15 +1,17 @@
 package xodebox.food.common.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
-import java.lang.reflect.Constructor;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * Class for the data model objects, to be read mainly by the UI objects.
  * Created by shath on 7/9/2016.
  */
 public abstract class BaseModel {
@@ -33,6 +35,10 @@ public abstract class BaseModel {
         return  ret;
     }
 
+    public Map<String, String> getAttributes(){
+        return strProperties;
+    }
+
     /**
      * Add new attribute to the object.
      * @param key
@@ -47,34 +53,46 @@ public abstract class BaseModel {
         return strProperties.get(key);
     }
 
-    /**
-     * Make a new creator. Creator should be static for each Parcelable.
-     * @return
-     */
-    public static Parcelable.Creator<BaseModel> newCreator(){
-        return new Parcelable.Creator<BaseModel>() {
-            public BaseModel createFromParcel(Parcel in) {
-                try
-                {
-                    // Try to create and instantiate object of the child class, then return it
-                    Class tClass = this.getClass();
-                    Constructor tConstructor = tClass.getConstructor(Parcel.class);
-                    Object instant = tConstructor.newInstance(in);
-                    return (BaseModel) instant;
-                }catch (Exception ex)
-                {
-                    Log.e(TAG, "createFromParcel: Exception, "+ ex.getMessage());
-                    return null;
-                }
-            }
 
-            public BaseModel[] newArray(int size) {
-                return new BaseModel[size];
-            }
-        };
+    /**
+     * Add attributes using JSON data
+     * Might throw exception, if the JSONObject is not well defined.
+     * TODO: Modify the code so that we can accept JSON objects with inherited objects and arrays.
+     * @return True on success <br /> False on failure
+     */
+    public boolean setAttributes(JSONObject jsonObject) throws JSONException{
+        Iterator<String> iKeys = jsonObject.keys();
+
+        while (iKeys.hasNext())
+        {
+            String key = iKeys.next();
+            String value = (String) jsonObject.get(key);        //Type casting here is probably a bad idea. // FIXME: 7/11/2016 
+
+            // We do not accept child object or an array inside our JSON object.
+            // if (value instanceof JSONArray || value instanceof JSONObject)
+           //     return false;
+
+            addProperty(key, value);
+        }
+
+        return true;
     }
 
-
-
+    /**
+     * Copies attributes from another model. Overwrites existing attributes.
+     * @param inModel
+     * @return
+     */
+    public boolean copyAttributes(BaseModel inModel)
+    {
+        HashMap<String, String> srcHashMap = (HashMap<String, String>) inModel.getAttributes();
+        try {
+            strProperties.putAll(srcHashMap);
+        }catch (Exception ex){
+            Log.e(TAG, "setAttributes: "+ex.getMessage() );
+            return false;
+        }
+        return true;
+    }
 
 }
