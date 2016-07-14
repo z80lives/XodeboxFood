@@ -25,7 +25,16 @@ public class Restaurant extends BaseModel {
      * Empty constructor
      */
     public  Restaurant(){
+        super();
        // this(Parcel.obtain());
     }
 
+    /**
+     * Construct model from an xml or JSON String
+     *
+     * @param inString
+     */
+    public Restaurant(String inString) {
+        super(inString);
+    }
 }
