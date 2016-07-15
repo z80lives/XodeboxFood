@@ -26,13 +26,13 @@ public class Restaurant extends BaseModel {
      */
     public  Restaurant(){
         super();
-       // this(Parcel.obtain());
     }
 
     /**
      * Construct model from an xml or JSON String
+     * Refer to the class documentation for the format.
      *
-     * @param inString
+     * @param inString String parameter can contain either JSON data object or XML data object.
      */
     public Restaurant(String inString) {
         super(inString);

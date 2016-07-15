@@ -2,6 +2,7 @@ package xodebox.food.common.models;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -23,16 +24,18 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+//TODO Complete the javadocs.
 /**
  * Helper Class for the data model objects, to be read mainly by the UI objects.
- * Created by shath on 7/9/2016.
+ * Implement with the appropriate constructor.
+ * @author Ibrahim Shath
  */
 public abstract class BaseModel {
     private static final String TAG = "BaseModel";
     private Map<String, String> strProperties;
 
     /**
-     * Constructs a new empty model.
+     * Construct an empty model.
      */
     public BaseModel() {
         strProperties = new HashMap<String, String>();
@@ -40,7 +43,8 @@ public abstract class BaseModel {
 
     /**
      * Construct model from an xml or JSON String
-     * @param inString
+     * Refer to the class documentation for the format.
+     * @param inString String parameter can contain either JSON data object or XML data object.
      */
     public BaseModel(String inString)
     {
@@ -61,14 +65,18 @@ public abstract class BaseModel {
         return  ret;
     }
 
+    /**
+     * Getter for Model attributes. Should be used by View classes.
+     * @return {@code HashMap<String, String> Hashmap of all attributes, mapped from key to value.
+     */
     public Map<String, String> getAttributes(){
         return strProperties;
     }
 
     /**
      * Add new attribute to the object.
-     * @param key
-     * @param value
+     * @param key String value for the key.
+     * @param value String value for the attribute.
      */
     public void addProperty(String key, String value){
         strProperties.put(key, value);
@@ -85,29 +93,6 @@ public abstract class BaseModel {
     }
 
 
-    /**
-     * Add attributes using JSON data
-     * Might throw exception, if the JSONObject is not well defined.
-     * TODO: Modify the code so that we can accept JSON objects with inherited objects and arrays.
-     * @return True on success <br /> False on failure
-     */
-    public boolean setAttributes(JSONObject jsonObject) throws JSONException{
-        Iterator<String> iKeys = jsonObject.keys();
-
-        while (iKeys.hasNext())
-        {
-            String key = iKeys.next();
-            String value = (String) jsonObject.get(key);        //Type casting here is probably a bad idea. // FIXME: 7/11/2016 
-
-            // We do not accept child object or an array inside our JSON object.
-            // if (value instanceof JSONArray || value instanceof JSONObject)
-           //     return false;
-
-            addProperty(key, value);
-        }
-
-        return true;
-    }
 
     /**
      * Copies attributes from another model. Overwrites existing attributes.
@@ -128,13 +113,31 @@ public abstract class BaseModel {
 
     /**
      * Create an array list of this object.
+     * Please refer to the class documentation for more details.
      * @param buildString Must be an xml or a json string.
+     * @param modelClass Should be subclass of {@link BaseModel}
+     * @param <T> Should be same as modelClass
      * @return Array List of the models.
      */
     public static <T> ArrayList<T> buildArrayList(String buildString, Class<T> modelClass){
-        ArrayList<T> arrayList = new ArrayList<>();
-        final  String xmlHead = "<?xml version=\"1.0\" encoding=\"UTF-16\"?>\n";
+        if(isStringXML(buildString))
+            return buildXMLArrayList(buildString, modelClass); //The string argument was xml
+        else
+            return buildJSONArrayList(buildString, modelClass); //Otherwise assume the string is in JSON format
+    }
 
+    /**
+     * Build an arraylist of {@link #BaseModel()} out of xml string
+     * @param buildString XML String
+     * @param modelClass Should be subclass of {@link BaseModel}
+     * @param <T> Should be same as modelClass
+     * @return Array List of the models.
+     */
+    private static <T> ArrayList<T> buildXMLArrayList(String buildString, Class<T> modelClass)
+    {
+        ArrayList<T> arrayList = new ArrayList<>();
+
+        final  String xmlHead = "<?xml version=\"1.0\" encoding=\"UTF-16\"?>\n";
         try {
             //Prepare xml builder
             DocumentBuilderFactory xmlFactory = DocumentBuilderFactory.newInstance();
@@ -182,12 +185,47 @@ public abstract class BaseModel {
                 System.err.println("Failed: " + ex.toString());
             }
         };
-
         return arrayList;
     }
 
+    /**
+     * Build an arraylist of {@link #BaseModel()} out of json string
+     * @param buildString
+     * @param modelClass
+     * @param <T>
+     * @return
+     */
+    private static <T> ArrayList<T> buildJSONArrayList(String buildString, Class<T> modelClass)
+    {
+        ArrayList<T> arrayList = new ArrayList<>();
+        try{
+            JSONObject jsonObject = new JSONObject(buildString);
+            JSONArray itemArray = jsonObject.getJSONArray(jsonObject.names().get(0).toString()); //First item should be labeled
+            //for each item in the array
+            for(int i=0; i<itemArray.length(); i++)
+            {
+                String itemString = itemArray.get(i).toString();
+
+                //Create an instance of the model object
+                T model;
+                Constructor<T> modelConstructor = modelClass.getConstructor(String.class);
+                model = modelConstructor.newInstance(itemString);
+                //Add the model object to the list
+                arrayList.add(model);
+            }
+            jsonObject.toString();
+        }catch (Exception ex)
+        {
+            logError(ex.getMessage());
+        }
+        return arrayList;
+    }
+
+
+
+
     ///////////////////////////////////////////////////////////////////////////
-    // Private Methods
+    // Internal Methods
     ///////////////////////////////////////////////////////////////////////////
 
     /**
@@ -237,6 +275,7 @@ public abstract class BaseModel {
         }
     }
 
+
     /**
      * Attempt to parse JSON string, and store the attributes to our model.
      * JSON object should look like this:
@@ -248,8 +287,41 @@ public abstract class BaseModel {
      *     }
      * </pre>
      * @param inString String containing JSON object. Preferably not formatted.
+     * @see #jsonToMap(JSONObject)
      */
     private void readJSONString(String inString){
+        try{
+            JSONObject jObject = new JSONObject(inString);
+            strProperties.putAll(jsonToMap(jObject));
+        }catch (RuntimeException ex){
+            if(isTestLogger())
+                System.out.println("Run time Exception occured: "+ex.getMessage());
+        }
+        catch (Exception ex)
+        {
+            if(isTestLogger())
+                System.out.println("Exception occured: "+ex.getMessage());
+        }
+    }
+
+    /**
+     * JSON to HashMap function, created for {@link #readJSONString(String) }.
+     * @param jObject A valid {@link JSONObject}.
+     * @throws JSONException
+     */
+    private HashMap<String, String> jsonToMap(JSONObject jObject) throws JSONException {
+        HashMap<String, String> map = new HashMap<String, String>();
+        //JSONObject jObject = new JSONObject(strArg);
+        Iterator<?> keys = jObject.keys();
+
+        while( keys.hasNext() ){
+            String key = (String)keys.next();
+            String value = jObject.getString(key);
+            map.put(key, value);
+
+        }
+
+        return map;
 
     }
 
@@ -258,17 +330,53 @@ public abstract class BaseModel {
      * @param testString
      * @return {@code true} if the string may be valid xml.
      */
-    private boolean isStringXML(String testString){
+    private static boolean isStringXML(String testString){
         //We are going to do a simple check for now.
         if(testString.startsWith("<"))
             return true;
         return false;
     }
 
+
+
     ///////////////////////////////////////////////////////////////////////////
     // Internal Error Tracking
     ///////////////////////////////////////////////////////////////////////////
     private static boolean STD_ERR = false;         //Output error messages to std_err
-    private static void enableDebugMessages(boolean val){STD_ERR = val;}
+    public static void enableDebugMessages(boolean val){STD_ERR = val;}
     private static boolean isTestLogger(){ return STD_ERR; }
+    private static void logError(String errMsg){
+        if(isTestLogger())
+            System.err.println("BaseModel: "+ errMsg);
+    }
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Unused code.
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * //TODO: 9:14 AM 7/15/2016, UNUSED. Replaced in favour of {@link #readJSONString(String)}
+     * Add attributes using JSON data
+     * Might throw exception, if the JSONObject is not well defined.
+     * @return True on success <br /> False on failure
+     */
+    public boolean setAttributes(JSONObject jsonObject) throws JSONException{
+        Iterator<String> iKeys = jsonObject.keys();
+
+        while (iKeys.hasNext())
+        {
+            String key = iKeys.next();
+            String value = (String) jsonObject.get(key);        //Type casting here is probably a bad idea. // FIXME: 7/11/2016
+
+            // We do not accept child object or an array inside our JSON object.
+            // if (value instanceof JSONArray || value instanceof JSONObject)
+            //     return false;
+
+            addProperty(key, value);
+        }
+
+        return true;
+    }
 }

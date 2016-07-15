@@ -1,0 +1,15 @@
+{
+ "restaurant" : [
+   {
+     "name" : "Pizza Hut",
+     "description" : "Pizza Hut is an American restaurant chain and international franchise known for Italian-American cuisine including pizza and pasta as well as side dishes and desserts.",
+     "imageUrl" : "http://paypizzapal.com/wp-content/uploads/2014/01/pizza-hut2.jpg"
+   },
+
+   {
+       "name" : "Olive Garden",
+       "description" : "Olive Garden, famed for their modern-day Italian dishes, has finally arrived in Malaysia. Their traditional Italian specialties, made with only the freshest ingredients, are perfect for sharing with your loved ones. Indulge in a creamy bowl of fettucine alfredo, chow down on some hearty minestrone, or wash down your meal with a slice on heavenly tiramisu. Embark on your very own Italian food journey here at Olive Garden.",
+       "imageUrl" : "https://farm1.staticflickr.com/396/19406875693_ee95ce95e6_o.jpg"
+    }
+ ]
+}
