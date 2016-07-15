@@ -9,22 +9,28 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSSerializer;
 import org.xml.sax.InputSource;
 
+import java.io.InputStream;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 //TODO Complete the javadocs.
+//TODO Refactor
 /**
  * Helper Class for the data model objects, to be read mainly by the UI objects.
  * Implement with the appropriate constructor.
@@ -49,6 +55,21 @@ public abstract class BaseModel {
     public BaseModel(String inString)
     {
         this();
+        if (isStringXML(inString))
+            readXMLString(inString);
+        else
+            readJSONString(inString);
+    }
+
+    /**
+     * Construct model from an xml or JSON InputStream
+     * Refer to the class documentation for the format.
+     * @param inputStream String parameter can contain either JSON data object or XML data object.
+     */
+    public BaseModel(InputStream inputStream)
+    {
+        this();
+        String inString = new InputSource(inputStream).toString();
         if (isStringXML(inString))
             readXMLString(inString);
         else
@@ -126,6 +147,12 @@ public abstract class BaseModel {
             return buildJSONArrayList(buildString, modelClass); //Otherwise assume the string is in JSON format
     }
 
+    public static <T> ArrayList<T> buildArrayList(InputStream inputStream, Class<T> modelClass){
+        Scanner isScanner = new Scanner(inputStream, "UTF-16").useDelimiter("\\A");
+        String buildString = isScanner.hasNext() ? isScanner.next() : "";
+        return buildArrayList(buildString, modelClass);
+    }
+
     /**
      * Build an arraylist of {@link #BaseModel()} out of xml string
      * @param buildString XML String
@@ -138,6 +165,7 @@ public abstract class BaseModel {
         ArrayList<T> arrayList = new ArrayList<>();
 
         final  String xmlHead = "<?xml version=\"1.0\" encoding=\"UTF-16\"?>\n";
+        buildString = buildString.replace("\n", "").replace("\r","");
         try {
             //Prepare xml builder
             DocumentBuilderFactory xmlFactory = DocumentBuilderFactory.newInstance();
@@ -151,25 +179,19 @@ public abstract class BaseModel {
             for (int i = 0; i < items.getLength(); i++) {
                 NodeList attrNodes = items.item(i).getChildNodes();
                 Node node = items.item(i);
+                if (node == null)       //Bug fix
+                    continue;
 
-                //Write all child content into the serializer and build a string from it
-                StringBuilder stringBuilder = new StringBuilder();
-                LSSerializer lsSerializer = ((DOMImplementationLS) node.getOwnerDocument()
-                        .getImplementation().getFeature("LS", "3.0")).createLSSerializer();
-                lsSerializer.getDomConfig().setParameter("xml-declaration", false);
+                //Transform content of item tag into string format
+                Transformer transformer = TransformerFactory.newInstance().newTransformer();
+                StringWriter stringWriter = new StringWriter();
+                transformer.transform(new DOMSource(node), new StreamResult(stringWriter));
+                String xmlString = stringWriter.toString();
 
-                for (int j = 0; j < attrNodes.getLength(); j++) {
-                    stringBuilder.append(lsSerializer.writeToString(attrNodes.item(j)));
-                }
-                String xmlString = xmlHead + "<item>" + stringBuilder.toString() + "</item>";
-
-                //modelClass.newInstance();
+                //Create new object from it, and add the object into our return list
                 T model;
-                //T model = modelClass.getConstructor(); //(T) new BaseModel(xmlString) {};
-                //Class clazz = Class.forName(modelClass.getName());
                 Constructor modelConstructor = modelClass.getConstructor(String.class);
                 model = (T) modelConstructor.newInstance(xmlString);
-                //modelConstructor.newInstance(xmlString);
                 arrayList.add((T) model);
 
             }
@@ -227,9 +249,19 @@ public abstract class BaseModel {
     ///////////////////////////////////////////////////////////////////////////
     // Internal Methods
     ///////////////////////////////////////////////////////////////////////////
+    private void readXMLString(String xmlString){
+        InputSource inputSource = new InputSource(new StringReader(xmlString));
+        readXMLInputSource(inputSource);
+    }
+
+    private void readXMLString(InputStream xmlStream)
+    {
+        InputSource inputSource = new InputSource(xmlStream);
+        readXMLInputSource(inputSource);
+    }
 
     /**
-     * Parse XML string and add attributes to the model according to our format.
+     * Parse XML from Input source and add attributes to the model according to our format.
      * Accepted format should look like this:
      * <pre>
      *  <?xml version="1.0" encoding="UTF-16" ?>
@@ -241,15 +273,16 @@ public abstract class BaseModel {
      *      </item>
      *      }
      * </pre>
-     * @param xmlString
+     * @param inputSource
      */
-    private void readXMLString(String xmlString)
+    private void readXMLInputSource(InputSource inputSource)
     {
         //Read the string as an xml file
+        //InputSource inputSource = new InputSource(new StringReader(xmlString));
         DocumentBuilderFactory xmlFactory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder xmlBuilder = xmlFactory.newDocumentBuilder();
-            Document doc = xmlBuilder.parse(new InputSource(new StringReader(xmlString)));
+            Document doc = xmlBuilder.parse(inputSource);
             Element root = doc.getDocumentElement();
             NodeList level1Nodes = root.getChildNodes();
 
@@ -357,7 +390,7 @@ public abstract class BaseModel {
     // Unused code.
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * //TODO: 9:14 AM 7/15/2016, UNUSED. Replaced in favour of {@link #readJSONString(String)}
+     * //TODO: REMOVE THIS METHOD. 9:14 AM 7/15/2016, UNUSED. Replaced in favour of {@link #readJSONString(String)}
      * Add attributes using JSON data
      * Might throw exception, if the JSONObject is not well defined.
      * @return True on success <br /> False on failure

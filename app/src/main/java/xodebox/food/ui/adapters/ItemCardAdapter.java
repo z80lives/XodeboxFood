@@ -58,16 +58,9 @@ public class ItemCardAdapter extends PagerAdapter {
             Class vClass = Class.forName(ViewClass.getName());              //Retrieve the ViewClass name
             Constructor vConstructor = vClass.getConstructor(Context.class, BaseModel.class);  // Retrieve our default constructor: ViewClass(Context context)
 
-            //Parcel parcel = Parcel.obtain();
-            //parcel.writeString("Hello 123");
-           // Bundle p = new Bundle();
-          //  p.putString("sda", "da");
-
             Object viewObject = vConstructor.newInstance(container.getContext(), itemList.get(position));  //Create a new instance of that object
-            //Object viewObject = vConstructor.newInstance(container.getContext(), a);  //Create a new instance of that object
 
             container.addView((View) viewObject);                   // Typecast and try to add the object into our ViewGroup
-           // ((AbstractCardView) viewObject).updateCard();
 
             return  viewObject;
         }

@@ -8,12 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import xodebox.food.R;
@@ -58,31 +60,21 @@ public class HomeScreenFragment extends Fragment  {
         FrameLayout restaurantItemFrameLayout = new FrameLayout(getContext());
         FrameLayout newsItemFrameLayout = new FrameLayout(getContext());
 
-        //------------BEGIN TEST DATA INSERTION--------------------
+        //------------TEST DATA INSERTION--------------------
 
-/*        try {
-            InputStream inputStream = getActivity().getAssets().open("dummy.xml");
+        InputStream restaurantXMLFile = null;
+        try {
+            restaurantXMLFile = getActivity().getAssets().open("home_data.xml");
         }catch (Exception ex)
         {
+            Log.e(TAG, "onCreateView: "+ex.getMessage() );
+        }
 
-        }*/
-
-        // Prepare data models we are going to display.
-        Restaurant aliMaju = new Restaurant();
-        Restaurant pizzaHut = new Restaurant();
-
-        aliMaju.set(Restaurant.Attrib.name, "Ali Maju");
-        aliMaju.set(Restaurant.Attrib.description, "This place is okay. !");
-        aliMaju.set(Restaurant.Attrib.imgurl, "http://paypizzapal.com/wp-content/uploads/2014/01/pizza-hut2.jpg");
-
-        pizzaHut.addProperty("name", "Pizza Hut");
-        pizzaHut.addProperty("description", "This place is bad.");
-
-        ArrayList<Restaurant> restaurants= new ArrayList<Restaurant>();
-        restaurants.add(aliMaju);
-        restaurants.add(pizzaHut);
+        //Prepare array to display
+        ArrayList<Restaurant> restaurants= Restaurant.buildArrayList(restaurantXMLFile, Restaurant.class);
 
         //-------------END OF TEST DATA INSERTION --------
+
 
         /* Add the stack display items for the home screen here*/
         HomeScreenViewItem[] homeScreenViewItems = {
@@ -112,6 +104,10 @@ public class HomeScreenFragment extends Fragment  {
         return rootView;
     }
 
+    /**
+     * Create the root layout
+     * @return rootLayout
+     */
     private LinearLayout createLinearRootView(){
         LinearLayout rootView = new LinearLayout(getContext());
         rootView.setWeightSum(1);
