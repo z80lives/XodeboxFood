@@ -12,7 +12,9 @@
         android:layout_weight="0.7"
         android:background="@color/colorAccent"
         android:src="@android:drawable/ic_menu_gallery"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:id="@+id/imageview_restaurant_image"
+        />
 
     <TextView
         android:layout_width="0dp"
