@@ -67,7 +67,7 @@ public class HomeScreenFragment extends Fragment  {
             restaurantXMLFile = getActivity().getAssets().open("home_data.xml");
         }catch (Exception ex)
         {
-            Log.e(TAG, "onCreateView: "+ex.getMessage() );
+            Log.e(TAG, "onCreateView: " + ex.getMessage() );
         }
 
         //Prepare array to display

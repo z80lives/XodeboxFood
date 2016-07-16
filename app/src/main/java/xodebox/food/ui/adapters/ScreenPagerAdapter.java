@@ -57,7 +57,7 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return navItems.length-1;
+        return navItems.length;
     }
 
     /**
@@ -77,8 +77,6 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
         assert(navItems!=null && navItems.length >= position);
 
         return navItems[position].toString();
-        //return "Tab "+(position+1);
-        //return super.getPageTitle(position);
     }
 
     /**
