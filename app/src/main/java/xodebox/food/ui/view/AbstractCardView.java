@@ -35,6 +35,7 @@ public abstract class AbstractCardView extends FrameLayout{
 
     public  abstract void onCreate();
     protected abstract void inflateResource();
+    public void onLoad(){}
 
     /**
      * Add a string to the attribute list.

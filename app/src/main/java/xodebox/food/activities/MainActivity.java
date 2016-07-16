@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import xodebox.food.R;
 import xodebox.food.ui.adapters.ScreenPagerAdapter;
+import xodebox.food.ui.viewpagers.MainscreenViewPager;
 
 public class MainActivity extends FragmentActivity {
 
@@ -24,7 +25,7 @@ public class MainActivity extends FragmentActivity {
         ScreenPagerAdapter screenPagerAdapter = new ScreenPagerAdapter(fm, getResources().getStringArray(R.array.nav_items));
 
         ViewGroup rootView = new LinearLayout(this);
-        ViewPager screenPager = new ViewPager(this);
+        ViewPager screenPager = new MainscreenViewPager(this);
 
         ViewGroup.LayoutParams vgMatchParent = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         LinearLayout.LayoutParams childLayoutParam= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
@@ -48,12 +49,15 @@ public class MainActivity extends FragmentActivity {
         //setContentView(R.layout.home_screen);
 
         //Create nav bar
-        /* PagerTabStrip navStrip = new PagerTabStrip(this);
+        /* Nav strip
+         PagerTabStrip navStrip = new PagerTabStrip(this);
         navStrip.setLayoutParams(new ViewGroup.LayoutParams(PagerTitleStrip.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        screenPager.addView(navStrip); */
+        screenPager.addView(navStrip);
+        */
 
+
+        /*
         TabLayout tabLayout = new TabLayout(this);
-
         //TabLayout.Tab tab = new tabLayout.newTab();
 //        tabLayout.addTab(tabLayout.newTab().setText("Home"));
 
@@ -61,6 +65,16 @@ public class MainActivity extends FragmentActivity {
         tabLayout.setupWithViewPager(screenPager);
         //tabLayout.addTab(tabLayout.newTab().setText("More"));
 
+        rootView.addView(tabLayout); */
+
+        //Add the bottom navigation bar
+        TabLayout tabLayout = new TabLayout(this){
+
+        };
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setupWithViewPager(screenPager);
+        tabLayout.setSelectedTabIndicatorHeight(0);
+        //tabLayout.setAnimation();
         rootView.addView(tabLayout);
 
         setContentView(rootView, vgMatchParent);

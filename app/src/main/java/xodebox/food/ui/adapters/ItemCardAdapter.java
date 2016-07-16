@@ -11,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 import xodebox.food.common.models.BaseModel;
+import xodebox.food.ui.view.AbstractCardView;
 
 /**
  * Created by shath on 7/4/2016.
@@ -62,6 +63,8 @@ public class ItemCardAdapter extends PagerAdapter {
 
             container.addView((View) viewObject);                   // Typecast and try to add the object into our ViewGroup
 
+            ((AbstractCardView) viewObject).onLoad();
+
             return  viewObject;
         }
         catch (NoSuchMethodException ex)  //Thrown possibly by getConstructor()
@@ -70,7 +73,6 @@ public class ItemCardAdapter extends PagerAdapter {
         }
         catch(Exception ex){
             Log.e(TAG, "instantiateItem: "+ ex.getMessage());
-
         }
 
         //Display a fallback item
@@ -80,4 +82,5 @@ public class ItemCardAdapter extends PagerAdapter {
         return tv;
 
     }
+
 }

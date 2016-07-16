@@ -6,10 +6,11 @@ import android.widget.TextView;
 
 import xodebox.food.R;
 import xodebox.food.common.models.BaseModel;
+import xodebox.food.common.threads.DownloadImageForView;
 
 /**
  *
- * A simplistic restaurant view, that will display a picture of the restaurant and
+ * A simple view for the restaurant, to display the picture of the restaurant and
  * it's description, stacked vertically.
  * Please set the following attributes.
  * <h3>Attribute list</h3>
@@ -31,13 +32,14 @@ import xodebox.food.common.models.BaseModel;
  * Created by shath on 7/4/2016.
  */
 public class RestaurantCardView extends AbstractCardView {
-    //private static int instances=0;
-    private TextView tvRestaurantDescription;
+   // private TextView tvRestaurantDescription;
+    private TextView tvRestaurantName;
     private ImageView ivRestaurantImage;
 
     private enum Attrib{
         name,
-        imgurl
+        image_url,
+        description
     }
 
     /**
@@ -46,15 +48,23 @@ public class RestaurantCardView extends AbstractCardView {
      */
     public RestaurantCardView(Context context, BaseModel model) {
         super(context, model);
-        //inflateResource();
-        //instances++;
     }
 
     public void onCreate() {
-        tvRestaurantDescription.setText(getAttribute(Attrib.name.toString()) );
-        //ivRestaurantImage.setImageDrawable(getResources().getDrawable(R.drawable.rest1, getContext().getTheme()));
-        //Drawable drawable = new ProgressBar(getContext());
-        //ivRestaurantImage.setVisibility(GONE);
+        setTextView(R.id.textview_restaurant_description, Attrib.name.toString());
+    }
+
+    @Override
+    public void onLoad() {
+        String strImageUrl = getAttribute(Attrib.image_url.toString());
+        DownloadImageForView downloadTask = new DownloadImageForView(ivRestaurantImage);
+        downloadTask.execute(strImageUrl);
+
+    }
+
+
+    public ImageView getImageView(){
+        return ivRestaurantImage;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -63,7 +73,6 @@ public class RestaurantCardView extends AbstractCardView {
 
     protected void inflateResource(){
         inflate(getContext(), R.layout.restaurant_feature_item, this);
-        tvRestaurantDescription = (TextView) findViewById(R.id.textview_restaurant_description);
         ivRestaurantImage = (ImageView) findViewById(R.id.imageview_restaurant_image);
     }
 }
