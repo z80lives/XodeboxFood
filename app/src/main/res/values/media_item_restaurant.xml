@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="placeholder_rest_description">
+        Restaurant description text.
+    </string>
+    <string name="startscreen_media_pic_desc">
+        Restaurant Image.
+    </string>
+</resources>
