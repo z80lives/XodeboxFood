@@ -56,6 +56,9 @@ public class login_registrationActivity extends AppCompatActivity {
         QuickMethods.ctx=context;
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile,email","user_friends"));
+
+
+        //facebook login  code
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -107,7 +110,7 @@ public class login_registrationActivity extends AppCompatActivity {
             }
         });
 
-        Log.v("activity", "Activity created.");
+
     }
 
     @Override
