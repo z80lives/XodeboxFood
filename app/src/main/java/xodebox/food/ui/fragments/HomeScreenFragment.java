@@ -4,7 +4,6 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -28,15 +29,29 @@ import xodebox.food.ui.view.RestaurantCardView;
  * Created by shath on 6/29/2016.
  * Fragment for home screen.
  */
-public class HomeScreenFragment extends Fragment  {
+public class HomeScreenFragment extends DynamicScreenFragment  {
     private static final String TAG = "HomeScreenFragment";
     private static int instance=0;
+    private ImageButton rollDiceButton;
 
     /**
      * Default constructor
      */
     public HomeScreenFragment(){
         instance++;     //Count instance for debug purpose.
+    }
+
+    public boolean prepareRollButton(){
+        if (rollDiceButton == null) {
+            return false;
+        }
+        rollDiceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Roll button clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return  true;
     }
 
     /**
@@ -101,19 +116,10 @@ public class HomeScreenFragment extends Fragment  {
 
         }
 
+        prepareRollButton();
         return rootView;
     }
 
-    /**
-     * Create the root layout
-     * @return rootLayout
-     */
-    private LinearLayout createLinearRootView(){
-        LinearLayout rootView = new LinearLayout(getContext());
-        rootView.setWeightSum(1);
-        rootView.setOrientation(LinearLayout.VERTICAL);
-        return rootView;
-    }
 
     /**
      * Retrieve the layout attributes from xml file and use it.
@@ -164,5 +170,10 @@ public class HomeScreenFragment extends Fragment  {
         }
 
     };
+
+    public void setRollDiceButton(ImageButton rollDiceButton)
+    {
+        this.rollDiceButton = rollDiceButton;
+    }
 }
 

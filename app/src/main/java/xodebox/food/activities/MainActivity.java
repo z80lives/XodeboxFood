@@ -1,7 +1,6 @@
 package xodebox.food.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -10,6 +9,7 @@ import android.widget.LinearLayout;
 
 import xodebox.food.R;
 import xodebox.food.ui.adapters.ScreenPagerAdapter;
+import xodebox.food.ui.nav.NavBar;
 import xodebox.food.ui.viewpagers.MainscreenViewPager;
 
 public class MainActivity extends FragmentActivity {
@@ -20,9 +20,10 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentManager fm = getSupportFragmentManager();
-      //  actionBar = getActionBar();
 
-        ScreenPagerAdapter screenPagerAdapter = new ScreenPagerAdapter(fm, getResources().getStringArray(R.array.nav_items));
+        NavBar navBar = new NavBar(this);
+
+        ScreenPagerAdapter screenPagerAdapter = new ScreenPagerAdapter(fm, getResources().getStringArray(R.array.nav_items), navBar);
 
         ViewGroup rootView = new LinearLayout(this);
         ViewPager screenPager = new MainscreenViewPager(this);
@@ -48,7 +49,7 @@ public class MainActivity extends FragmentActivity {
 
         //setContentView(R.layout.home_screen);
 
-        //Create nav bar
+        //This one looks cool. Maybe we can implement it in future.
         /* Nav strip
          PagerTabStrip navStrip = new PagerTabStrip(this);
         navStrip.setLayoutParams(new ViewGroup.LayoutParams(PagerTitleStrip.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -56,26 +57,12 @@ public class MainActivity extends FragmentActivity {
         */
 
 
-        /*
-        TabLayout tabLayout = new TabLayout(this);
-        //TabLayout.Tab tab = new tabLayout.newTab();
-//        tabLayout.addTab(tabLayout.newTab().setText("Home"));
-
-
-        tabLayout.setupWithViewPager(screenPager);
-        //tabLayout.addTab(tabLayout.newTab().setText("More"));
-
-        rootView.addView(tabLayout); */
-
         //Add the bottom navigation bar
-        TabLayout tabLayout = new TabLayout(this){
+        screenPager.setOffscreenPageLimit(4);       //Fixme: Cache the data and destroy the fragments instead.
 
-        };
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        tabLayout.setupWithViewPager(screenPager);
-        tabLayout.setSelectedTabIndicatorHeight(0);
-        //tabLayout.setAnimation();
-        rootView.addView(tabLayout);
+
+        navBar.setupWithViewPager(screenPager);
+        rootView.addView(navBar);
 
         setContentView(rootView, vgMatchParent);
 

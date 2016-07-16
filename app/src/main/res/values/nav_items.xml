@@ -4,7 +4,6 @@
     <string-array name="nav_items">
         <item name="home">Home</item>
         <item>History</item>
-        <item>Add Restaurant</item>
         <item name="feed">Feed</item>
         <item>More</item>
     </string-array>
@@ -12,6 +11,13 @@
     <style name="nav_btn">
         <item name="android:gravity">center</item>
         <item name="android:background">@android:color/holo_blue_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="roll_button">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/middle_button</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
