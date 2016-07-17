@@ -5,9 +5,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.io.IOException;
@@ -16,6 +18,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import xodebox.food.R;
 
 /**
  * Todo: Properly display the progress graphics.
@@ -45,14 +49,24 @@ public class DownloadImageForView extends AsyncTask<String, Integer, HashMap<Ima
 
         //Add progress bar
         if(firstItem != null) {
+            LinearLayout progressContainer;
             parent = (ViewGroup)firstItem.getParent();
             int index = parent.indexOfChild(firstItem);
-            parent.addView(progressBar = new ProgressBar(firstItem.getContext()) , index);
+            //parent.addView(progressBar = new ProgressBar(firstItem.getContext()) , index);
+            parent.addView(progressContainer = new LinearLayout(firstItem.getContext()), index);
+
+            progressContainer.setLayoutParams(firstItem.getLayoutParams());
+            //progressContainer.setGravity(RelativeLayout.CENTER_IN_PARENT);
+            //progressBar.drawableHotspotChanged(firstItem.getX() + (firstItem.getWidth()/2), firstItem.getY()+ (firstItem.getHeight()/2 ));
+            progressContainer.addView(progressBar = new ProgressBar(progressContainer.getContext()));
+            progressContainer.setBackgroundResource(R.color.cardview_dark_background);
+            progressContainer.setGravity(Gravity.CENTER);
         }
         //Hide all views
         for(ImageView imageView: imagelst)
         {
             imageView.setVisibility(View.INVISIBLE);
+           // imageView.setBackgroundResource(R.color.cardview_dark_background);
         }
     }
 
@@ -79,7 +93,10 @@ public class DownloadImageForView extends AsyncTask<String, Integer, HashMap<Ima
     protected void onPostExecute(HashMap<ImageView, Bitmap> imageViewBitmapHashMap) {
         super.onPostExecute(imageViewBitmapHashMap);
         //Remove progress bar
-        parent.removeView(progressBar);
+        ViewGroup container = (ViewGroup) progressBar.getParent();
+        //parent.removeView(progressBar);
+        parent.removeView(container);
+
         //Show images
         for(ImageView imageview : imageViewBitmapHashMap.keySet())
         {
