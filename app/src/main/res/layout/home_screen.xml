@@ -43,7 +43,7 @@
     <ViewFlipper
         android:layout_width="fill_parent"
             android:layout_height="0dp"
-        android:layout_weight="0.6"
+        android:layout_weight="0.5"
         android:id="@+id/restaurantViewFlipper"
         android:clickable="false"
         android:layout_gravity="top">
@@ -57,14 +57,14 @@
     <ViewFlipper
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.5"
         android:id="@+id/viewFlipper1"
         android:clickable="false"
         android:layout_gravity="bottom">
 
         <!--Sample item -->
         <include
-            layout="@layout/news_highlight_item_dice"
+            layout="@layout/news_highlight_item"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
 

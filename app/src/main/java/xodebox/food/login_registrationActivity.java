@@ -2,6 +2,8 @@ package xodebox.food;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,6 +36,8 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.UUID;
 
+import xodebox.food.ui.Configurations;
+
 public class login_registrationActivity extends AppCompatActivity {
 
     private String LOG_TAG = login_registrationActivity.class.getName();
@@ -42,11 +46,14 @@ public class login_registrationActivity extends AppCompatActivity {
     Firebase FirebaseRef;
     Context context;
     CallbackManager callbackManager;
+    public static SharedPreferences prefsettings;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //prefsettings=getPreferences(Configurations.datapref,0);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.login_registration);
@@ -56,6 +63,9 @@ public class login_registrationActivity extends AppCompatActivity {
         QuickMethods.ctx=context;
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile,email","user_friends"));
+
+
+        //facebook login  code
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -107,7 +117,7 @@ public class login_registrationActivity extends AppCompatActivity {
             }
         });
 
-        Log.v("activity", "Activity created.");
+
     }
 
     @Override
