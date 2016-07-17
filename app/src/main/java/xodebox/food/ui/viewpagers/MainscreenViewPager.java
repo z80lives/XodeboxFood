@@ -14,11 +14,17 @@ public class MainscreenViewPager extends ViewPager {
     public MainscreenViewPager(Context context)
     {
         super(context);
+        init();
     }
 
     public MainscreenViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
+
+    private void init(){
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

@@ -3,7 +3,7 @@
 
     <string-array name="nav_items">
         <item name="home">Home</item>
-        <item>History</item>
+        <item>Collections</item>
         <item name="feed">Feed</item>
         <item>More</item>
     </string-array>

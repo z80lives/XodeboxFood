@@ -1,6 +1,8 @@
 package xodebox.food.ui.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,8 +73,25 @@ public class RestaurantCardView extends AbstractCardView {
     // Local Methods
     ///////////////////////////////////////////////////////////////////////////
 
-    protected void inflateResource(){
-        inflate(getContext(), R.layout.restaurant_feature_item, this);
+    protected View inflateResource(){
+        View rootView = inflate(getContext(), R.layout.restaurant_feature_item, this);
         ivRestaurantImage = (ImageView) findViewById(R.id.imageview_restaurant_image);
+
+        return rootView;
+
+        /*
+        int paddingPixel = 25;
+        float density = getContext().getResources().getDisplayMetrics().density;
+        int paddingDp = (int)(paddingPixel * density);
+
+        restImage.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
+*/
+        //elevate();
+       // this.setElevation(1.5f);
+    }
+
+    @TargetApi(21)
+    private  void elevate(){
+        this.setElevation(0.5f);
     }
 }

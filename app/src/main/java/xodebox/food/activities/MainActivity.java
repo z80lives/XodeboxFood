@@ -61,6 +61,7 @@ public class MainActivity extends FragmentActivity {
         screenPager.setOffscreenPageLimit(4);       //Fixme: Cache the data and destroy the fragments instead.
 
 
+        //Add bottom navigation bar
         navBar.setupWithViewPager(screenPager);
         rootView.addView(navBar);
 

@@ -2,7 +2,9 @@ package xodebox.food.ui.view;
 
 import android.content.Context;
 import android.support.annotation.IdRes;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -20,6 +22,10 @@ public abstract class AbstractCardView extends FrameLayout{
     private static final String TAG = "AbstractCardView";
     //private ArrayList<String> attributes;       //Todo: use HashMap instead of ArrayList
     private HashMap<String, String> attributes;
+    View root;
+    Context context;
+
+
 
     /**
      * Construct view from the given data model. Please make sure the attributes of the Model are set.
@@ -28,13 +34,35 @@ public abstract class AbstractCardView extends FrameLayout{
     public AbstractCardView(Context context, BaseModel model) {
         super(context);
         //attributes = model.getAttributesList();
+       newInstance(model);
+    }
+
+    /**
+     * Construct with android attribute set.
+     * @param context
+     * @param model
+     * @param attrs
+     */
+    public AbstractCardView(Context context,  BaseModel model, AttributeSet attrs) {
+        super(context, attrs);
+        newInstance(model);
+    }
+
+    private void newInstance(BaseModel model){
+        this.context = getContext();
         attributes = (HashMap<String, String>) model.getAttributes();
-        inflateResource();
+        root = inflateResource();
+
+        root.setBackgroundResource(android.R.drawable.screen_background_light);
+        root.setBackgroundResource(R.drawable.card_background);
+        //int padding = getDP(16);
+        //root.setPadding(padding, padding, padding, padding);
+
         onCreate();
     }
 
     public  abstract void onCreate();
-    protected abstract void inflateResource();
+    protected abstract View inflateResource();
     public void onLoad(){}
 
     /**
@@ -75,4 +103,13 @@ public abstract class AbstractCardView extends FrameLayout{
         textView.setText(getAttribute(key));
         return  textView;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Internal
+    ///////////////////////////////////////////////////////////////////////////
+    private int getDP(int pixel) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return (int) (pixel * density);
+    }
+
 }

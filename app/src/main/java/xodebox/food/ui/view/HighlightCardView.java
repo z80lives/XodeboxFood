@@ -1,6 +1,7 @@
 package xodebox.food.ui.view;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 
 import xodebox.food.R;
@@ -33,9 +34,8 @@ public class HighlightCardView extends AbstractCardView{
         new DownloadImageForView(ivRestaurantImage).execute(getAttribute("image_url"));
     }
 
-    @Override
-    protected void inflateResource() {
-        inflate(getContext(), R.layout.news_highlight_item, this);
+    protected View inflateResource() {
+        return inflate(getContext(), R.layout.news_highlight_item, this);
     }
 
 }

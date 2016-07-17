@@ -27,6 +27,9 @@ public class NavBar extends TabLayout {
         setTabMode(MODE_FIXED);
         setSelectedTabIndicatorHeight(0);
         setTabGravity(GRAVITY_FILL);
+        setBackgroundResource(R.color.colorPrimary);
+        setTabTextColors(getResources().getColor(android.R.color.primary_text_dark),
+                          getResources().getColor(android.R.color.holo_orange_light));
     }
 
     /**
@@ -41,6 +44,7 @@ public class NavBar extends TabLayout {
             Tab tab = newTab();
             tab.setText(tabLabels[i]);
             tabs[i] = tab;
+           // tab.setCustomView(R.layout.nav_button);
         }
         //Place all the tabs along with the roll button
         for(int i=0,c=0; i<tabLabels.length+1; i++)
@@ -53,6 +57,7 @@ public class NavBar extends TabLayout {
                 ImageButton imageButton = new ImageButton(getContext());
                 //Resources.Theme diceTheme = getResources().newTheme();
                 imageButton.setImageDrawable(getResources().getDrawable(R.drawable.roll_the_dice));
+                imageButton.setBackgroundResource(R.color.colorPrimary);
                 imageButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 rollDiceButton = imageButton;
                 addTab(newTab().setCustomView(imageButton));
