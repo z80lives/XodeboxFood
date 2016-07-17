@@ -9,8 +9,11 @@ public class NewsItem extends BaseModel {
      * Constructs a new instance of {@code Object}.
      *
      */
-    public NewsItem() {
+   /* public NewsItem() {
         super();
-    }
+    }*/
 
+    public NewsItem(String inString) {
+        super(inString);
+    }
 }

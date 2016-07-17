@@ -38,6 +38,11 @@ public class ItemCardAdapter extends PagerAdapter {
         //return 1;
     }
 
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+       // super.destroyItem(container, position, object);       //Removed because of a bug
+        ((ViewGroup) container).removeView((View)object);
+    }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {

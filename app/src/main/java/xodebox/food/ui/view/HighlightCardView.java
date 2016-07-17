@@ -23,15 +23,18 @@ public class HighlightCardView extends AbstractCardView{
         setTextView(R.id.highlight_rest_name, "name");
         setTextView(R.id.highlight_rest_description, "description");
         setTextView(R.id.highlight_rest_dish, "top_dish");
-        setTextView(R.id.highlight_rest_review, "top_review");
-        setTextView(R.id.highlight_rest_review, "type");
+        setTextView(R.id.highlight_rest_review, "rating");
+        setTextView(R.id.highlight_rest_type, "type");
 
         ivRestaurantImage = (ImageView) findViewById(R.id.highlight_image);
     }
 
     @Override
     public void onLoad() {
-        new DownloadImageForView(ivRestaurantImage).execute(getAttribute("image_url"));
+        String image_url = getAttribute("image_url");
+        if (image_url != null) {
+            new DownloadImageForView(ivRestaurantImage).execute(getAttribute("image_url"));
+        }
     }
 
     protected View inflateResource() {

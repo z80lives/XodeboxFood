@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import xodebox.food.R;
+import xodebox.food.common.models.NewsItem;
 import xodebox.food.common.models.Restaurant;
 import xodebox.food.ui.adapters.ItemCardAdapter;
 import xodebox.food.ui.view.HighlightCardView;
@@ -83,9 +84,10 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
 
         //------------TEST DATA INSERTION--------------------
 
-        InputStream restaurantXMLFile = null;
+        InputStream restaurantXMLFile = null, newsItemJSONFile = null;
         try {
             restaurantXMLFile = getActivity().getAssets().open("home_data.xml");
+            newsItemJSONFile = getActivity().getAssets().open("home_data.json");
         }catch (Exception ex)
         {
             Log.e(TAG, "onCreateView: " + ex.getMessage() );
@@ -93,6 +95,7 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
 
         //Prepare array to display
         ArrayList<Restaurant> restaurants= Restaurant.buildArrayList(restaurantXMLFile, Restaurant.class);
+        ArrayList<NewsItem> newsItems = NewsItem.buildArrayList(newsItemJSONFile, NewsItem.class);
 
         //-------------END OF TEST DATA INSERTION --------
 
@@ -106,7 +109,7 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
 
                 //News Highlights
                 new HomeScreenViewItem(newsItemFrameLayout,
-                        new ItemCardAdapter(restaurants, HighlightCardView.class),
+                        new ItemCardAdapter(newsItems, HighlightCardView.class),
                         R.style.news_highlight_item_framelayout)
         };
 
