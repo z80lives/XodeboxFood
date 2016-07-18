@@ -1,25 +1,60 @@
 package xodebox.food.ui.adapters;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.util.HashMap;
+
+import xodebox.food.ui.fragments.DynamicScreenFragment;
 import xodebox.food.ui.fragments.HomeScreenFragment;
+import xodebox.food.ui.nav.NavBar;
 
 /**
  * Created by shath on 6/29/2016.
+ * FIXME The class does not instantiate properly after quick run. This may lead to possible bugs.
  */
 
 public class ScreenPagerAdapter extends FragmentPagerAdapter {
+    private static final String TAG = "ScreenPagerAdapter";
+    HashMap<ScreenTabs, Class> screenTabHashMap = new HashMap<>();
+    private NavBar navBar = null;
 
     private String navItems[];
+    private int tabCount = 0;
 
+    enum ScreenTabs{
+        HOME_SCREEN(0),
+        COLLECTION_SCREEN(1),
+        FEED_SCREEN(3),
+        MORE_SCREEN(4);
+        int index;
+        ScreenTabs(int i){ index = i; }
+        int getIndex(){ return index; }
+    }
 
-    // HomeScreenFragment homeScreen;
-    public ScreenPagerAdapter(FragmentManager fm, String[] navItems) {
+    /**
+     * Constructor for navbar with roll the dice button
+     * @param fm
+     * @param navItems
+     */
+    public ScreenPagerAdapter(FragmentManager fm, String[] navItems, NavBar navBar) {
         super(fm);
         this.navItems = navItems;
-        // homeScreen = new HomeScreenFragment();
+        createTabs();
+        this.navBar = navBar;
+        tabCount = navItems.length+1;
+    }
+
+    public void  createTabs(){
+        screenTabHashMap.put(ScreenTabs.HOME_SCREEN, HomeScreenFragment.class);
     }
 
     /**
@@ -31,13 +66,41 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         //Fragment frag = new HomeScreenFragment();
         //return frag;
-        switch (position)
+
+        ScreenTabs[] item = ScreenTabs.values();
+
+
+        if (position > item.length || position < 0)
+            return new EmptyFragment();
+
+        //If dice button exists ignore it's index
+        if(navBar != null )     //FIXME refactor with short circuit boolean expression
         {
-            case 0:
-                return new HomeScreenFragment();
-            default:
-                return new Fragment();
+            if( position >= navBar.getDiceButtonPosition())
+                position-=1;
         }
+
+        try {
+            //Search for the hashmap key first
+            if(screenTabHashMap.containsKey(item[position])) {
+                Class<Fragment> fragmentClass = screenTabHashMap.get(item[position]);
+                Fragment fragment = fragmentClass.newInstance();
+                /*Implement dice button in navigation for  home screen fragment*/
+                if (item[position] == ScreenTabs.HOME_SCREEN){
+                    ((HomeScreenFragment)fragment).setRollDiceButton(navBar.getRollDiceButton());
+                }
+                return fragment;
+            }
+        }catch (Exception ex){
+            Log.e(TAG, "getItem: "+ex.getMessage() );
+        }
+        //Fallback
+        Fragment emptyFragment = new EmptyFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", item[position].getIndex());
+        bundle.putString("name", item[position].toString());
+        emptyFragment.setArguments(bundle);
+        return emptyFragment;
     }
 
     /**
@@ -45,7 +108,7 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return navItems.length-1;
+        return tabCount;
     }
 
     /**
@@ -59,13 +122,31 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public CharSequence getPageTitle(int position) {
-        //Fragment frag = getItem(position);
-       // return ((HomeScreenFragment) frag).getTitle();
-        //String arrNavItems[] = ;
-        assert(navItems!=null && navItems.length >= position);
+        return "NULL";      //We do not really need this
+    }
 
-        return navItems[position].toString();
-        //return "Tab "+(position+1);
-        //return super.getPageTitle(position);
+    /**
+     * Test fragment to show empty stuff
+     * TODO Remove this before the final product
+     */
+    public static class EmptyFragment extends DynamicScreenFragment{
+        int position;
+        String title;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+           // return super.onCreateView(inflater, container, savedInstanceState);
+            ViewGroup root = createLinearRootView();
+            Bundle bundle = this.getArguments();
+            position = bundle.getInt("position", 0);
+            title = bundle.getString("name", "Unknown");
+
+            TextView textView = new TextView(root.getContext());
+            textView.setText("Empty fragment for "+ title+ " at " + position);
+            root.addView(textView);
+            return root;
+        }
     }
 }
+

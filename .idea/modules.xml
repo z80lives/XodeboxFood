@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Food.iml" filepath="$PROJECT_DIR$/Food.iml" />
+      <module fileurl="file://$PROJECT_DIR$/XodeboxFood.iml" filepath="$PROJECT_DIR$/XodeboxFood.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/xbfood.iml" filepath="$PROJECT_DIR$/xbfood.iml" />
     </modules>

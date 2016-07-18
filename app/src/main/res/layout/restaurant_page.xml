@@ -207,7 +207,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:text="Tues"/>
+                android:text="Tue" />
 
             <TextView
                 style="@style/day_tag"
@@ -220,7 +220,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:text="Thurs"/>
+                android:text="Thu" />
             <TextView
                 style="@style/day_tag"
                 android:layout_width="0dp"
