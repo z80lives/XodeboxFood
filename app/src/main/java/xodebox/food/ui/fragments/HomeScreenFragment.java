@@ -8,22 +8,22 @@ import android.support.annotation.StyleableRes;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import xodebox.food.R;
+import xodebox.food.activities.MainActivity;
 import xodebox.food.common.models.NewsItem;
 import xodebox.food.common.models.Restaurant;
 import xodebox.food.ui.adapters.ItemCardAdapter;
@@ -39,6 +39,8 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
     private static int instance=0;
     private ImageButton rollDiceButton;
 
+    private ViewGroup homeView, loadView;
+
     /**
      * Default constructor
      */
@@ -53,7 +55,7 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
         rollDiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Roll button clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Roll button clicked", Toast.LENGTH_SHORT).show();
             }
         });
         return  true;
@@ -70,15 +72,32 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
 
         //Create the root view, we are not really inflating home_screen.xml here.
         ViewGroup rootView = createLinearRootView();
+        homeView = rootView;
+        //loadView = createLinearRootView();
+
         rootView.setBackgroundResource(android.R.drawable.screen_background_light_transparent);
 
-        //Create the toolbar on top
-        Toolbar toolbar = new Toolbar(getContext());
-        toolbar.inflateMenu(R.menu.home_screen_actionbar);
-        toolbar.setBackgroundResource(R.color.colorPrimary);
-        rootView.addView(toolbar);
+        ViewGroup searchResultView;
+        //searchResultView = (ViewGroup) inflater.inflate(R.layout.search_result_fragment, null);
+//        searchView.addView(addSearchBar());
+  //      searchView.addView(searchResultView);
 
-        //Create the two frame layout, as a container for the two main UI objects we want to show.
+        //Create the toolbar on top
+       // Toolbar searchBar = createToolbar();
+       // rootView.addView(searchBar);
+        rootView.addView(addSearchBar());
+        EditText searchTextBar = (EditText) rootView.findViewById(R.id.home_search_edittext);
+        searchTextBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(), "Edit text clicked", Toast.LENGTH_SHORT).show();
+                ((MainActivity) getActivity()).searchButtonClicked();
+              //  hideView(homeView);
+              //  showView(searchView);
+            }
+        });
+
+                //Create the two frame layout, as a container for the two main UI objects we want to show.
         CardView restaurantItemFrameLayout = new CardView(getContext());
         CardView newsItemFrameLayout = new CardView(getContext());
 
@@ -133,8 +152,16 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
         }
 
         prepareRollButton();
-        return rootView;
+        //return rootView;
+
+        ViewGroup activityViewGroup = new LinearLayout(getContext());
+     //   activityViewGroup.addView(searchView);
+        activityViewGroup.addView(rootView);
+    //    hideView(searchView);
+        showView(homeView);
+        return activityViewGroup;
     }
+
 
 
     /**
@@ -236,5 +263,54 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
     {
         this.rollDiceButton = rollDiceButton;
     }
+
+    /**
+     * Quickly fetches a view for the the search bar layout
+     * @return
+     */
+    private View addSearchBar(){
+        View searchView = View.inflate(getContext(), R.layout.homescreen_searchbar_layout, null);
+        return searchView;
+    }
+
+    /**
+     * Creates home screen toolbar
+     * @return Toolbar widget
+     */
+    /**
+    private Toolbar createToolbar(){
+        Toolbar toolbar = new Toolbar(getContext());
+        toolbar.inflateMenu(R.menu.home_screen_actionbar);
+        toolbar.setBackgroundResource(R.color.colorPrimary);
+
+        Menu menu = toolbar.getMenu();
+        final MenuItem searchItem = menu.findItem(R.id.search);
+
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        if(searchView == null)
+        {
+            return toolbar;
+        }
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+               /* if(!searchView.isIconified())
+                {
+                    //searchView.setIconified(true);
+                }
+                //searchItem.collapseActionView();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+      //  SearchManager searchManager = (SearchManager) toolbar.getSy
+        return toolbar;
+    }*/
 }
 
