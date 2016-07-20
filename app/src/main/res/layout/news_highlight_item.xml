@@ -7,20 +7,13 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.6"
+        android:layout_weight="0.7"
         android:orientation="vertical"
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/restaurant_name"
-                android:id="@+id/highlight_rest_name" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -32,16 +25,6 @@
                 android:padding="4dp"
                 />
 
-            <TextView
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/restaurant_type_caption"
-                android:layout_alignParentBottom="true"
-                android:layout_above="@+id/thumb_rest_name"
-                android:layout_alignRight="@+id/highlight_rest_name"
-                android:id="@+id/highlight_rest_type"
-                />
         </RelativeLayout>
 
     </LinearLayout>
@@ -49,7 +32,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.4"
+        android:layout_weight="0.3"
         android:orientation="vertical"
         >
 
@@ -59,6 +42,24 @@
             android:src="@drawable/icon"
             android:layout_gravity="center_horizontal|right"
             android:scaleType="fitXY" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_name"
+            android:id="@+id/highlight_rest_name"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_type_caption"
+            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/thumb_rest_name"
+            android:layout_alignRight="@+id/highlight_rest_name"
+            android:id="@+id/highlight_rest_type" />
 
         <TextView
             android:layout_width="wrap_content"

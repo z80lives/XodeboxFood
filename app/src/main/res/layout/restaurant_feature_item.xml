@@ -14,7 +14,8 @@
         android:src="@android:drawable/ic_menu_gallery"
         android:scaleType="fitXY"
         android:id="@+id/imageview_restaurant_image"
-        />
+        android:layout_margin="5dp"
+        android:padding="4dp" />
 
     <TextView
         android:layout_width="0dp"
