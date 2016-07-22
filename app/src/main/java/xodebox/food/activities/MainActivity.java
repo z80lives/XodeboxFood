@@ -5,22 +5,16 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import xodebox.food.R;
 import xodebox.food.ui.adapters.ScreenPagerAdapter;
 import xodebox.food.ui.nav.NavBar;
+import xodebox.food.ui.view.SearchResultView;
 import xodebox.food.ui.viewpagers.MainscreenViewPager;
 
 /**
@@ -29,8 +23,10 @@ import xodebox.food.ui.viewpagers.MainscreenViewPager;
 public class MainActivity extends FragmentActivity {
 
    // private ActionBar actionBar;
-    private ViewGroup searchViewGroup;
+    private SearchResultView searchViewGroup;
     private SearchView searchView;
+
+
     private ViewGroup rootView;
     private ViewGroup MasterView;
     private ViewGroup currentView;
@@ -41,7 +37,12 @@ public class MainActivity extends FragmentActivity {
         FragmentManager fm = getSupportFragmentManager();
 
         NavBar navBar = new NavBar(this);
-        createSearchView();
+        //createSearchView();
+
+        //TODO: Refactor searchView out of Main Activity and let SearchResultView Handle it.
+        searchViewGroup = new SearchResultView(this);
+        searchView = searchViewGroup.getSearchView();
+        setSearchCloseButton();
 
         ScreenPagerAdapter screenPagerAdapter = new ScreenPagerAdapter(fm, getResources().getStringArray(R.array.nav_items), navBar);
 
@@ -71,7 +72,7 @@ public class MainActivity extends FragmentActivity {
 
         //setContentView(R.layout.home_screen);
 
-        //This one looks cool. Maybe we can implement it in future.
+        //This nav bar looks cool. Maybe we can implement it in future.
         /* Nav strip
          PagerTabStrip navStrip = new PagerTabStrip(this);
         navStrip.setLayoutParams(new ViewGroup.LayoutParams(PagerTitleStrip.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -86,6 +87,7 @@ public class MainActivity extends FragmentActivity {
         //Add bottom navigation bar
         navBar.setupWithViewPager(screenPager);
         rootView.addView(navBar);
+
         MasterView.addView(rootView);
         MasterView.addView(searchViewGroup);
         setContentView(MasterView, vgMatchParent);
@@ -95,6 +97,16 @@ public class MainActivity extends FragmentActivity {
     }
 
     boolean doubleBackToExitPressedOnce = false;
+
+    private void setSearchCloseButton(){
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                showSearchbar(false);
+                return false;
+            }
+        });
+    }
 
     /**
      * Code when back button is pressed on main activity
@@ -129,6 +141,7 @@ public class MainActivity extends FragmentActivity {
      * Create the screen to display search result
      * @return
      */
+    /*
     private ViewGroup createSearchView(){
         String[] test = {"Cafe 1", "Dim light"};
         List<String> lstData = new ArrayList<>();
@@ -196,6 +209,7 @@ public class MainActivity extends FragmentActivity {
                 return false;
             }
         });
+
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
@@ -206,14 +220,17 @@ public class MainActivity extends FragmentActivity {
 
         this.searchView = searchView;
         return searchViewGroup;
-    }
-
+    }*/
 
     public void searchButtonClicked(){
         showSearchbar(true);
     }
 
-    private void showSearchbar(boolean state){
+    /**
+     * This method is public because it
+     * @param state
+     */
+    public void showSearchbar(boolean state){
         if (state){
             showView(searchViewGroup);
             hideView(rootView);

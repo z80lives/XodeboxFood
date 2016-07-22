@@ -77,27 +77,18 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
 
         rootView.setBackgroundResource(android.R.drawable.screen_background_light_transparent);
 
-        ViewGroup searchResultView;
-        //searchResultView = (ViewGroup) inflater.inflate(R.layout.search_result_fragment, null);
-//        searchView.addView(addSearchBar());
-  //      searchView.addView(searchResultView);
 
-        //Create the toolbar on top
-       // Toolbar searchBar = createToolbar();
-       // rootView.addView(searchBar);
         rootView.addView(addSearchBar());
         EditText searchTextBar = (EditText) rootView.findViewById(R.id.home_search_edittext);
         searchTextBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getContext(), "Edit text clicked", Toast.LENGTH_SHORT).show();
-                ((MainActivity) getActivity()).searchButtonClicked();
-              //  hideView(homeView);
-              //  showView(searchView);
+                ((MainActivity) getActivity()).searchButtonClicked();   //Search bar clicked
+
             }
         });
 
-                //Create the two frame layout, as a container for the two main UI objects we want to show.
+        //Create the two frame layout, as a container for the two main UI objects we want to show.
         CardView restaurantItemFrameLayout = new CardView(getContext());
         CardView newsItemFrameLayout = new CardView(getContext());
 
@@ -133,6 +124,7 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
         };
 
 
+        // Add the two UI widgets
         for(HomeScreenViewItem item : homeScreenViewItems)
         {
             FrameLayout frameLayout = item.frameLayout = new FrameLayout(getContext());
@@ -152,20 +144,20 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
         }
 
         prepareRollButton();
-        //return rootView;
 
         ViewGroup activityViewGroup = new LinearLayout(getContext());
      //   activityViewGroup.addView(searchView);
         activityViewGroup.addView(rootView);
-    //    hideView(searchView);
+
         showView(homeView);
+
         return activityViewGroup;
     }
 
 
 
     /**
-     * //FIXME THIS METHOD IS BROKEN SINCE 7/17/2016
+     * //FIXME THIS METHOD IS NOT WORKING PROPERLY SINCE 7/17/2016
      * Retrieve the layout attributes from xml file and use it.
      * Before calling the function make sure you have defined the following items in XML resource.
      *  <ul>
@@ -225,7 +217,8 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
     }
 
     /**
-     * Converts dip to pixel for the set screen pager's margin function
+     * TODO REMOVE THIS METHOD AND USE LAYOUT XML FILES INSTEAD
+     * Converts dip to pixel for the set screen pager's margin function.
      * @param context
      * @param dip
      * @return
@@ -269,48 +262,8 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
      * @return
      */
     private View addSearchBar(){
-        View searchView = View.inflate(getContext(), R.layout.homescreen_searchbar_layout, null);
-        return searchView;
+        return View.inflate(getContext(), R.layout.homescreen_searchbar_layout, null);
     }
 
-    /**
-     * Creates home screen toolbar
-     * @return Toolbar widget
-     */
-    /**
-    private Toolbar createToolbar(){
-        Toolbar toolbar = new Toolbar(getContext());
-        toolbar.inflateMenu(R.menu.home_screen_actionbar);
-        toolbar.setBackgroundResource(R.color.colorPrimary);
-
-        Menu menu = toolbar.getMenu();
-        final MenuItem searchItem = menu.findItem(R.id.search);
-
-        final SearchView searchView = (SearchView) searchItem.getActionView();
-        if(searchView == null)
-        {
-            return toolbar;
-        }
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-               /* if(!searchView.isIconified())
-                {
-                    //searchView.setIconified(true);
-                }
-                //searchItem.collapseActionView();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-      //  SearchManager searchManager = (SearchManager) toolbar.getSy
-        return toolbar;
-    }*/
 }
 

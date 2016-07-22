@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="search_bar_id">searchBar</item>
+    <item type="id" name="searchview_id">searchView</item>
     <string name="search_bar_title">Search Bar</string>
     <string name="filter_title">Filter</string>
 </resources>

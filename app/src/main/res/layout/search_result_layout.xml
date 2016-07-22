@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:foregroundGravity="top"
+    android:weightSum="1"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1">
+    <xodebox.food.ui.view.MainSearchView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@id/searchview_id"
+        >
+        <EditText
+            style="?editTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_edit_frame"
+            android:hint="@string/search_hint"
+            />
+    </xodebox.food.ui.view.MainSearchView>
+    </LinearLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.9">
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/home_search_result_item"
+        android:id="@+id/search_result_listview"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
+</LinearLayout>
