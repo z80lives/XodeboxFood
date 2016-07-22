@@ -41,21 +41,27 @@ public class SearchResultView extends LinearLayoutCompat {
             Log.e(TAG, "SearchResultView: Cannot Create class. " + ex.getMessage());
         }
        // addView(rootView);
-        fetchViews();
-        prepareSearchView();
-        prepareRecyclerView();
-        populateResultList();
+        if( fetchViews() ) {
+            prepareSearchView();
+            prepareRecyclerView();
+            populateResultList();
+        }else {
+            Log.e(TAG, "SearchResultView: "+ "Cannot fetch the views" );
+            //TODO Fallback content
+        }
     }
 
 
 
-    private void fetchViews(){
+    private boolean fetchViews(){
         //FIXME: Throws null pointer exception sometimes. Display fallback content if it happens.
         searchView = (SearchView) findViewById(R.id.searchview_id);
         recyclerView = (RecyclerView) findViewById(R.id.search_result_listview);
         if (recyclerView == null) {
             Log.e(TAG, "fetchViews: Cannot find recycler view." );
+            return  false;
         }
+        return true;
     }
 
     public SearchView getSearchView() {
@@ -64,7 +70,7 @@ public class SearchResultView extends LinearLayoutCompat {
 
     private void prepareRecyclerView(){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);//Throws Null pointer exception
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
