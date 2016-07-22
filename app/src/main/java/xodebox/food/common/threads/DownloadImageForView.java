@@ -1,5 +1,6 @@
 package xodebox.food.common.threads;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -30,6 +31,7 @@ public class DownloadImageForView extends AsyncTask<String, Integer, HashMap<Ima
     ProgressBar progressBar;
     private ArrayList<ImageView> imagelst;
     ViewGroup parent = null;
+    private Context context;
 
     public DownloadImageForView(ArrayList<ImageView> imagelst) {
         super();
@@ -42,16 +44,26 @@ public class DownloadImageForView extends AsyncTask<String, Integer, HashMap<Ima
         imagelst.add(imageview);
     }
 
+    private void init(){
+        if (parent == null) {
+            return;
+        }
+        context = parent.getContext();
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         ImageView firstItem = imagelst.get(0);
 
-        //Add progress bar
+        //Add progress bar only to the first item
+        //TODO add progress bar for every item on the download list
         if(firstItem != null) {
             LinearLayout progressContainer;
             parent = (ViewGroup)firstItem.getParent();
+            init();
             int index = parent.indexOfChild(firstItem);
+
             //parent.addView(progressBar = new ProgressBar(firstItem.getContext()) , index);
             parent.addView(progressContainer = new LinearLayout(firstItem.getContext()), index);
 
@@ -83,6 +95,10 @@ public class DownloadImageForView extends AsyncTask<String, Integer, HashMap<Ima
             }catch (Exception ex)
             {
                 Log.e(TAG, "doInBackground: "+ ex.getMessage() );
+                //Add fallback image
+                //Drawable fallbackDrawable = context.getResources().getDrawable(R.drawable.image_placeholder);
+                Bitmap fallback = BitmapFactory.decodeResource(context.getResources(), R.drawable.image_placeholder);
+                retMap.put(imageview, fallback);
             }
             if(i <= params.length) i++; //Read next parameter, if there is an imageview pending
         }

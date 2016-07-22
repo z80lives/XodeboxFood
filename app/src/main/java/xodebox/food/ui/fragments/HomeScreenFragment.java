@@ -8,22 +8,22 @@ import android.support.annotation.StyleableRes;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import xodebox.food.R;
+import xodebox.food.activities.MainActivity;
 import xodebox.food.common.models.NewsItem;
 import xodebox.food.common.models.Restaurant;
 import xodebox.food.ui.adapters.ItemCardAdapter;
@@ -39,6 +39,8 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
     private static int instance=0;
     private ImageButton rollDiceButton;
 
+    private ViewGroup homeView, loadView;
+
     /**
      * Default constructor
      */
@@ -53,7 +55,7 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
         rollDiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Roll button clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Roll button clicked", Toast.LENGTH_SHORT).show();
             }
         });
         return  true;
@@ -70,13 +72,21 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
 
         //Create the root view, we are not really inflating home_screen.xml here.
         ViewGroup rootView = createLinearRootView();
+        homeView = rootView;
+        //loadView = createLinearRootView();
+
         rootView.setBackgroundResource(android.R.drawable.screen_background_light_transparent);
 
-        //Create the toolbar on top
-        Toolbar toolbar = new Toolbar(getContext());
-        toolbar.inflateMenu(R.menu.home_screen_actionbar);
-        toolbar.setBackgroundResource(R.color.colorPrimary);
-        rootView.addView(toolbar);
+
+        rootView.addView(addSearchBar());
+        EditText searchTextBar = (EditText) rootView.findViewById(R.id.home_search_edittext);
+        searchTextBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).searchButtonClicked();   //Search bar clicked
+
+            }
+        });
 
         //Create the two frame layout, as a container for the two main UI objects we want to show.
         CardView restaurantItemFrameLayout = new CardView(getContext());
@@ -114,6 +124,7 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
         };
 
 
+        // Add the two UI widgets
         for(HomeScreenViewItem item : homeScreenViewItems)
         {
             FrameLayout frameLayout = item.frameLayout = new FrameLayout(getContext());
@@ -133,12 +144,20 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
         }
 
         prepareRollButton();
-        return rootView;
+
+        ViewGroup activityViewGroup = new LinearLayout(getContext());
+     //   activityViewGroup.addView(searchView);
+        activityViewGroup.addView(rootView);
+
+        showView(homeView);
+
+        return activityViewGroup;
     }
 
 
+
     /**
-     * //FIXME THIS METHOD IS BROKEN SINCE 7/17/2016
+     * //FIXME THIS METHOD IS NOT WORKING PROPERLY SINCE 7/17/2016
      * Retrieve the layout attributes from xml file and use it.
      * Before calling the function make sure you have defined the following items in XML resource.
      *  <ul>
@@ -198,7 +217,8 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
     }
 
     /**
-     * Converts dip to pixel for the set screen pager's margin function
+     * TODO REMOVE THIS METHOD AND USE LAYOUT XML FILES INSTEAD
+     * Converts dip to pixel for the set screen pager's margin function.
      * @param context
      * @param dip
      * @return
@@ -236,5 +256,14 @@ public class HomeScreenFragment extends DynamicScreenFragment  {
     {
         this.rollDiceButton = rollDiceButton;
     }
+
+    /**
+     * Quickly fetches a view for the the search bar layout
+     * @return
+     */
+    private View addSearchBar(){
+        return View.inflate(getContext(), R.layout.homescreen_searchbar_layout, null);
+    }
+
 }
 

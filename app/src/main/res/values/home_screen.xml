@@ -16,4 +16,6 @@
         <item name="android:layout_height">0dp</item>
     </style>
 
+    <string name="search_hint">Search for nearby restaurants.</string>
+
 </resources>

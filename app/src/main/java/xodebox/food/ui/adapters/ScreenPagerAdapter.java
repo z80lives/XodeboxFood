@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+import xodebox.food.ui.fragments.CollectionsScreenFragment;
 import xodebox.food.ui.fragments.DynamicScreenFragment;
 import xodebox.food.ui.fragments.HomeScreenFragment;
 import xodebox.food.ui.nav.NavBar;
@@ -53,8 +54,12 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
         tabCount = navItems.length+1;
     }
 
-    public void  createTabs(){
+    /**
+     * Add our screen fragment to the {@code screenTabHashmap} in this method.
+     */
+    private void  createTabs(){
         screenTabHashMap.put(ScreenTabs.HOME_SCREEN, HomeScreenFragment.class);
+        screenTabHashMap.put(ScreenTabs.COLLECTION_SCREEN, CollectionsScreenFragment.class);
     }
 
     /**
@@ -85,10 +90,13 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
             if(screenTabHashMap.containsKey(item[position])) {
                 Class<Fragment> fragmentClass = screenTabHashMap.get(item[position]);
                 Fragment fragment = fragmentClass.newInstance();
-                /*Implement dice button in navigation for  home screen fragment*/
+
+                //Special code for home screen fragment
                 if (item[position] == ScreenTabs.HOME_SCREEN){
+                    /*Implement dice button in navigation for  home screen fragment*/
                     ((HomeScreenFragment)fragment).setRollDiceButton(navBar.getRollDiceButton());
                 }
+
                 return fragment;
             }
         }catch (Exception ex){
