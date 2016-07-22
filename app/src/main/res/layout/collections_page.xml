@@ -54,9 +54,9 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/restaurant_feature_item"
+        tools:listitem="@layout/collection_item"
         android:id="@+id/collection_item_list"
-        >
+        android:scrollIndicators="right">
     </ListView>
 
 </LinearLayout>
