@@ -50,8 +50,12 @@ public class SearchResultView extends LinearLayoutCompat {
 
 
     private void fetchViews(){
+        //FIXME: Throws null pointer exception sometimes. Display fallback content if it happens.
         searchView = (SearchView) findViewById(R.id.searchview_id);
         recyclerView = (RecyclerView) findViewById(R.id.search_result_listview);
+        if (recyclerView == null) {
+            Log.e(TAG, "fetchViews: Cannot find recycler view." );
+        }
     }
 
     public SearchView getSearchView() {
