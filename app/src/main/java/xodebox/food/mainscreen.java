@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 
 /**
- * Created by User on 16/5/2016.
+ * Created by Max on 16/5/2016.
  *
  */
 

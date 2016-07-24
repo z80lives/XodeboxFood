@@ -8,5 +8,6 @@ import android.content.SharedPreferences;
 public abstract class Configurations {
 
     public static final String datapref="XodeboxPref";
+    public static final int GoogleSignincode=567;
 
 }

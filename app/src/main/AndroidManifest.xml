@@ -31,8 +31,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="xodebox.food.activities.MainActivity"
-            />
+        <activity android:name="xodebox.food.activities.MainActivity" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
