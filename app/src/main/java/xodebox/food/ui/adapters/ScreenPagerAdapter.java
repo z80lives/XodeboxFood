@@ -16,6 +16,8 @@ import java.util.HashMap;
 import xodebox.food.ui.fragments.CollectionsScreenFragment;
 import xodebox.food.ui.fragments.DynamicScreenFragment;
 import xodebox.food.ui.fragments.HomeScreenFragment;
+import xodebox.food.ui.fragments.MoreScreenFragment;
+import xodebox.food.ui.fragments.NewsFeedFragment;
 import xodebox.food.ui.nav.NavBar;
 
 /**
@@ -59,7 +61,9 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
      */
     private void  createTabs(){
         screenTabHashMap.put(ScreenTabs.HOME_SCREEN, HomeScreenFragment.class);
+        screenTabHashMap.put(ScreenTabs.FEED_SCREEN, NewsFeedFragment.class);
         screenTabHashMap.put(ScreenTabs.COLLECTION_SCREEN, CollectionsScreenFragment.class);
+        screenTabHashMap.put(ScreenTabs.MORE_SCREEN, MoreScreenFragment.class);
     }
 
     /**

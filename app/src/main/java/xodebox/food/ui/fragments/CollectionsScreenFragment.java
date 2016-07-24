@@ -1,5 +1,6 @@
 package xodebox.food.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import xodebox.food.R;
-import xodebox.food.common.models.BaseModel;
 
 /**
  * TODO: Replace listView with RecyclerView. Read and create views from JSON/XML File. Refactor and clean the code.
@@ -27,6 +24,7 @@ public class CollectionsScreenFragment extends Fragment {
     private static final String TAG = "CollectionsScreen";
     private View rootView;
     private ListView listView;
+    private Context context;
 
     @Nullable
     @Override
@@ -38,7 +36,9 @@ public class CollectionsScreenFragment extends Fragment {
         rootView =   inflater.inflate(R.layout.collections_page, null);
 
         //Maybe we should do this on an Async task
-        fetchViews();
+        if(fetchViews()) {
+            populateList();
+        }
         populateList();
 
         return rootView;
@@ -47,8 +47,11 @@ public class CollectionsScreenFragment extends Fragment {
     /**
      * Fetch views from layout and store them in the class variable.
      */
-    private void fetchViews(){
+    private boolean fetchViews(){
         listView = (ListView) rootView.findViewById(R.id.collection_item_list);
+        if(listView == null)
+            return  false;
+        return true;
     }
 
     /**
@@ -57,14 +60,14 @@ public class CollectionsScreenFragment extends Fragment {
     public void populateList(){
         if (listView == null || rootView == null) {
             Log.e(TAG, "populateList: Null Exception occured! " );
-            TextView tv = new TextView(getContext());
-            tv.setText("Nothing to display!");
+            //TextView tv = new TextView();
+            //tv.setText("Nothing to display!");
 //            /rootView.addView(tv);
             return;
         }
 
         //Create a temporary list view for now
-        List<BaseModel> collectionItems = new ArrayList<>();
+        //List<BaseModel> collectionItems = new ArrayList<>();
         //Create and add few items into our list
         String[] names = {"Chalk and cheese", "Olive Garden", "Pizza Hut", "KGB", "Ali Maju", "Nandos"};
 
