@@ -96,18 +96,12 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
                 Class<Fragment> fragmentClass = screenTabHashMap.get(item[position]);
                 Fragment fragment = fragmentClass.newInstance();
 
-                //Special code for home screen fragment
-                /**if (item[position] == ScreenTabs.HOME_SCREEN){
-                    //Implement dice button in navigation for  home screen fragment
-                    ((HomeScreenFragment)fragment).setRollDiceButton(navBar.getRollDiceButton());
-                }**/
                 //Special code for objects implementing the roll button interface
                 if( fragment instanceof RollDiceInterface )
                 {
                     RollDiceInterface rollableFragment = (RollDiceInterface) fragment;
                     rollableFragment.setRollDiceImage(navBar.getRollDiceButton());
                 }
-
 
                 return fragment;
             }

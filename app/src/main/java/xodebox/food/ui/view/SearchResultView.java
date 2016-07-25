@@ -29,7 +29,11 @@ public class SearchResultView extends LinearLayoutCompat {
     private SearchView searchView;
     private RecyclerView recyclerView;
 
-
+    /**
+     * Constructs the search result view.
+     * Tries to inflate the search result view from the {@code layout/search_result_layout.xml} file.
+     * @param context Android {@link Context} Object
+     */
     public SearchResultView(Context context) {
         super(context);
         this.context = context;
@@ -51,8 +55,15 @@ public class SearchResultView extends LinearLayoutCompat {
         }
     }
 
-
-
+    /**
+     * Assign all View class attributes
+     * Following ids must exist in the inflated view.
+     * <ul>
+     *     <li>searchView</li>
+     *     <li>recyclerView</li>
+     * </ul>
+     * @return {@code false} only if recycler view is not found
+     */
     private boolean fetchViews(){
         //FIXME: Throws null pointer exception sometimes. Display fallback content if it happens.
         searchView = (SearchView) findViewById(R.id.searchview_id);
@@ -64,16 +75,28 @@ public class SearchResultView extends LinearLayoutCompat {
         return true;
     }
 
+    /**
+     * Used in the {@link xodebox.food.activities.MainActivity}
+     * @return The searchView object. That is the view object where user can enter the data.
+     *
+     * @see xodebox.food.activities.MainActivity
+     */
     public SearchView getSearchView() {
         return searchView;
     }
 
+    /**
+     * Prepare recycler View
+     */
     private void prepareRecyclerView(){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);//Throws Null pointer exception
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
+    /**
+     * Prepare Search View
+     */
     private void prepareSearchView(){
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
@@ -83,6 +106,9 @@ public class SearchResultView extends LinearLayoutCompat {
         });
     }
 
+    /**
+     * Populate search result with dummy data
+     */
     private void populateResultList(){
         List<BaseModel> searchResultModels = new ArrayList<>();
         for(int i=0; i < 3; i++){
@@ -90,10 +116,6 @@ public class SearchResultView extends LinearLayoutCompat {
             resultModel.addProperty("name", "item "+i);
             searchResultModels.add(resultModel);
         }
-
-        //ListAdapter<String> stringListAdapter =
-        //final ArrayAdapter<String> searchResultAdapter = new ArrayAdapter<String>(context, R.layout.home_search_result_item,
-        //        R.id.name, lstData);
 
         RecyclerView.Adapter searchResultAdapter = new SearchRestaurantAdapter(searchResultModels);
 

@@ -31,7 +31,12 @@ import xodebox.food.ui.view.HighlightCardView;
 import xodebox.food.ui.view.RestaurantCardView;
 
 /**
- * Created by shath on 7/25/2016.
+ * Load Home page fragment statically using the xml layout files.
+ * Fragment for home page.
+ * TODO: Allow pagerMargin to be set through XML editor.
+ * <br />
+ * @see xodebox.food.ui.adapters.ScreenPagerAdapter
+ * @author shath
  */
 public class HomePageFragment extends Fragment implements RollDiceInterface, FragmentWithSearchBar {
     private static final String TAG = "HomePageFragment";
@@ -41,6 +46,7 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
 
     final private int pagerMargin = 16;
 
+    /**{@inheritDoc}**/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,6 +58,11 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
         return rootView;
     }
 
+    /**
+     * Search and set size of two view items manually. This is a temporary solution.
+     * TODO: Remove this function, and instead read from a xml value file to set the weight values.
+     * @param root Root view object to search
+     */
     void manualSize(View root){
         FrameLayout homeFrame = (FrameLayout) root.findViewById(R.id.home_item_frame);
         //Display display = ((WindowManager) root.getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -73,8 +84,12 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
         highlightFrame.setLayoutParams(params);
     }
 
-
-    private boolean fetchViews(View root){
+    /**
+     * Fetch views and store it inside the class variables.
+     * @param root View object to search
+     * @return {@code false} on {@link NullPointerException}.
+     */
+    private boolean fetchViews(View root) {
         if (getActivity() instanceof ActivityWithSearchView)
             parentActivity = (ActivityWithSearchView) getActivity();
 
@@ -84,7 +99,11 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
         return true;
     }
 
-
+    /**
+     * Prepare all the views
+     * Todo: Catch null pointer exceptions and return false.
+     * @return False on exception
+     */
     private boolean prepareViews(){
         prepareRollButton();
         prepareSearchButton();
@@ -97,6 +116,11 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
     // Internal
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Prepare View Pager for Banner items.
+     * Temporary solution.
+     * @param homeItemsPager
+     */
     private void prepareHomeItemsPager(ViewPager homeItemsPager){
 
         //Read dummy files
@@ -114,6 +138,11 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
         prepareItemsPager(homeItemsPager, restaurants, RestaurantCardView.class);
     }
 
+    /**
+     * Prepare ViewPager for news item.
+     * Temporary solution.
+     * @param newsItemsPager ViewPager for news Item.
+     */
     private void prepareNewsItemPager(ViewPager newsItemsPager){
         //Read dummy files
         InputStream restaurantXMLFile = null;
@@ -128,6 +157,12 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
 
     }
 
+    /**
+     * Prepare Items pager
+     * @param itemsPager View Pager for the items to be displayed.
+     * @param models ArrayList of {@link xodebox.food.common.models.BaseModel} class.
+     * @param viewClass An object of class {@code View}, preferrably {@link xodebox.food.ui.view.AbstractCardView}.
+     */
     private void prepareItemsPager(ViewPager itemsPager, ArrayList models, Class<?> viewClass){
 
         if(!View.class.isAssignableFrom(viewClass))
@@ -147,15 +182,19 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
     // Search button code
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Prepare the search button.
+     */
     private void prepareSearchButton(){
         searchButton.setOnClickListener(getSearchListener());
     }
 
+    /** {@inheritDoc} **/
     @Override
     public View getSearchButton() {
         return (View) searchButton;
     }
-
+    /** {@inheritDoc} **/
     @Override
     public View.OnClickListener getSearchListener()  {
         return new View.OnClickListener() {
@@ -172,11 +211,16 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
     ///////////////////////////////////////////////////////////////////////////
     private ImageButton rollDiceButton;
 
+    /** {@inheritDoc} **/
     @Override
     public void setRollDiceImage(ImageButton rollDiceImage) {
         rollDiceButton = rollDiceImage;
     }
 
+    /**
+     * Make sure to {@link #setRollDiceImage(ImageButton)} before calling this method.
+     * @return {@code false} if the roll button image was not set.
+     */
     private boolean prepareRollButton(){
         if (rollDiceButton == null) {
             return false;

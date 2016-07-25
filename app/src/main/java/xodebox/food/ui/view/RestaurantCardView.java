@@ -38,6 +38,9 @@ public class RestaurantCardView extends AbstractCardView {
     private TextView tvRestaurantName;
     private ImageView ivRestaurantImage;
 
+    /**
+     * Not really necessary, this is just here for readability.
+     */
     private enum Attrib{
         name,
         image_url,
@@ -45,17 +48,21 @@ public class RestaurantCardView extends AbstractCardView {
     }
 
     /**
-     *  Construct the View using the data] model
-     * @param context
+     *  Construct the View from a data model related to {@link BaseModel}
+     * @param context Context
      */
     public RestaurantCardView(Context context, BaseModel model) {
         super(context, model);
     }
 
-    public void onCreate() {
+    /**
+     * Create
+     */
+    protected void onCreate() {
         setTextView(R.id.textview_restaurant_description, Attrib.name.toString());
     }
 
+    /**{@inheritDoc}**/
     @Override
     public void onLoad() {
         String strImageUrl = getAttribute(Attrib.image_url.toString());
@@ -64,30 +71,20 @@ public class RestaurantCardView extends AbstractCardView {
 
     }
 
-
-    public ImageView getImageView(){
-        return ivRestaurantImage;
-    }
-
     ///////////////////////////////////////////////////////////////////////////
     // Local Methods
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Inflate restuarant Card
+     * @return view
+     */
     protected View inflateResource(){
         View rootView = inflate(getContext(), R.layout.restaurant_feature_item, this);
         ivRestaurantImage = (ImageView) findViewById(R.id.imageview_restaurant_image);
 
         return rootView;
 
-        /*
-        int paddingPixel = 25;
-        float density = getContext().getResources().getDisplayMetrics().density;
-        int paddingDp = (int)(paddingPixel * density);
-
-        restImage.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
-*/
-        //elevate();
-       // this.setElevation(1.5f);
     }
 
     @TargetApi(21)

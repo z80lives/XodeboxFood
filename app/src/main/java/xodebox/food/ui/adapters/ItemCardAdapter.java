@@ -14,11 +14,17 @@ import xodebox.food.common.models.BaseModel;
 import xodebox.food.ui.view.AbstractCardView;
 
 /**
- * Created by shath on 7/4/2016.
+ * Adapter for viewPager, intended to list a group of items like a slide show.
+ * <ol>
+ * <li>To use pass the item list and Class to be constructed like this: <br/>
+ * {@code ItemCardAdapter adapter = new ItemCardAdapter(imageViewCards, ImageViewCard.class); }
+ * </li><br />
+ * <li>Then attach it to the page view. <br /> {@code myPager.setAdapter(adapter);} </li>
+ *</ol>
+ * @see android.support.v4.view.ViewPager
  */
 public class ItemCardAdapter extends PagerAdapter {
     private static final String TAG = "ItemCardAdapter";
-    //private  ArrayAdapter<ViewClass> arrayAdapter;
     private ArrayList<BaseModel> itemList;
     private Class<?> ViewClass;
 
@@ -32,33 +38,44 @@ public class ItemCardAdapter extends PagerAdapter {
         this.itemList = itemList;
     }
 
+    /**
+     *
+     * @return The size of the item list.
+     */
     @Override
     public int getCount() {
         return itemList.size();
-        //return 1;
     }
 
+    /**
+     * Android might crash if memory is not properly released.
+     * @param container It is necessary to check that this is not null.
+     * @param position Position of the object being released
+     * @param object The object being released.
+     */
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
        // super.destroyItem(container, position, object);       //Removed because of a bug
         ((ViewGroup) container).removeView((View)object);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return object==view;
     }
 
-    /**
-     * Insantiate an object of the previously defined class, in the constructor. The class must be a
-     * valid ViewGroup/View class which will be added into the container.
-     * @param container
-     * @param position
-     * @return View object of ViewClass on success. Fallback content on failure.
-     */
+
+    /** {@inheritDoc} **/
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-
+        /* I am using java reflection to construct an object of vClass here.
+         This is just a temporary solution.
+         I have to refactor this code, and get rid of the reflection methods before
+         something unintended happens because of this. (Ibrahim, shath)
+         */
         try {
             /* Use java.reflection to instantiate an object of the ViewClass  */
             Class vClass = Class.forName(ViewClass.getName());              //Retrieve the ViewClass name

@@ -10,14 +10,17 @@ import android.view.ViewGroup;
 import xodebox.food.R;
 
 /**
- * Created by shath on 7/23/2016.
+ * Fragment code for the More Screen.
+ * Inflate the more screen layout file.
+ * @see xodebox.food.ui.adapters.ScreenPagerAdapter
+ * @author shath
  */
 public class MoreScreenFragment extends Fragment {
 
+    /** {@inheritDoc}**/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.more_page, null);
     }
 }

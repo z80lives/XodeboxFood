@@ -19,6 +19,7 @@ import xodebox.food.R;
  * TODO: Replace listView with RecyclerView. Read and create views from JSON/XML File. Refactor and clean the code.
  * FIXME: Possible bug occurs occasionally while inflating the layout
  * Created by shath on 7/22/2016.
+ * @see xodebox.food.ui.adapters.ScreenPagerAdapter
  */
 public class CollectionsScreenFragment extends Fragment {
     private static final String TAG = "CollectionsScreen";
@@ -26,12 +27,11 @@ public class CollectionsScreenFragment extends Fragment {
     private ListView listView;
     private Context context;
 
+    /** {@inheritDoc} **/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        //rootView = new FrameLayout(getContext());
-
 
         rootView =   inflater.inflate(R.layout.collections_page, null);
 
@@ -39,7 +39,6 @@ public class CollectionsScreenFragment extends Fragment {
         if(fetchViews()) {
             populateList();
         }
-       // populateList();
 
         return rootView;
     }
@@ -55,7 +54,8 @@ public class CollectionsScreenFragment extends Fragment {
     }
 
     /**
-     * Populate our list
+     * Populate our list, with temporary data.
+     * TODO: Fetch data from the network and populate using an AsyncTask.
      */
     public void populateList(){
         if (listView == null || rootView == null) {
@@ -67,7 +67,7 @@ public class CollectionsScreenFragment extends Fragment {
         }
 
         //Create a temporary list view for now
-        //List<BaseModel> collectionItems = new ArrayList<>();
+
         //Create and add few items into our list
         String[] names = {"Chalk and cheese", "Olive Garden", "Pizza Hut", "KGB", "Ali Maju", "Nandos"};
 
