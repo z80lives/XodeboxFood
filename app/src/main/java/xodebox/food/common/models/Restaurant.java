@@ -16,10 +16,10 @@ public class Restaurant extends BaseModel {
     }
 
 
-    public void set(Attrib attrib, String value){
+/*    public void set(Attrib attrib, String value){
         String key = attrib.toString();
         addProperty(key, value);
-    }
+    }*/
 
     /**
      * Empty constructor

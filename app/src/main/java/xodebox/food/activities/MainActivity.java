@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import xodebox.food.R;
 import xodebox.food.ui.adapters.ScreenPagerAdapter;
+import xodebox.food.ui.interfaces.ActivityWithSearchView;
 import xodebox.food.ui.nav.NavBar;
 import xodebox.food.ui.view.SearchResultView;
 import xodebox.food.ui.viewpagers.MainscreenViewPager;
@@ -20,7 +21,7 @@ import xodebox.food.ui.viewpagers.MainscreenViewPager;
 /**
  * Main activity
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ActivityWithSearchView {
 
    // private ActionBar actionBar;
     private SearchResultView searchViewGroup;

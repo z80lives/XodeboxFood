@@ -1,28 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    >
 
+<LinearLayout
+    style="@style/CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:padding="15dp"
+    android:background="@drawable/card_background">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:minHeight="@android:dimen/thumbnail_height"
+        android:minWidth="@android:dimen/thumbnail_width"
+        >
     <ImageView
         android:contentDescription="@string/startscreen_media_pic_desc"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@android:drawable/ic_menu_gallery"
         android:scaleType="fitXY"
         android:id="@+id/imageview_restaurant_image"
         android:layout_margin="5dp"
-        android:padding="4dp" />
+        android:padding="4dp"
 
-    <TextView
+        />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.3"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="0.5"
+        android:layout_gravity="center">
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/placeholder_rest_description"
         android:id="@+id/textview_restaurant_description"
         />
+    </LinearLayout>
 </LinearLayout>
+</android.support.v7.widget.CardView>

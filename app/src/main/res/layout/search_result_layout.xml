@@ -11,15 +11,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1">
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/colorPrimary"
+        >
+
     <xodebox.food.ui.view.MainSearchView
+        style="@android:style/Widget.EditText"
+        android:background="@android:drawable/editbox_background_normal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@android:dimen/app_icon_size"
         android:id="@id/searchview_id"
         >
         <EditText
-            style="?editTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/search_edit_frame"

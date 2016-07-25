@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import java.util.Arrays;
@@ -18,6 +17,7 @@ import xodebox.food.R;
 
 /**
  * TODO: Replace listView with RecyclerView. Read and create views from JSON/XML File. Refactor and clean the code.
+ * FIXME: Possible bug occurs occasionally while inflating the layout
  * Created by shath on 7/22/2016.
  */
 public class CollectionsScreenFragment extends Fragment {
@@ -30,7 +30,7 @@ public class CollectionsScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        rootView = new FrameLayout(getContext());
+        //rootView = new FrameLayout(getContext());
 
 
         rootView =   inflater.inflate(R.layout.collections_page, null);
@@ -39,7 +39,7 @@ public class CollectionsScreenFragment extends Fragment {
         if(fetchViews()) {
             populateList();
         }
-        populateList();
+       // populateList();
 
         return rootView;
     }
@@ -73,7 +73,7 @@ public class CollectionsScreenFragment extends Fragment {
 
 
         //A temporary adapter for our list view
-        ArrayAdapter<String> collectionsAdapter = new ArrayAdapter<>(rootView.getContext(), R.layout.collection_item, R.id.thumb_rest_name, Arrays.asList(names) );
+        ArrayAdapter<String> collectionsAdapter = new ArrayAdapter<>(rootView.getContext(), R.layout.collection_item, R.id.name, Arrays.asList(names) );
 
         //Set the adapter to the view
         listView.setAdapter(collectionsAdapter);
