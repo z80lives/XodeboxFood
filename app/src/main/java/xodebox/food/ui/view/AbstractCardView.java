@@ -27,6 +27,7 @@ public abstract class AbstractCardView extends FrameLayout{
     //private ArrayList<String> attributes;       //Todo: use HashMap instead of ArrayList
     private HashMap<String, String> attributes;
     private HashMap<ImageView, String> imageViewStringHashMap;      //Hashmap of all images to be stored
+    private BaseModel originalModel;
     boolean loadComplete = false;
     View root;
     Context context;
@@ -53,12 +54,17 @@ public abstract class AbstractCardView extends FrameLayout{
         newInstance(model);
     }
 
+    public BaseModel getModel(){
+        return originalModel;
+    }
+
     /**
      * This method properly initialize the class.
      * @param model Input Data Model.
      */
     private void newInstance(BaseModel model){
         this.context = getContext();
+        this.originalModel = model;     //Store original model to be used later.
         attributes = (HashMap<String, String>) model.getAttributes();       //Copy all the attributes from the model
         imageViewStringHashMap = new HashMap<ImageView, String>();
         root = inflateResource();
@@ -157,3 +163,4 @@ public abstract class AbstractCardView extends FrameLayout{
 
 
 }
+

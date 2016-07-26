@@ -20,6 +20,7 @@ public class SplashActivity extends Activity {
         this.setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
         startActivity(new Intent(this,login_registrationActivity.class));
+//        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

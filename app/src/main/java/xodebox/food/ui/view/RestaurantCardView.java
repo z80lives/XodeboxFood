@@ -2,11 +2,15 @@ package xodebox.food.ui.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import xodebox.food.R;
+import xodebox.food.activities.RestaurantActivity;
 import xodebox.food.common.models.BaseModel;
 import xodebox.food.common.threads.DownloadImageForView;
 
@@ -33,7 +37,7 @@ import xodebox.food.common.threads.DownloadImageForView;
  * </table>
  * Created by shath on 7/4/2016.
  */
-public class RestaurantCardView extends AbstractCardView {
+public class RestaurantCardView extends AbstractClickableCardView {
    // private TextView tvRestaurantDescription;
     private TextView tvRestaurantName;
     private ImageView ivRestaurantImage;
@@ -45,6 +49,13 @@ public class RestaurantCardView extends AbstractCardView {
         name,
         image_url,
         description
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        getContext().startActivity(new Intent(getContext(), RestaurantActivity.class));
+        Log.d("Restaurant", "onClick: Clicked " + getModel().getAttributesList().toString() );
     }
 
     /**
@@ -60,6 +71,7 @@ public class RestaurantCardView extends AbstractCardView {
      */
     protected void onCreate() {
         setTextView(R.id.textview_restaurant_description, Attrib.name.toString());
+        setClickable(true);
     }
 
     /**{@inheritDoc}**/
@@ -70,6 +82,14 @@ public class RestaurantCardView extends AbstractCardView {
         downloadTask.execute(strImageUrl);
 
     }
+
+    public RestaurantCardView(Context context, BaseModel model, AttributeSet attrs) {
+        super(context, model, attrs);
+    }
+/**@Override
+    public void setClickListener(OnClickListener defaultClickListener) throws NoClickListenerException {
+        super.setClickListener(defaultClickListener);
+    }**/
 
     ///////////////////////////////////////////////////////////////////////////
     // Local Methods
