@@ -1,6 +1,7 @@
 package xodebox.food;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -9,14 +10,19 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 /**
- * Created by User on 16/5/2016.
- *
+ * Created by Max on 16/5/2016.
+ *sample to show library functionalities i implemented
  */
 
 
@@ -29,6 +35,7 @@ public class mainscreen extends AppCompatActivity {
     RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    Context ctx;
 
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
@@ -38,9 +45,7 @@ public class mainscreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainscreen);
-
-
-
+        ctx=this;
         mNavItems.add(new NavItem("Home", "Meetup destination", R.drawable.folder));
         mNavItems.add(new NavItem("Preferences", "Change your preferences", R.drawable.folder));
         mNavItems.add(new NavItem("About", "Get to know about us", R.drawable.folder));
@@ -87,7 +92,29 @@ public class mainscreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        //call  using http request and show it in the imageview widget
+        final ImageView imgview= (ImageView) findViewById(R.id.imageView);
 
+        int restaurantid=2;
+        String URL="http://foodapp.xodebox.com/?type=4&restaurant="+restaurantid;
+        HttpRequest request=new HttpRequest(this);
+        request.SendGetrequest(URL, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.v("Volley", "Response is: " + response);
+                        Gson g = new Gson();
+
+                        Image img = g.fromJson(response, Image.class);
+                        Picasso.with(ctx).setIndicatorsEnabled(true);
+                        Picasso.with(ctx).load(img.image_link).into(imgview);
+                       // System.out.println(g.toJson(person)); // {"name":"John"}
+                    }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.v("Volley", "Error,Response is: " + error.getMessage());
+                    }
+                }
+        );
 
 
 
