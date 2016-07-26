@@ -174,6 +174,7 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
         ItemCardAdapter itemCardAdapter = new ItemCardAdapter(models, viewClass);
         itemsPager.setPageMargin(Screen.convertDip2Pixels(getContext(), pagerMargin));
         itemsPager.setAdapter(itemCardAdapter);
+        itemsPager.setOffscreenPageLimit(2);
     }
 
 
