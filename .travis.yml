@@ -1,4 +1,9 @@
 language: android
+jdk: oraclejdk7
+env:
+  global:
+    - ANDROID_TARGET=android-15
+    - ANDROID_ABI=armeabi-v7a
 android:
   components:
     - tools
@@ -6,7 +11,6 @@ android:
     - build-tools-23.0.2
     - android-23
     - extra-android-m2repository
-
+    - extra-google-m2repository
 script:
    - ./gradlew build connectedCheck
-   - extra-google-m2repository
