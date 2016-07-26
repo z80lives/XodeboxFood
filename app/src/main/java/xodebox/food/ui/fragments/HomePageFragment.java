@@ -134,7 +134,6 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
 
         //Prepare array to display
         ArrayList<Restaurant> restaurants= Restaurant.buildArrayList(restaurantXMLFile, Restaurant.class);
-
         prepareItemsPager(homeItemsPager, restaurants, RestaurantCardView.class);
     }
 
