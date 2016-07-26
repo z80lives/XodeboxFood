@@ -6,15 +6,19 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
 
 import xodebox.food.R;
 import xodebox.food.common.models.BaseModel;
+import xodebox.food.common.threads.DownloadImageForView;
 
 /**
  * Abstract view for all cards.
+ * Remember to call onLoad() method, after construction of this object by the adapter. Otherwise, the
+ * card view may not be properly prepared to display.
  * All view objects should inflate their XML layout, and name attribute fields of their modifiable child views.
  * Created by shath on 7/8/2016.
  */
@@ -22,6 +26,8 @@ public abstract class AbstractCardView extends FrameLayout{
     private static final String TAG = "AbstractCardView";
     //private ArrayList<String> attributes;       //Todo: use HashMap instead of ArrayList
     private HashMap<String, String> attributes;
+    private HashMap<ImageView, String> imageViewStringHashMap;      //Hashmap of all images to be stored
+    boolean loadComplete = false;
     View root;
     Context context;
 
@@ -33,7 +39,6 @@ public abstract class AbstractCardView extends FrameLayout{
      */
     public AbstractCardView(Context context, BaseModel model) {
         super(context);
-        //attributes = model.getAttributesList();
        newInstance(model);
     }
 
@@ -48,26 +53,56 @@ public abstract class AbstractCardView extends FrameLayout{
         newInstance(model);
     }
 
+    /**
+     * This method properly initialize the class.
+     * @param model Input Data Model.
+     */
     private void newInstance(BaseModel model){
         this.context = getContext();
-        attributes = (HashMap<String, String>) model.getAttributes();
+        attributes = (HashMap<String, String>) model.getAttributes();       //Copy all the attributes from the model
+        imageViewStringHashMap = new HashMap<ImageView, String>();
         root = inflateResource();
-
-        root.setBackgroundResource(android.R.drawable.screen_background_light);
-        root.setBackgroundResource(R.drawable.card_background);
-        //int padding = getDP(16);
-        //root.setPadding(padding, padding, padding, padding);
-
         onCreate();
     }
 
-    public  abstract void onCreate();
+    protected   abstract void onCreate();
     protected abstract View inflateResource();
-    public void onLoad(){}
+
+    /**
+     * This method will be executed after it's creator
+     */
+    public void onLoad(){
+        loadImages();
+        loadComplete = true;
+    }
+
+    /**
+     * Should be called when the view needs to be manually refreshed
+     */
+    public void update(){
+        loadImages();
+    }
+
+    /**
+     * Loads all the images found in the HashMap
+     */
+    private void loadImages(){
+        if(! imageViewStringHashMap.isEmpty()){
+            for(ImageView imageView: imageViewStringHashMap.keySet())
+            {
+                String url = imageViewStringHashMap.get(imageView);
+                if(url != null)
+                {
+                    new DownloadImageForView(imageView).execute(url);
+                }
+            }
+        }
+    }
 
     /**
      * Add a string to the attribute list.
      * @param attrib String to store
+     * @deprecated Avoid modifying the values given by the model.
      */
     public void addAttribute(String key, String attrib){
         attributes.put(key, attrib);
@@ -97,19 +132,28 @@ public abstract class AbstractCardView extends FrameLayout{
         TextView textView = (TextView) findViewById(res);
         if(textView == null)
         {
-            Log.e(TAG, "setTextView: Resource with id "+ res + "not found." );
+            Log.e(TAG, "setTextView: Resource with id "+ res + " was not found." );
             return  null;
         }
         textView.setText(getAttribute(key));
         return  textView;
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // Internal
-    ///////////////////////////////////////////////////////////////////////////
-    private int getDP(int pixel) {
-        float density = context.getResources().getDisplayMetrics().density;
-        return (int) (pixel * density);
+    /**
+     * Sets the image url. Image set by the card view will be downloaded automatically.
+     * @param res Image resource
+     * @param key A valid URL in string format
+     * @return Image view of the object.
+     */
+    public ImageView setImageView(@IdRes int res, String key){
+        ImageView imageView = (ImageView) findViewById(res);
+        if (imageView == null)
+        {
+            Log.e(TAG, "setImageView: Resourse with id "+res+" was not found.");
+        }
+        imageViewStringHashMap.put(imageView, getAttribute(key));
+        return  imageView;
     }
+
 
 }

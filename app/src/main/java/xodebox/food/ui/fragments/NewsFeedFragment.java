@@ -11,10 +11,13 @@ import android.widget.FrameLayout;
 import xodebox.food.R;
 
 /**
- * Created by shath on 7/23/2016.
+ * The fragment code for the Social Feed.
+ * @see xodebox.food.ui.adapters.ScreenPagerAdapter
+ * @author shath
  */
 public class NewsFeedFragment extends Fragment {
     private View rootView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

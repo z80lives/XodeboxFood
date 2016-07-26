@@ -34,8 +34,13 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
+
+
 /**
+ * TODO: Safely delete this class and it's layouts.
  * A login screen that offers login via email/password.
+ * ////to be deleted
+ * @deprecated It seems that we are not using this.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 

@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+import xodebox.food.ui.interfaces.RollDiceInterface;
 import xodebox.food.ui.fragments.CollectionsScreenFragment;
 import xodebox.food.ui.fragments.DynamicScreenFragment;
-import xodebox.food.ui.fragments.HomeScreenFragment;
+import xodebox.food.ui.fragments.HomePageFragment;
 import xodebox.food.ui.fragments.MoreScreenFragment;
 import xodebox.food.ui.fragments.NewsFeedFragment;
 import xodebox.food.ui.nav.NavBar;
@@ -60,7 +61,7 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
      * Add our screen fragment to the {@code screenTabHashmap} in this method.
      */
     private void  createTabs(){
-        screenTabHashMap.put(ScreenTabs.HOME_SCREEN, HomeScreenFragment.class);
+        screenTabHashMap.put(ScreenTabs.HOME_SCREEN, HomePageFragment.class);
         screenTabHashMap.put(ScreenTabs.FEED_SCREEN, NewsFeedFragment.class);
         screenTabHashMap.put(ScreenTabs.COLLECTION_SCREEN, CollectionsScreenFragment.class);
         screenTabHashMap.put(ScreenTabs.MORE_SCREEN, MoreScreenFragment.class);
@@ -95,10 +96,11 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
                 Class<Fragment> fragmentClass = screenTabHashMap.get(item[position]);
                 Fragment fragment = fragmentClass.newInstance();
 
-                //Special code for home screen fragment
-                if (item[position] == ScreenTabs.HOME_SCREEN){
-                    /*Implement dice button in navigation for  home screen fragment*/
-                    ((HomeScreenFragment)fragment).setRollDiceButton(navBar.getRollDiceButton());
+                //Special code for objects implementing the roll button interface
+                if( fragment instanceof RollDiceInterface )
+                {
+                    RollDiceInterface rollableFragment = (RollDiceInterface) fragment;
+                    rollableFragment.setRollDiceImage(navBar.getRollDiceButton());
                 }
 
                 return fragment;
@@ -144,19 +146,25 @@ public class ScreenPagerAdapter extends FragmentPagerAdapter {
     public static class EmptyFragment extends DynamicScreenFragment{
         int position;
         String title;
+        private static final String TAG = "EmptyFragment";
 
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
            // return super.onCreateView(inflater, container, savedInstanceState);
-            ViewGroup root = createLinearRootView();
-            Bundle bundle = this.getArguments();
-            position = bundle.getInt("position", 0);
-            title = bundle.getString("name", "Unknown");
+            ViewGroup root = null;
+            try {
+                root = createLinearRootView();
+                Bundle bundle = this.getArguments();
+                position = bundle.getInt("position", 0);
+                title = bundle.getString("name", "Unknown");
 
-            TextView textView = new TextView(root.getContext());
-            textView.setText("Empty fragment for "+ title+ " at " + position);
-            root.addView(textView);
+                TextView textView = new TextView(root.getContext());
+                textView.setText("Empty fragment for " + title + " at " + position);
+                root.addView(textView);
+            }catch (Exception ex){
+                Log.e(TAG, "onCreateView: Cannot create Empty fragment", ex);
+            }
             return root;
         }
     }
