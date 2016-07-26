@@ -18,6 +18,10 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -94,15 +98,31 @@ public class mainscreen extends AppCompatActivity {
 
         //call  using http request and show it in the imageview widget
         final ImageView imgview= (ImageView) findViewById(R.id.imageView);
-
         int restaurantid=2;
-        String URL="http://foodapp.xodebox.com/?type=4&restaurant="+restaurantid;
+        String URL=Configs.BackEndUrl+"?type=4&restaurant="+restaurantid;
         HttpRequest request=new HttpRequest(this);
         request.SendGetrequest(URL, new VolleyCallback() {
                     @Override
                     public void onSuccess(String response) {
                         Log.v("Volley", "Response is: " + response);
                         Gson g = new Gson();
+
+                        //fetch the images if they are many
+                        //http://stackoverflow.com/questions/2770273/pdostatement-to-json
+                        JSONArray jsonarray = null;
+                        try {
+                            jsonarray = new JSONArray(response);
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+
+
+
+                                // String name = jsonobject.getString("name");
+                                //String url = jsonobject.getString("url");
+                            }
+                        } catch (JSONException e) {
+
+                        }
 
                         Image img = g.fromJson(response, Image.class);
                         Picasso.with(ctx).setIndicatorsEnabled(true);

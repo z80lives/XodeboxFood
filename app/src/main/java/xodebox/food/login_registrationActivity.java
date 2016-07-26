@@ -230,7 +230,7 @@ public class login_registrationActivity extends AppCompatActivity implements Goo
 
 
     public void Login_user(String username,String password_token){
-        String URL="http://foodapp.xodebox.com/?type=2&email="+username+"&pass="+password_token;
+        String URL=Configs.BackEndUrl+"?type=2&email="+username+"&pass="+password_token;
         HttpRequest request=new HttpRequest(context);
         request.SendGetrequest(URL, new VolleyCallback() {
                     @Override
@@ -252,7 +252,7 @@ public class login_registrationActivity extends AppCompatActivity implements Goo
     public void Register_user(final String username, final String password_token){
         String guid=UUID.randomUUID().toString();
         Log.v("guid",guid);
-        String URL="http://foodapp.xodebox.com/?type=1&email="+username+"&pass="+password_token+"&guid="+guid;
+        String URL=Configs.BackEndUrl+"?type=1&email="+username+"&pass="+password_token+"&guid="+guid;
         Log.v("URLvolley",URL);
         HttpRequest request=new HttpRequest(this);
         request.SendGetrequest(URL, new VolleyCallback() {
