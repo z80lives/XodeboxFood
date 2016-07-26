@@ -1,5 +1,7 @@
 language: android
-jdk: oraclejdk7
+jdk:
+  - oraclejdk7
+  - oraclejdk8
 env:
   global:
     - ANDROID_TARGET=android-15
@@ -12,7 +14,16 @@ android:
     - android-23
     - extra-android-m2repository
     - extra-google-m2repository
+    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
 script:
-   - ./gradlew connectedCheck
+    - ./gradlew
+    - ./gradlew assembleAndroidTest
+    - ./gradlew assembleRelease
+    - ./gradlew testDebugUnitTest
+    - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+    - emulator -avd test -no-skin -no-audio -no-window &
+    - android-wait-for-emulator
+    - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+    - ./gradlew connectedCheck
 before_install:
  - chmod +x gradlew
