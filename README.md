@@ -1,4 +1,12 @@
-# XodeboxFood
+# Zhilli Food Finder 
+
+## Build Status ##
+###Branch2 - Test ###
+Branch 2 with Unit and Instrumented tests.
+[![Build Status](https://travis-ci.org/z80lives/XodeboxFood.svg?branch=branch2-test)](https://travis-ci.org/z80lives/XodeboxFood)
+
+## About ##
+
 This app is basically a food finder app, where people in a specific location could see what type of cafes , 
 restaurant, bar, bistro, and etc, is available around that specific area, it’s a left(no), right (yes) system. ,
 It shows the menu, ratings, review and pictures of the restaurant, and might even have discount codes. 
