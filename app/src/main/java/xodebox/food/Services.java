@@ -22,6 +22,9 @@ public class Services {
 
 
 public  ArrayList<Restaurant> GetNearbyRestaurant(int useraddress,Context ctx){
+    
+    //// TODO: 27/07/16 :Generate random addresses nearby my location and assign them to the sql table restaurants -http://gis.stackexchange.com/questions/25877/how-to-generate-random-locations-nearby-my-location
+
     NearByRestaurants=null;
     //call  using http request that will return a set of restaurants
     String URL=Configs.BackEndUrl+"?type=5&address="+useraddress;
@@ -44,8 +47,6 @@ public  ArrayList<Restaurant> GetNearbyRestaurant(int useraddress,Context ctx){
                         Log.v("Volley", "Response is: " + response + "(invalid json array)");
 
                     }
-
-
                     //Picasso.with(ctx).setIndicatorsEnabled(true);
                     //Picasso.with(ctx).load(img.image_link).into(imgview);
                 }
@@ -55,8 +56,6 @@ public  ArrayList<Restaurant> GetNearbyRestaurant(int useraddress,Context ctx){
                 }
             }
     );
-
-
     return null;
 
 }
