@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import xodebox.food.R;
+import xodebox.food.login_registrationActivity;
 
 /**
  * Created by Ibrahim shath on 5/28/2016.
@@ -18,8 +19,8 @@ public class SplashActivity extends Activity {
 
         this.setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
-        //startActivity(new Intent(this,login_registrationActivity.class));
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this,login_registrationActivity.class));
+        //startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }
