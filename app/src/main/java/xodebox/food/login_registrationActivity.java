@@ -223,7 +223,7 @@ public class login_registrationActivity extends AppCompatActivity implements Goo
     * open the next activity after the login/registration process
    **/
     public void GoToNextActivity(){
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, mainscreen.class);
         startActivity(intent);
         finish();       //We don't want this activity to linger after the login process is complete.
     }

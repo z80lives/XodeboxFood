@@ -1,7 +1,11 @@
 package xodebox.food;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,19 +16,23 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
+
 import java.util.ArrayList;
 
 /**
  * Created by Max on 16/5/2016.
- *sample to show library functionalities i implemented
+ *sample to show library functions i implemented from the backend and how to call/use them
  */
 
 
+public class mainscreen extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-public class mainscreen extends AppCompatActivity {
 
-
-    private static String TAG =mainscreen.class.getSimpleName();
+    private static String TAG = mainscreen.class.getSimpleName();
     ListView mDrawerList;
     RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -34,12 +42,11 @@ public class mainscreen extends AppCompatActivity {
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainscreen);
-        ctx=this;
+        ctx = this;
         mNavItems.add(new NavItem("Home", "Meetup destination", R.drawable.folder));
         mNavItems.add(new NavItem("Preferences", "Change your preferences", R.drawable.folder));
         mNavItems.add(new NavItem("About", "Get to know about us", R.drawable.folder));
@@ -63,7 +70,7 @@ public class mainscreen extends AppCompatActivity {
 
 
         //listen to the drawer event
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -86,50 +93,38 @@ public class mainscreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        //call  using http request and show it in the imageview widget
-        /*
-        final ImageView imgview= (ImageView) findViewById(R.id.imageView);
-        int restaurantid=2;
-        String URL=Configs.BackEndUrl+"?type=4&restaurant="+restaurantid;
-        HttpRequest request=new HttpRequest(this);
-        request.SendGetrequest(URL, new VolleyCallback() {
-                    @Override
-                    public void onSuccess(String response) {
-                        Log.v("Volley", "Response is: " + response);
-                        Gson g = new Gson();
+        // TODO ::getting User location
 
-                        //fetch the images if they are many
-                        //http://stackoverflow.com/questions/2770273/pdostatement-to-json
-                        JSONArray jsonarray = null;
-                        try {
-                            jsonarray = new JSONArray(response);
-                            for (int i = 0; i < jsonarray.length(); i++) {
-                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+        // Create an instance of GoogleAPIClient.
+        if (Configs.mGoogleApiClient == null) {
+            Configs.mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
 
 
+        Services.GetNearbyRestaurant("test", this);
 
-                                // String name = jsonobject.getString("name");
-                                //String url = jsonobject.getString("url");
-                            }
-                        } catch (JSONException e) {
-
-                        }
-
-                        Image img = g.fromJson(response, Image.class);
-                        Picasso.with(ctx).setIndicatorsEnabled(true);
-                        Picasso.with(ctx).load(img.image_link).into(imgview);
-                       // System.out.println(g.toJson(person)); // {"name":"John"}
-                    }
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.v("Volley", "Error,Response is: " + error.getMessage());
-                    }
-                }
-        );*/
 
 
     }
 
+    //when activity start
+    @Override
+    protected void onStart() {
+        Configs.mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+
+    //when acticity is stopped
+    @Override
+    protected void onStop() {
+        Configs.mGoogleApiClient.disconnect();
+        super.onStop();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -158,7 +153,7 @@ public class mainscreen extends AppCompatActivity {
 * */
     private void selectItemFromDrawer(int position) {
 
-        Log.v("Drawerclick","Drawer menu item clicked:"+position);
+        Log.v("Drawerclick", "Drawer menu item clicked:" + position);
 //        Fragment fragment = new PreferencesFragment();
 //
 //        FragmentManager fragmentManager = getFragmentManager();
@@ -172,4 +167,50 @@ public class mainscreen extends AppCompatActivity {
 //        // Close the drawer
 //        mDrawerLayout.closeDrawer(mDrawerPane);
     }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, Configs.LocationPersmissionRequestCode);
+            return;
+        }
+        Configs.UserLastLocation = LocationServices.FusedLocationApi.getLastLocation(Configs.mGoogleApiClient);
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+
+            case Configs.LocationPersmissionRequestCode:{
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    Configs.UserLastLocation = LocationServices.FusedLocationApi.getLastLocation(Configs.mGoogleApiClient);
+                    Log.v("address",Configs.UserLastLocation.toString());
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+
+        }
+    }
+}
 }

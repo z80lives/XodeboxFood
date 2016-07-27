@@ -1,9 +1,21 @@
 package xodebox.food;
 
+import android.content.Context;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
+
 /**
  * Created by Max on 24/7/2016.
  */
 public class Image {
+
+    int restaurant;
+    int type;
+    int width;
+    int height;
+    int size;
+
     public Image(String image_link, int id, int type, int restaurant) {
         this.image_link = image_link;
         this.id = id;
@@ -38,10 +50,16 @@ public class Image {
         this.size = size;
     }
 
-    int restaurant;
-    int type;
-    int width;
-    int height;
-    int size;
+
+    /**
+     * show an image into a provided view
+     * @param ctx
+     * @param imgview
+     */
+    public void show(Context ctx, ImageView imgview){
+        Picasso.with(ctx).setIndicatorsEnabled(true);
+        Picasso.with(ctx).load(this.image_link).into(imgview);
+    }
+
 
 }
