@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso;
 
 /**
  * Created by Max on 24/7/2016.
+ * @deprecated I don't see us using this.
  */
 public class Image {
 

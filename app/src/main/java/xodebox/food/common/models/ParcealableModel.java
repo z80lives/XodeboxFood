@@ -5,22 +5,23 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.lang.reflect.Constructor;
+import java.util.Map;
 
 /**
  * For use, if necessary.
  * Created by shath on 7/10/2016.
  */
-public abstract class ParcealableModel extends BaseModel implements Parcelable{
+public class ParcealableModel extends BaseModel implements Parcelable{
     private static final String TAG = "ParcealableModel";
+
 
     /**
      * Constructs a new instance of {@code Object}.
      *
      * @param in
      */
-    public ParcealableModel(Parcel in) {
+    private ParcealableModel(Parcel in) {
         super();
-
         readFromParcel(in);
     }
 
@@ -44,9 +45,47 @@ public abstract class ParcealableModel extends BaseModel implements Parcelable{
      *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
      */
     @Override
-    public abstract void writeToParcel(Parcel dest, int flags);
+    public void writeToParcel(Parcel dest, int flags){
+       // dest.writeMap(getAttributes());
+        Map<String, String> map = getAttributes();
+        dest.writeInt(map.size());
+        for(Map.Entry<String, String> entry: map.entrySet()){
+            dest.writeString(entry.getKey());
+            dest.writeString(entry.getValue());
+        }
+    }
 
-    public abstract void readFromParcel(Parcel in);
+    /**
+     * Read the attributes from parcel.
+     *
+     * @param in The Parcel object to be read from
+     */
+    public void readFromParcel(Parcel in){
+        int size = in.readInt();
+        for(int i=0; i<size; i++){
+            String key = in.readString();
+            String value = in.readString();
+            addProperty(key, value);
+        }
+    }
+
+
+    /**
+     * Parcelable Creator
+     */
+    public static final Parcelable.Creator<ParcealableModel> CREATOR = new Parcelable.Creator<ParcealableModel>() {
+        public ParcealableModel createFromParcel(Parcel in) {
+            return new ParcealableModel(in);
+        }
+
+        public ParcealableModel[] newArray(int size) {
+            return new ParcealableModel[size];
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Untested
+    ///////////////////////////////////////////////////////////////////////////
     /**
      * Make a new creator. Creator should be static for each Parcelable.
      * @return
