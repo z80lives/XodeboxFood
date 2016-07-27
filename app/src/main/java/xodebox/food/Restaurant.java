@@ -1,17 +1,8 @@
 package xodebox.food;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+
+//import com.google.gson.Gson;
 
 /**
  * Created by Max on 24/7/2016.
@@ -84,7 +75,7 @@ public class Restaurant {
         this.name = name;
     }
 
-
+/*
     public void FetchRestaurantImages(int id,final Context ctx){
         String URL=Configs.BackEndUrl+"?type=4&restaurant="+id;
         HttpRequest request=new HttpRequest(ctx);
@@ -114,6 +105,6 @@ public class Restaurant {
                 }
         );
     }
-
+*/
 
 }
