@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Max on 24/7/2016.
+ * @deprecated Use Model class instead
  */
 public class Restaurant {
 
