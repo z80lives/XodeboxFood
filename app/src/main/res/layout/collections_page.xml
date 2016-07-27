@@ -56,7 +56,7 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/collection_item"
         android:id="@+id/collection_item_list"
-        android:layout_margin="10dp"
+        android:layout_margin="2dp"
         >
     </ListView>
 

@@ -2,6 +2,7 @@ package xodebox.food;
 
 /**
  * Created by Max on 24/7/2016.
+ * @deprecated I don't see us using this.
  */
 public class Image {
     public Image(String image_link, int id, int type, int restaurant) {

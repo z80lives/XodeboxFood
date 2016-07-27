@@ -20,13 +20,17 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import xodebox.food.R;
+import xodebox.food.common.DataLoadCallback;
 import xodebox.food.common.Screen;
 import xodebox.food.common.models.NewsItem;
 import xodebox.food.common.models.Restaurant;
+import xodebox.food.common.threads.DataLoader;
 import xodebox.food.ui.adapters.ItemCardAdapter;
 import xodebox.food.ui.interfaces.ActivityWithSearchView;
 import xodebox.food.ui.interfaces.FragmentWithSearchBar;
 import xodebox.food.ui.interfaces.RollDiceInterface;
+import xodebox.food.ui.managers.DefaultViewSwitcher;
+import xodebox.food.ui.managers.XodeboxViewManager;
 import xodebox.food.ui.view.HighlightCardView;
 import xodebox.food.ui.view.RestaurantCardView;
 
@@ -44,6 +48,9 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
     private ViewPager homeItemsPager, viewItemsPager;
     private ActivityWithSearchView parentActivity = null;
 
+    View rootView, loaderView;
+    XodeboxViewManager localViewManager;
+
     final private int pagerMargin = 16;
 
     /**{@inheritDoc}**/
@@ -51,11 +58,57 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.home_screen, null);
+        rootView = inflater.inflate(R.layout.home_screen, null);
+        loaderView = inflater.inflate(R.layout.load_view, null);
+
+
+
+        /*
+        ((RelativeLayout)loaderView)
+                .setLayoutParams(
+                        new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.MATCH_PARENT,
+                                RelativeLayout.LayoutParams.MATCH_PARENT));
+
+        viewSwitcher = new XodeboxViewSwitcher(getContext(), loaderView, rootView);
+        //viewSwitcher.setLoadView(loaderView);
+        viewSwitcher.setReadyView(rootView);*/
+
+
+        localViewManager = new DefaultViewSwitcher(getContext());
+
+        localViewManager.addView(loaderView);
+        localViewManager.addView(rootView);
+
+        localViewManager.setReadyView(rootView);
+        localViewManager.setLoadView(loaderView);
+
+        return localViewManager.getRootView();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         fetchViews(rootView);
         prepareViews();
         manualSize(rootView);
-        return rootView;
+
+        new DataLoader(
+                new DataLoadCallback() {
+                    @Override
+                    public void onDataLoadSucess() {
+                        localViewManager.showView( rootView );
+                    }
+
+                    @Override
+                    public void onDataLoadFailure() {
+                        localViewManager.showView( rootView );
+                    }
+                }
+        ).execute(null, null);
+
+        //viewSwitcher.setLoading(true);
+        //viewSwitcher.setLoading(true);
     }
 
     /**
@@ -229,6 +282,8 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Roll button clicked", Toast.LENGTH_SHORT).show();
+                //viewAnimator.setDisplayedChild( viewAnimator.getDisplayedChild() ^ 1 );
+                //localViewManager.showView(rootView);
             }
         });
         return  true;

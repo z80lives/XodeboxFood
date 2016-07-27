@@ -62,6 +62,20 @@ public abstract class BaseModel {
     }
 
     /**
+     * Construct Base Model from json object
+     * @param jsonObject A valid jsonObject
+     * @deprecated Untested
+     */
+    public BaseModel(JSONObject jsonObject){
+        this();
+        try {
+            setAttributes(jsonObject);
+        }catch (Exception ex){
+            Log.e(TAG, "BaseModel: "+ex.getMessage() );
+        }
+    }
+
+    /**
      * Construct model from an xml or JSON InputStream
      * Refer to the class documentation for the format.
      * @param inputStream String parameter can contain either JSON data object or XML data object.
@@ -394,6 +408,7 @@ public abstract class BaseModel {
      * Add attributes using JSON data
      * Might throw exception, if the JSONObject is not well defined.
      * @return True on success <br /> False on failure
+     * @deprecated In favour of {@link #readJSONString(String)}
      */
     public boolean setAttributes(JSONObject jsonObject) throws JSONException{
         Iterator<String> iKeys = jsonObject.keys();

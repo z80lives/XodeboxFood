@@ -17,10 +17,9 @@ import java.util.ArrayList;
 /**
  * Created by Max on 16/5/2016.
  *sample to show library functionalities i implemented
+ * @deprecated Sample code by Max. Thank you.
+ * @author Max
  */
-
-
-
 public class mainscreen extends AppCompatActivity {
 
 
@@ -85,18 +84,35 @@ public class mainscreen extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /**
-        //call  using http request and show it in the imageview widget
-        final ImageView imgview= (ImageView) findViewById(R.id.imageView);
 
+        //call  using http request and show it in the imageview widget
+        /*
+        final ImageView imgview= (ImageView) findViewById(R.id.imageView);
         int restaurantid=2;
-        String URL="http://foodapp.xodebox.com/?type=4&restaurant="+restaurantid;
+        String URL=Configs.BackEndUrl+"?type=4&restaurant="+restaurantid;
         HttpRequest request=new HttpRequest(this);
         request.SendGetrequest(URL, new VolleyCallback() {
                     @Override
                     public void onSuccess(String response) {
                         Log.v("Volley", "Response is: " + response);
                         Gson g = new Gson();
+
+                        //fetch the images if they are many
+                        //http://stackoverflow.com/questions/2770273/pdostatement-to-json
+                        JSONArray jsonarray = null;
+                        try {
+                            jsonarray = new JSONArray(response);
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+
+
+
+                                // String name = jsonobject.getString("name");
+                                //String url = jsonobject.getString("url");
+                            }
+                        } catch (JSONException e) {
+
+                        }
 
                         Image img = g.fromJson(response, Image.class);
                         Picasso.with(ctx).setIndicatorsEnabled(true);
@@ -108,8 +124,8 @@ public class mainscreen extends AppCompatActivity {
                         Log.v("Volley", "Error,Response is: " + error.getMessage());
                     }
                 }
-        );
-        **/
+        );*/
+
 
     }
 
