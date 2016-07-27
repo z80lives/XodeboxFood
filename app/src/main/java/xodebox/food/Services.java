@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by MaxAhirwe on 26/07/16.
+ * @deprecated ...
  */
 public class Services {
 

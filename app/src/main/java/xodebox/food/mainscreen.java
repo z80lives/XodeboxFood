@@ -17,10 +17,9 @@ import java.util.ArrayList;
 /**
  * Created by Max on 16/5/2016.
  *sample to show library functionalities i implemented
+ * @deprecated Sample code by Max. Thank you.
+ * @author Max
  */
-
-
-
 public class mainscreen extends AppCompatActivity {
 
 
