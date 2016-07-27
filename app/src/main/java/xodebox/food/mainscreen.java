@@ -1,6 +1,5 @@
 package xodebox.food;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -10,17 +9,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
-import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -97,6 +87,7 @@ public class mainscreen extends AppCompatActivity {
 
 
         //call  using http request and show it in the imageview widget
+        /*
         final ImageView imgview= (ImageView) findViewById(R.id.imageView);
         int restaurantid=2;
         String URL=Configs.BackEndUrl+"?type=4&restaurant="+restaurantid;
@@ -134,8 +125,7 @@ public class mainscreen extends AppCompatActivity {
                         Log.v("Volley", "Error,Response is: " + error.getMessage());
                     }
                 }
-        );
-
+        );*/
 
 
     }

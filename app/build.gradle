@@ -39,7 +39,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.+'
     compile 'com.google.android.gms:play-services-auth:9.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.google.code.gson:gson:2.7'
+    //compile 'com.google.code.gson:gson:2.7'       //We don't need this.
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import xodebox.food.R;
 import xodebox.food.ui.adapters.ScreenPagerAdapter;
+import xodebox.food.ui.interfaces.ActivityWithSearchView;
 import xodebox.food.ui.nav.NavBar;
 import xodebox.food.ui.view.SearchResultView;
 import xodebox.food.ui.viewpagers.MainscreenViewPager;
@@ -20,7 +21,7 @@ import xodebox.food.ui.viewpagers.MainscreenViewPager;
 /**
  * Main activity
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ActivityWithSearchView {
 
    // private ActionBar actionBar;
     private SearchResultView searchViewGroup;
@@ -136,91 +137,6 @@ public class MainActivity extends FragmentActivity {
             }
         }, 2000);
     }
-
-    /**
-     * Create the screen to display search result
-     * @return
-     */
-    /*
-    private ViewGroup createSearchView(){
-        String[] test = {"Cafe 1", "Dim light"};
-        List<String> lstData = new ArrayList<>();
-        lstData.addAll(Arrays.asList(test));
-
-        searchViewGroup = new LinearLayout(this);
-        ((LinearLayout)searchViewGroup).setOrientation(LinearLayout.VERTICAL);
-        ((LinearLayout)searchViewGroup).setWeightSum(1);
-
-
-        LinearLayout.LayoutParams layoutParam  = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        ((LinearLayout)searchViewGroup).setLayoutParams(layoutParam);
-
-
-        final SearchView searchView = new SearchView(this);
-
-        //set dimensions param for search bar
-        LinearLayout.LayoutParams itemLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-       // itemLayoutParams.setMargins(0,0,0,10);
-
-        //set dimensions for search result
-        ListView searchResults = new ListView(this);
-        searchResults.setDividerHeight(10);
-        LinearLayout.LayoutParams resultParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT, 0.9f);
-        resultParams.setMargins(0,40,0,0);
-        searchResults.setLayoutParams(resultParams);
-
-        final ArrayAdapter<String> searchResultAdapter = new ArrayAdapter<String>(this, R.layout.home_search_result_item,
-                R.id.name, lstData);
-
-        searchResults.setAdapter(searchResultAdapter);
-
-        //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-
-        searchView.setLayoutParams(itemLayoutParams);
-        searchView.setIconified(false);
-        searchView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-        EditText searchField = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-
-        if(searchField == null){
-            searchField = new EditText(this);
-            searchView.addView(searchField);
-            searchField.setId(android.support.v7.appcompat.R.id.search_src_text);
-        }
-        searchField.requestFocus();
-
-
-        searchViewGroup.addView(searchView);
-        searchViewGroup.addView(searchResults);
-        searchView.setQueryHint(getResources().getString(R.string.search_hint));
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchResultAdapter.add(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                showSearchbar(false);
-                return false;
-            }
-        });
-
-        this.searchView = searchView;
-        return searchViewGroup;
-    }*/
 
     public void searchButtonClicked(){
         showSearchbar(true);

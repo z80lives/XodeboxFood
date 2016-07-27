@@ -2,6 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <item type="id" name="home_restaurantItem_container_id">restaurantContainer</item>
     <item type="id" name="screen_pager_id">screenPager</item>
+    <item type="id" name="home_searchbar_id">searchBar</item>
 
     <style name="restaurant_item_framelayout">
         <item name="android:layout_weight">0.5</item>

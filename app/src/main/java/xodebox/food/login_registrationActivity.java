@@ -3,20 +3,15 @@ package xodebox.food;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -25,7 +20,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.client.Firebase;
@@ -37,10 +31,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.Arrays;
 import java.util.UUID;
+
+import xodebox.food.activities.MainActivity;
 import xodebox.food.ui.Configurations;
 
 public class login_registrationActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -183,6 +181,7 @@ public class login_registrationActivity extends AppCompatActivity implements Goo
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.d("Googlelogin", "details:" + acct.getEmail());
 
+            GoToNextActivity();
            // mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             //updateUI(true);
         } else {
@@ -224,8 +223,9 @@ public class login_registrationActivity extends AppCompatActivity implements Goo
     * open the next activity after the login/registration process
    **/
     public void GoToNextActivity(){
-        Intent intent = new Intent(context,mainscreen.class);
+        Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);
+        finish();       //We don't want this activity to linger after the login process is complete.
     }
 
 

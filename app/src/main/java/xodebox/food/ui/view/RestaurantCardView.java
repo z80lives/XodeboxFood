@@ -2,11 +2,15 @@ package xodebox.food.ui.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import xodebox.food.R;
+import xodebox.food.activities.RestaurantActivity;
 import xodebox.food.common.models.BaseModel;
 import xodebox.food.common.threads.DownloadImageForView;
 
@@ -33,29 +37,44 @@ import xodebox.food.common.threads.DownloadImageForView;
  * </table>
  * Created by shath on 7/4/2016.
  */
-public class RestaurantCardView extends AbstractCardView {
+public class RestaurantCardView extends AbstractClickableCardView {
    // private TextView tvRestaurantDescription;
     private TextView tvRestaurantName;
     private ImageView ivRestaurantImage;
 
+    /**
+     * Not really necessary, this is just here for readability.
+     */
     private enum Attrib{
         name,
         image_url,
         description
     }
 
+
+    @Override
+    public void onClick(View v) {
+        getContext().startActivity(new Intent(getContext(), RestaurantActivity.class));
+        Log.d("Restaurant", "onClick: Clicked " + getModel().getAttributesList().toString() );
+    }
+
     /**
-     *  Construct the View using the data] model
-     * @param context
+     *  Construct the View from a data model related to {@link BaseModel}
+     * @param context Context
      */
     public RestaurantCardView(Context context, BaseModel model) {
         super(context, model);
     }
 
-    public void onCreate() {
+    /**
+     * Create
+     */
+    protected void onCreate() {
         setTextView(R.id.textview_restaurant_description, Attrib.name.toString());
+        setClickable(true);
     }
 
+    /**{@inheritDoc}**/
     @Override
     public void onLoad() {
         String strImageUrl = getAttribute(Attrib.image_url.toString());
@@ -64,30 +83,28 @@ public class RestaurantCardView extends AbstractCardView {
 
     }
 
-
-    public ImageView getImageView(){
-        return ivRestaurantImage;
+    public RestaurantCardView(Context context, BaseModel model, AttributeSet attrs) {
+        super(context, model, attrs);
     }
+/**@Override
+    public void setClickListener(OnClickListener defaultClickListener) throws NoClickListenerException {
+        super.setClickListener(defaultClickListener);
+    }**/
 
     ///////////////////////////////////////////////////////////////////////////
     // Local Methods
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Inflate restuarant Card
+     * @return view
+     */
     protected View inflateResource(){
         View rootView = inflate(getContext(), R.layout.restaurant_feature_item, this);
         ivRestaurantImage = (ImageView) findViewById(R.id.imageview_restaurant_image);
 
         return rootView;
 
-        /*
-        int paddingPixel = 25;
-        float density = getContext().getResources().getDisplayMetrics().density;
-        int paddingDp = (int)(paddingPixel * density);
-
-        restImage.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
-*/
-        //elevate();
-       // this.setElevation(1.5f);
     }
 
     @TargetApi(21)

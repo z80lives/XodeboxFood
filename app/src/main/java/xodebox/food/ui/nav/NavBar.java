@@ -11,7 +11,12 @@ import android.widget.ImageView;
 import xodebox.food.R;
 
 /**
- * Created by shath on 7/16/2016.
+ * The code for the bottom Navigation bar in Main Activity.
+ * A nav bar object is directly used by MainActivity and ScreenPagerAdapter object.
+ * TODO: Refactor and use interface to loose the direct coupling between MainActivity and ScreenPagerAdapter.
+ * @see  xodebox.food.activities.MainActivity
+ * @see  xodebox.food.ui.adapters.ScreenPagerAdapter
+ * @see TabLayout
  */
 public class NavBar extends TabLayout {
     private Tab[] tabs;
@@ -97,6 +102,7 @@ public class NavBar extends TabLayout {
 
 
 /**
+ * Tab listener implementation, modified for our special purpose navigation tab with dice.
  * Modified the tab listener to ignore the die button and redirect to zeroth index (Home tab)
  * when called.
  */

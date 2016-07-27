@@ -31,8 +31,8 @@ import xodebox.food.ui.view.HighlightCardView;
 import xodebox.food.ui.view.RestaurantCardView;
 
 /**
- * Created by shath on 6/29/2016.
  * Fragment for home screen.
+ * @deprecated In favour of {@link HomePageFragment}
  */
 public class HomeScreenFragment extends DynamicScreenFragment  {
     private static final String TAG = "HomeScreenFragment";
