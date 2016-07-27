@@ -38,7 +38,6 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.UUID;
 
-import xodebox.food.activities.MainActivity;
 import xodebox.food.ui.Configurations;
 
 public class login_registrationActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -180,13 +179,11 @@ public class login_registrationActivity extends AppCompatActivity implements Goo
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.d("Googlelogin", "details:" + acct.getEmail());
-
-            GoToNextActivity();
-           // mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+            // mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             //updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
-           // updateUI(false);
+            // updateUI(false);
         }
     }
 
@@ -219,13 +216,12 @@ public class login_registrationActivity extends AppCompatActivity implements Goo
 
 
 
-   /**
-    * open the next activity after the login/registration process
-   **/
+    /**
+     * open the next activity after the login/registration process
+     **/
     public void GoToNextActivity(){
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context,mainscreen.class);
         startActivity(intent);
-        finish();       //We don't want this activity to linger after the login process is complete.
     }
 
 

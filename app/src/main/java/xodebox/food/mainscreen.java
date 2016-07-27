@@ -9,17 +9,27 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 /**
  * Created by Max on 16/5/2016.
  *sample to show library functionalities i implemented
- * @deprecated Sample code by Max. Thank you.
- * @author Max
  */
+
+
+
 public class mainscreen extends AppCompatActivity {
 
 
@@ -86,7 +96,6 @@ public class mainscreen extends AppCompatActivity {
 
 
         //call  using http request and show it in the imageview widget
-        /*
         final ImageView imgview= (ImageView) findViewById(R.id.imageView);
         int restaurantid=2;
         String URL=Configs.BackEndUrl+"?type=4&restaurant="+restaurantid;
@@ -117,14 +126,15 @@ public class mainscreen extends AppCompatActivity {
                         Image img = g.fromJson(response, Image.class);
                         Picasso.with(ctx).setIndicatorsEnabled(true);
                         Picasso.with(ctx).load(img.image_link).into(imgview);
-                       // System.out.println(g.toJson(person)); // {"name":"John"}
+                        // System.out.println(g.toJson(person)); // {"name":"John"}
                     }
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.v("Volley", "Error,Response is: " + error.getMessage());
                     }
                 }
-        );*/
+        );
+
 
 
     }

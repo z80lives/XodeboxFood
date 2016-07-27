@@ -1,5 +1,15 @@
 package xodebox.food;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -11,8 +21,8 @@ public class Services {
     ArrayList<Restaurant> NearByRestaurants;
 
 
-/*
-public  ArrayList<Restaurant> GetNearbyRestaurant(int useraddress,Context ctx){
+
+public  ArrayList<Restaurant> GetNearbyRestaurant(int useraddress, Context ctx){
     
     //// TODO: 27/07/16 :Generate random addresses nearby my location and assign them to the sql table restaurants -http://gis.stackexchange.com/questions/25877/how-to-generate-random-locations-nearby-my-location
 
@@ -49,6 +59,6 @@ public  ArrayList<Restaurant> GetNearbyRestaurant(int useraddress,Context ctx){
     );
     return null;
 
-}*/
+}
 
 }
