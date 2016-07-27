@@ -101,6 +101,18 @@ public abstract class BaseModel {
     }
 
     /**
+     * Intended for {@link ParcealableModel}
+     * @return Associative array containing the local class attributes.
+     */
+    protected void setAttributeMap(Map<String, String> map){
+        try {
+            strProperties.putAll(map);
+        }catch (Exception ex){
+            Log.e(TAG, "setAttributeMap: ", ex );
+        }
+    }
+
+    /**
      * Getter for Model attributes. Should be used by View classes.
      * @return {@code HashMap<String, String> Hashmap of all attributes, mapped from key to value.
      */
@@ -427,4 +439,5 @@ public abstract class BaseModel {
 
         return true;
     }
+
 }
