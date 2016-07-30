@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="review_profile_picture" type="id">profile_picture</item>
+    <item name="review_username" type="id">user_name</item>
+
+    <string name="review_profile_picture_alt">Profile Picture</string>
+
+    <string name="placeholder_username">John Doe</string>
+    <string name="placeholder_review_long">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </string>
+
+    <!--Review Box -->
+    <item name="reviewbox_items" type="id">reviewbox_items</item>
+    <string name="reviewbox_title">Reviews</string>
+    <string name="reviewbox_subtitle">Recent Reviews</string>
+    
+    <string name="reviewbox_read_label">Read all reviews </string>
+</resources>

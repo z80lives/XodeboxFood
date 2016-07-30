@@ -1,7 +1,6 @@
 package xodebox.food.common.threads;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import xodebox.food.common.DataLoadCallback;
 import xodebox.food.common.models.BaseModel;
@@ -22,12 +21,14 @@ public class DataLoader extends AsyncTask<BaseModel, Integer, Boolean> {
 
     @Override
     protected Boolean doInBackground(BaseModel... params) {
+        //Do nothing..
+        /**
         try{
             Thread.sleep(5);
         }catch (Exception ex){
             Log.e(TAG, "doInBackground: ", ex);
             return false;
-        }
+        }**/
         return true;
     }
 

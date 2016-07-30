@@ -4,6 +4,8 @@
     <string name="set_restInfo_title">Restaurant Details</string>
     <string name="set_location_title">Set Location</string>
 
+    <!-- Labels-->
+    <string name="address_label">Address</string>
 
     <string name="top_review_title">Top Review</string>
     <string name="reviews_title">Reviews</string>
@@ -34,6 +36,7 @@
     <string name="more_review_label">View more reviews</string>
 
     <style name="day_tag">
+        <item name="android:layout_margin">1dp</item>
         <item name="android:background">@drawable/round_tag</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
@@ -49,6 +52,36 @@
     </style>
 
     <!--placeholders -->
-    <string name="placeholder_operating_hours">1900-2000</string>
+    <string name="placeholder_operating_hours">1900–2000</string>
     <string name="placeholder_review">The restaurant was very good!</string>
+
+    <string name="restaurant_area">Area, City</string>
+
+    <string-array name="weekdays">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thur</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+
+    <!-- Menu Info data-->
+    <string name="payment_type_cash">Cash</string>
+    <string name="payment_type_card">Card</string>
+    <string name="choice_halal">Halal</string>
+    <string name="choice_non_alcoholic">Non-Alcoholic</string>
+
+    <string-array name="price_range">
+        <item>Cheap</item>
+        <item>Affordable</item>
+        <item>Expensive</item>
+    </string-array>
+
+    <item name="field_operating_time" type="id">operating_hours</item>
+    <item name="field_operating_days" type="id">operating_days</item>
+    <item name="field_payment_type" type="id">payment_type</item>
+    <item name="field_food_choices" type="id">food_choices</item>
+    <item name="field_budget_choices" type="id">budget_choices</item>
 </resources>

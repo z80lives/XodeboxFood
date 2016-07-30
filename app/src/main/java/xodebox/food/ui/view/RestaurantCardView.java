@@ -12,6 +12,7 @@ import android.widget.TextView;
 import xodebox.food.R;
 import xodebox.food.activities.RestaurantActivity;
 import xodebox.food.common.models.BaseModel;
+import xodebox.food.common.models.Model;
 import xodebox.food.common.threads.DownloadImageForView;
 
 /**
@@ -111,4 +112,13 @@ public class RestaurantCardView extends AbstractClickableCardView {
     private  void elevate(){
         this.setElevation(0.5f);
     }
+
+    public RestaurantCardView(Context context){
+        this(context, new Model());
+    }
+
+    public RestaurantCardView(Context context, AttributeSet attributeSet){
+        this(context, new Model(), attributeSet);
+    }
+
 }
