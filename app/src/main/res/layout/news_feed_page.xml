@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/com_facebook_button_border_color_focused">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,12 +29,21 @@
             />
     </LinearLayout>
 
+    <!--
     <FrameLayout
         android:id="@android:id/tabcontent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!--sample content -->
-        <include layout="@layout/news_feed_item"/>
-    </FrameLayout>
 
+        <include layout="@layout/news_feed_item"/>
+    </FrameLayout> -->
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/feed_list"
+        tools:listitem="@layout/news_feed_item"
+        >
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
