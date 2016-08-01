@@ -51,13 +51,13 @@
     </LinearLayout>
  -->
     <!--List view to put the item fragments -->
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/collection_item"
         android:id="@+id/collection_item_list"
         android:layout_margin="2dp"
         >
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
