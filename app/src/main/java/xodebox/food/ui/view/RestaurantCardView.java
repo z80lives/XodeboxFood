@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import xodebox.food.R;
 import xodebox.food.activities.RestaurantActivity;
 import xodebox.food.common.models.BaseModel;
 import xodebox.food.common.models.Model;
-import xodebox.food.common.threads.DownloadImageForView;
 
 /**
  *
@@ -41,7 +39,7 @@ import xodebox.food.common.threads.DownloadImageForView;
 public class RestaurantCardView extends AbstractClickableCardView {
    // private TextView tvRestaurantDescription;
     private TextView tvRestaurantName;
-    private ImageView ivRestaurantImage;
+    //private ImageView ivRestaurantImage;
 
     /**
      * Not really necessary, this is just here for readability.
@@ -72,15 +70,18 @@ public class RestaurantCardView extends AbstractClickableCardView {
      */
     protected void onCreate() {
         setTextView(R.id.textview_restaurant_description, Attrib.name.toString());
+        setImageView(R.id.imageview_restaurant_image, Attrib.image_url.toString());
         setClickable(true);
     }
 
     /**{@inheritDoc}**/
     @Override
     public void onLoad() {
+        super.onLoad();
         String strImageUrl = getAttribute(Attrib.image_url.toString());
-        DownloadImageForView downloadTask = new DownloadImageForView(ivRestaurantImage);
-        downloadTask.execute(strImageUrl);
+        //setImageView(R.id.)
+        //DownloadImageForView downloadTask = new DownloadImageForView(ivRestaurantImage);
+        //downloadTask.execute(strImageUrl);
 
     }
 
@@ -102,7 +103,7 @@ public class RestaurantCardView extends AbstractClickableCardView {
      */
     protected View inflateResource(){
         View rootView = inflate(getContext(), R.layout.restaurant_feature_item, this);
-        ivRestaurantImage = (ImageView) findViewById(R.id.imageview_restaurant_image);
+        //ivRestaurantImage = (ImageView) findViewById(R.id.imageview_restaurant_image);
 
         return rootView;
 

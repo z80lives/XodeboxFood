@@ -20,11 +20,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import xodebox.food.R;
-import xodebox.food.common.DataLoadCallback;
 import xodebox.food.common.Screen;
 import xodebox.food.common.models.NewsItem;
 import xodebox.food.common.models.Restaurant;
-import xodebox.food.common.threads.DataLoader;
 import xodebox.food.ui.adapters.ItemCardAdapter;
 import xodebox.food.ui.interfaces.ActivityWithSearchView;
 import xodebox.food.ui.interfaces.FragmentWithSearchBar;
@@ -93,7 +91,7 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
         prepareViews();
         manualSize(rootView);
 
-        new DataLoader(
+        /*new DataLoader(
                 new DataLoadCallback() {
                     @Override
                     public void onDataLoadSucess() {
@@ -105,7 +103,9 @@ public class HomePageFragment extends Fragment implements RollDiceInterface, Fra
                         localViewManager.showView( rootView );
                     }
                 }
-        ).execute(null, null);
+        ).execute(null, null);*/
+        localViewManager.showView(rootView);
+        //localViewManager.setLoading(false);
 
         //viewSwitcher.setLoading(true);
         //viewSwitcher.setLoading(true);

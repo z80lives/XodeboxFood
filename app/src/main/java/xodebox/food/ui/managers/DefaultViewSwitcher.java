@@ -94,8 +94,11 @@ public class DefaultViewSwitcher implements XodeboxViewManager {
     }
 
     @Override
-    public void setLoading(boolean val) {
-
+    public void setLoading(boolean paramLoading) {
+        if(paramLoading){
+            showView(loaderView);
+        }else
+            showView(readyView);
     }
 
     @Override

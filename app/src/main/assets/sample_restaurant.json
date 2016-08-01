@@ -1,0 +1,20 @@
+{
+  "name" : "Bulldog",
+  "area" : "Desa Sri Hartamas",
+  "city" : "Kuala Lumpur",
+  "time_open" :  "1500",
+  "time_closed" : "0100",
+  "phone_number" : "0362014484",
+  "cuisines" : "Finger Food",
+  "type" : "Pub",
+  "payment_type" : [
+    "Cash", "Credit"
+  ],
+  "top_review" :
+  {
+    "name" : "John Doe",
+    "rating" : 3.0,
+    "timestamp" : 1470001715
+  }
+
+}

@@ -9,11 +9,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.HashMap;
 
 import xodebox.food.R;
 import xodebox.food.common.models.BaseModel;
-import xodebox.food.common.threads.DownloadImageForView;
 
 /**
  * Abstract view for all cards.
@@ -99,7 +100,8 @@ public abstract class AbstractCardView extends FrameLayout{
                 String url = imageViewStringHashMap.get(imageView);
                 if(url != null)
                 {
-                    new DownloadImageForView(imageView).execute(url);
+                    //new DownloadImageForView(imageView).execute(url);
+                    Picasso.with(getContext()).load(url).into(imageView);           //Use Picasso
                 }
             }
         }
