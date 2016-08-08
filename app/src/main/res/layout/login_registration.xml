@@ -2,20 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/waves"
     android:gravity="center">
 
     <EditText
         android:layout_width="match_parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/colorPink"
         android:inputType="textPersonName|textEmailAddress"
         android:text="username"
         android:ems="10"
         android:id="@+id/user_txt"
         android:layout_gravity="center_horizontal" />
 
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/colorPink"
         android:id="@+id/pass_txt"
         android:text="password"
         android:inputType="textPassword" />
@@ -31,27 +43,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
+            android:layout_marginLeft="10dp"
             android:id="@+id/Login_btn"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.5"
             android:onClick="Login_register_account"
-            android:background="#9ab3ab" />
+            android:background="@color/colorAzure" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"
+            android:layout_marginRight="10dp"
             android:id="@+id/register_btn"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.5"
             android:onClick="Login_register_account"
-            android:background="#8fa58f" />
+            android:background="@color/colorAzure" />
 
     </LinearLayout>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

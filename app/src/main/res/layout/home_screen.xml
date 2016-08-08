@@ -7,9 +7,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="@color/com_facebook_button_login_silver_background_color_pressed">
+    android:background="@drawable/waves"
+    >
     <!-- Note: The dimensions declared in this file is currently
     overwritten after inflation-->
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

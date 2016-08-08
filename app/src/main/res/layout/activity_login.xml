@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/waves"
     tools:context="xodebox.food.LoginActivity">
 
     <!-- Login progress -->
@@ -22,6 +23,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
+        android:background="@color/colorGrey"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -67,6 +69,7 @@
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
+                android:background="@color/colorPink"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="_"

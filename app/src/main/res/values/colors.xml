@@ -3,5 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorMaroon">#8B1C62</color>
+    <color name="colorMaroon">#611120</color>
+    <color name="colorScarlet">#82172B</color>
+    <color name="colorPink">#C18C96</color>
+    <color name="colorLightPink">#DCBEC3</color>
+    <color name="colorAzure">#E0EEEE</color>
+    <color name="colorGrey">#FAFAFA</color>
+
 </resources>
