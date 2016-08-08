@@ -20,9 +20,10 @@
             android:id="@id/search_bar_id"/>
     </FrameLayout>
 
-    <ScrollView
+    <!--Uncomment the scroll view to enable scroll feature -->
+    <!--<ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,12 +31,22 @@
             android:orientation="vertical"
             >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Base.TextAppearance.AppCompat.Large"
+                android:background="@color/colorPink"
+                android:gravity="center"
+                android:text="Restuarants Nearby"
+                android:textColor="@color/colorScarlet"/>
             <!--first item container-->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
                 android:id="@+id/home_item_frame"
                 >
+
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/home_items_pager"
@@ -60,10 +71,19 @@
 
             </FrameLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Base.TextAppearance.AppCompat.Large"
+                android:background="@color/colorPink"
+                android:gravity="center"
+                android:text="Highlights"
+                android:textColor="@color/colorScarlet"/>
             <!--second item container-->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
                 android:id="@+id/home_highlight_frame"
                 >
 
@@ -92,6 +112,6 @@
 
 
         </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
 </LinearLayout>

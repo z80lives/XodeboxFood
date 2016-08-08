@@ -3,6 +3,7 @@ package xodebox.food.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import xodebox.food.R;
 import xodebox.food.ui.managers.DefaultViewSwitcher;
@@ -10,6 +11,9 @@ import xodebox.food.ui.managers.XodeboxViewManager;
 
 public class RestaurantActivity extends AppCompatActivity {
     XodeboxViewManager viewManager;
+
+    TextView restaurantName;
+    TextView areaAndCity;
     //View rootView=null;
 
     @Override
@@ -30,8 +34,18 @@ public class RestaurantActivity extends AppCompatActivity {
 
         //setContentView(viewManager.getRootView(),
         //        new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        fetchUI();
         setContentView(viewManager.getRootView());
     }
+
+    private void fetchUI(){
+        restaurantName = (TextView) findViewById(R.id.restaurant_name);
+        areaAndCity    = (TextView) findViewById(R.id.area);
+
+
+
+    }
+
 
     @Override
     protected void onStart() {

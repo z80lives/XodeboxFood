@@ -32,7 +32,7 @@ public class NavBar extends TabLayout {
         setTabMode(MODE_FIXED);
         setSelectedTabIndicatorHeight(0);
         setTabGravity(GRAVITY_FILL);
-        setBackgroundResource(R.color.colorPrimary);
+        setBackgroundResource(R.color.colorScarlet);
         setTabTextColors(getResources().getColor(android.R.color.primary_text_dark),
                           getResources().getColor(android.R.color.holo_orange_light));
     }
@@ -62,7 +62,7 @@ public class NavBar extends TabLayout {
                 ImageButton imageButton = new ImageButton(getContext());
                 //Resources.Theme diceTheme = getResources().newTheme();
                 imageButton.setImageDrawable(getResources().getDrawable(R.drawable.roll_the_dice));
-                imageButton.setBackgroundResource(R.color.colorPrimary);
+                imageButton.setBackgroundResource(R.color.colorScarlet);
                 imageButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 rollDiceButton = imageButton;
                 addTab(newTab().setCustomView(imageButton));
