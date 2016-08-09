@@ -32,7 +32,7 @@
                 android:src="@drawable/image_placeholder"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitXY"
-                android:id="@+id/imageView3"
+                android:id="@+id/iv_restaurant_image"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
@@ -56,7 +56,7 @@
             android:text="@string/restaurant_name"
             android:layout_gravity="center_horizontal"
             android:padding="6dp"
-            android:id="@+id/restaurant_name"
+            android:id="@+id/tv_restaurant_name"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/restaurant_area"
-            android:id="@+id/area"
+            android:id="@+id/tv_restaurant_area"
             android:layout_below="@+id/restaurant_name"
             android:layout_alignLeft="@+id/restaurant_name"
             android:layout_alignStart="@+id/restaurant_name"
@@ -135,8 +135,8 @@
             />
 
         <TextView
-            style="@style/Base.TextAppearance.AppCompat.Title"
-            android:layout_width="wrap_content"
+            style="@style/card_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/top_review_title"
             />
@@ -153,8 +153,7 @@
             />
 
         <TextView
-            style="@style/Base.TextAppearance.AppCompat.Title"
-            android:layout_width="wrap_content"
+            style="@style/card_title"
             android:layout_height="wrap_content"
             android:text="@string/menu_title"
             />
@@ -162,7 +161,8 @@
         <!--Sample menu photos-->
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -214,6 +214,14 @@
             style="@style/Divider"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorAzure"
+            android:layout_gravity="center"
+            android:gravity="center">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -238,6 +246,7 @@
             android:text="@string/restaurant_type_caption"
             android:id="@+id/textView13"
             android:layout_weight="0.04" />
+        </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
