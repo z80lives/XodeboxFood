@@ -39,12 +39,16 @@ import javax.xml.transform.stream.StreamResult;
 public abstract class BaseModel {
     private static final String TAG = "BaseModel";
     private Map<String, String> strProperties;
+    private Map<String, BaseModel> childModels; //Create inheritence for the Models.
+    private Map<String, String[]> childArrays; //Create map for arrays seperately
 
     /**
      * Construct an empty model.
      */
     public BaseModel() {
         strProperties = new HashMap<String, String>();
+        childArrays   = new HashMap<>();
+        childModels = new HashMap<>();
     }
 
     /**
@@ -69,7 +73,8 @@ public abstract class BaseModel {
     public BaseModel(JSONObject jsonObject){
         this();
         try {
-            setAttributes(jsonObject);
+            //setAttributes(jsonObject);
+            readJSONString(jsonObject.toString());
         }catch (Exception ex){
             Log.e(TAG, "BaseModel: "+ex.getMessage() );
         }
@@ -83,11 +88,15 @@ public abstract class BaseModel {
     public BaseModel(InputStream inputStream)
     {
         this();
-        String inString = new InputSource(inputStream).toString();
+        //String inString = new InputSource(inputStream).toString();
+        Scanner isScanner = new Scanner(inputStream, "UTF-16").useDelimiter("\\A");
+        String inString = isScanner.hasNext() ? isScanner.next() : "";
         if (isStringXML(inString))
             readXMLString(inString);
         else
             readJSONString(inString);
+        //Scanner isScanner = new Scanner(inputStream, "UTF-16").useDelimiter("\\A");
+        //String buildString = isScanner.hasNext() ? isScanner.next() : "";
     }
 
     /**
@@ -138,6 +147,7 @@ public abstract class BaseModel {
     {
         return strProperties.get(key);
     }
+
 
 
 
@@ -353,6 +363,7 @@ public abstract class BaseModel {
             JSONObject jObject = new JSONObject(inString);
             strProperties.putAll(jsonToMap(jObject));
         }catch (RuntimeException ex){
+            Log.e(TAG, "readJSONString: ", ex);
             if(isTestLogger())
                 System.out.println("Run time Exception occured: "+ex.getMessage());
         }
@@ -360,6 +371,7 @@ public abstract class BaseModel {
         {
             if(isTestLogger())
                 System.out.println("Exception occured: "+ex.getMessage());
+            Log.e(TAG, "readJSONString: ", ex );
         }
     }
 
@@ -368,15 +380,67 @@ public abstract class BaseModel {
      * @param jObject A valid {@link JSONObject}.
      * @throws JSONException
      */
-    private HashMap<String, String> jsonToMap(JSONObject jObject) throws JSONException {
+    private HashMap<String, String> jsonToMap(JSONObject jObject)  throws  JSONException {
         HashMap<String, String> map = new HashMap<String, String>();
         //JSONObject jObject = new JSONObject(strArg);
         Iterator<?> keys = jObject.keys();
 
-        while( keys.hasNext() ){
-            String key = (String)keys.next();
-            String value = jObject.getString(key);
-            map.put(key, value);
+        while( keys.hasNext() ) {
+            String key = (String) keys.next();
+
+                //String value = jObject.getString(key);
+               // map.put(key, value);
+            Object obj = jObject.get(key);
+            if(obj instanceof JSONObject) {
+                childModels.put(key, new Model((JSONObject) obj));
+            }
+            else if(obj instanceof JSONArray) {
+                try {
+                    JSONArray values = (JSONArray) obj;     //Type casting here seems justified.
+                    ArrayList<String> stringArray = new ArrayList<String>();
+                    for (int i = 0; i < values.length(); i++) {
+                        Object object = values.get(i);
+
+                        if (!(object instanceof JSONObject) && !(object instanceof JSONArray)) {      //TODO: Do something with the child arrays and child objects
+                            String strValue = (String) object;
+                            stringArray.add(strValue);
+                        }
+                    }
+                    String[] strArray = new String[stringArray.size()];
+                    stringArray.toArray(strArray);
+                    childArrays.put(key, strArray);
+                }catch (Exception ex){
+                    Log.e(TAG, "jsonToMap: Error processing JSON Array. ",ex );
+                }
+            }
+            else {
+                String value = jObject.getString(key);
+                map.put(key, value);
+            }
+
+           /* if(jsonValue instanceof JSONArray)
+            {
+                JSONArray values = (JSONArray) jsonValue;     //Type casting here seems justified.
+                ArrayList<String> stringArray = new ArrayList<>();
+                for(int i=0; i<values.length(); i++){
+                    Object object = values.get(i);
+
+                    if( !(object instanceof JSONObject) && !(object instanceof JSONArray) ) {      //TODO: Do something with the child arrays and child objects
+                        String strValue = (String) object;
+                        stringArray.add(strValue);
+                    }
+                }
+                childArrays.put(key, (String []) stringArray.toArray());
+
+            }else if (jsonValue instanceof JSONObject)
+            {
+                JSONObject childObject = (JSONObject) jsonValue;
+
+                Model childModel = new Model(childObject);
+                childModels.put(key, childModel);
+            }else {*/
+
+            //}
 
         }
 
@@ -429,15 +493,69 @@ public abstract class BaseModel {
         {
             String key = iKeys.next();
             String value = (String) jsonObject.get(key);        //Type casting here is probably a bad idea. // FIXME: 7/11/2016
-
+            Object valueObject = jsonObject.get(key);
             // We do not accept child object or an array inside our JSON object.
             // if (value instanceof JSONArray || value instanceof JSONObject)
-            //     return false;
+            //JSONObject childObject = jsonObject.getJSONObject(key);
 
-            addProperty(key, value);
+            //     return false;
+            if(valueObject instanceof JSONArray) {
+                JSONArray values = (JSONArray) valueObject;     //Type casting here seems justified.
+                ArrayList<String> stringArray = new ArrayList<>();
+                for(int i=0; i<values.length(); i++){
+                    Object object = values.get(i);
+
+                    if( !(object instanceof JSONObject) && !(object instanceof JSONArray) ) {      //TODO: Do something with the child arrays and child objects
+                        String strValue = (String) object;
+                        stringArray.add(strValue);
+                    }
+                }
+                childArrays.put(key, (String [])stringArray.toArray());
+
+            } else if(valueObject instanceof JSONObject){
+                JSONObject childObject = (JSONObject) valueObject;
+
+                Model childModel = new Model(childObject);
+                childModels.put(key, childModel);
+            }else
+                addProperty(key, value);
         }
 
         return true;
     }
 
+
+    public Map<String, String[]> getChildArrays(){
+        return childArrays;
+    }
+
+    public Map<String, BaseModel> getChildModels(){
+        return childModels;
+    }
+
+    public String[] getChildArray(String key){
+        return childArrays.get(key);
+    }
+
+    public BaseModel getChildModel(String key){
+        return childModels.get(key);
+    }
+
+    /**
+     * Copies specific keys from another Model into this Model.
+     */
+    public void copyKeyAttributes(String[] keys, Model srcModel){
+        for (String key: keys){
+            if(srcModel.getAttributes().containsKey(key)) {
+                String value = srcModel.getProperty(key);
+                strProperties.put(key, value);
+            }else if(srcModel.getChildArrays().containsKey(key)){
+                String[] value = srcModel.getChildArray(key);
+                childArrays.put(key, value);
+            }else if(srcModel.getChildModels().containsKey(key)){
+                BaseModel value = srcModel.getChildModel(key);
+                childModels.put(key, value);
+            }
+        }
+    }
 }

@@ -163,6 +163,14 @@ public abstract class AbstractCardView extends FrameLayout{
         return  imageView;
     }
 
-
+    /**
+     * It is a better idea to set the model as a parameter when constructor is called.
+     * Call update manually, if this is used.
+     */
+    public void attachModel(BaseModel model){
+        originalModel = model;
+        attributes = (HashMap<String, String>) model.getAttributes();       //Copy all the attributes from the model
+        onCreate();     //Contains all the data setters
+    }
 }
 

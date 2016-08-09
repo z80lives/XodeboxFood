@@ -143,14 +143,21 @@
 
         <!--Sample Review -->
         <xodebox.food.ui.view.ReviewItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/top_review">
 
         </xodebox.food.ui.view.ReviewItem>
 
         <View
             style="@style/Divider"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/restaurant_layout_menu_container">
 
         <TextView
             style="@style/card_title"
@@ -195,9 +202,11 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <View
-            style="@style/Divider"
-            />
+            <View
+                style="@style/Divider"
+                />
+        </LinearLayout>
+
 
         <xodebox.food.ui.view.ReviewBox
             android:layout_width="match_parent"
@@ -208,6 +217,7 @@
             style="@style/Divider"
             />
         <xodebox.food.ui.view.MenuInfoCard
+            android:id="@+id/menu_info_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <View

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="restaurant">
+        <item>@string/key_restaurant_name</item>
+        <item>@string/key_restaurant_area</item>
+        <item>@string/key_restaurant_city</item>
+        <item>@string/key_restaurant_time_open</item>
+        <item>@string/key_restaurant_time_closed</item>
+        <item>@string/key_restaurant_cuisines</item>
+        <item>@string/key_restaurant_type</item>
+        <item>@string/key_restaurant_payment_type</item>
+        <item>@string/key_restaurant_top_review</item>
+    </string-array>
+
+    <string-array name="review">
+        <item>@string/key_review_name</item>
+        <item>@string/key_review_rating</item>
+        <item>@string/key_review_timestamp</item>
+    </string-array>
+
+    <string name="key_restaurant_name">name</string>
+    <string name="key_restaurant_area">area</string>
+    <string name="key_restaurant_city">city</string>
+    <string name="key_restaurant_time_open">time_open</string>
+    <string name="key_restaurant_time_closed">time_closed</string>
+    <string name="key_restaurant_cuisines">cuisines</string>
+    <string name="key_restaurant_type">type</string>
+    <string name="key_restaurant_payment_type">payment_type</string>
+    <string name="key_restaurant_top_review">top_review</string>
+    <string name="key_restaurant_image_url">image_url</string>
+    <string name="key_restaurant_menu_images">menu_images</string>
+    <string name="key_restaurant_menu_info">menu_info_card</string>
+
+
+    <string name="key_review_name">name</string>
+    <string name="key_review_rating">rating</string>
+    <string name="key_review_timestamp">timestamp</string>
+
+    <string name="key_restaurant_days_open">days_open</string>
+</resources>
